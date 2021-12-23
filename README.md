@@ -1,2 +1,2 @@
-# mc-authentication
+# dei-authentication-mc
 Microservice for authentication
