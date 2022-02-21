@@ -1,3 +1,4 @@
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/mc_authentication
@@ -31,8 +32,8 @@ spring:
               - email
               - profile
           facebook:
-            clientId: 121189305185277
-            clientSecret: 42ffe5aa7379e8326387e0fe16f34132
+            clientId: 206852461579613
+            clientSecret: d509b2331ffd4a4ccb8faf803779c7fe
             redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
               - email
@@ -59,4 +60,5 @@ app:
       - myandroidapp://oauth2/redirect
       - myiosapp://oauth2/redirect
 server:
-  port: 3000
+  port: 8080
+debug: true

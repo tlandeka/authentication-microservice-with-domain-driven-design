@@ -25,7 +25,8 @@ public class ConfirmUserRegistrationCommandHandler implements ResultableCommandH
         this.userRespository = userRespository;
     }
 
-    @Override public BaseUserDto handle(ConfirmUserRegistrationCommand command) {
+    @Override
+    public BaseUserDto handle(ConfirmUserRegistrationCommand command) {
         UserRegistration userRegistration = userRegistrationRepository.findByConfirmLink(command.getConfirmationUrl());
 
         if (userRegistration == null) {

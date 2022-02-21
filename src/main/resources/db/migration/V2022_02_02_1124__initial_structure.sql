@@ -2,7 +2,7 @@ CREATE TABLE mcuser (
     id                  UUID PRIMARY KEY NOT NULL,
     first_name          VARCHAR(255),
     last_name           VARCHAR(255),
-    login_type          VARCHAR(50)      NOT NULL,
+    provider            VARCHAR(50)      NOT NULL,
     email               VARCHAR(255)     NOT NULL
         CONSTRAINT mcuser_email_unique unique,
     concurrency_version BIGINT,

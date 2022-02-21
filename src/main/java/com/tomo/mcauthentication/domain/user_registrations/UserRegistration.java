@@ -90,7 +90,7 @@ public class UserRegistration extends ConcurrencySafeEntity {
 
         UserId userId = userRespository.nextIdentity();
 
-        return new User(userId, getFirstName(), getLastName(), getEmail(), User.LoginType.EMAIL, userRespository);
+        return new User(userId, getFirstName(), getLastName(), getEmail(), User.AuthProvider.EMAIL, userRespository);
     }
 
     protected void protectPassword(String aCurrentPassword, String aChangedPassword) {

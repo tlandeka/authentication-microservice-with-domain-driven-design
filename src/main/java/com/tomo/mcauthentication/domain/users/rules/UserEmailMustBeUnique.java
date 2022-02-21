@@ -18,6 +18,6 @@ public class UserEmailMustBeUnique implements BusinessRule {
     }
 
     @Override public String message() {
-        return "User with this email already created.";
+        return "User with this email already exists.";
     }
 }

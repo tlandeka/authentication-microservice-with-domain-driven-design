@@ -16,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
 
 import java.util.stream.Collectors;
 
@@ -29,6 +32,9 @@ public class AppConfiguration {
 
     @Autowired
     UserJpaRepository userJpaRepository;
+
+    @Autowired
+    private Environment env;
 
     @Bean
     McAuthenticationModule authenticationModule(CommandHandlerPipelineBuilder commandHandlerPipelineBuilder) {
@@ -50,4 +56,13 @@ public class AppConfiguration {
         return new UserRespositoryJpaAdapter(userJpaRepository);
     }
 
+    @Bean
+    @Qualifier("facebookClientRegistration")
+    ClientRegistration facebookClientRegistration() {
+        String clientRootProperty = "spring.security.oauth2.client.registration.facebook";
+        String clientId = env.getProperty(clientRootProperty + ".client-id");
+        String clientSecret = env.getProperty(clientRootProperty + ".client-secret");
+        return CommonOAuth2Provider.FACEBOOK.getBuilder("facebook")
+                .clientId(clientId).clientSecret(clientSecret).build();
+    }
 }

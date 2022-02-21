@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class User extends ConcurrencySafeEntity {
 
-    public enum LoginType {
+    public enum AuthProvider {
         EMAIL,
         FACEBOOK,
         GOOGLE
@@ -25,21 +25,21 @@ public class User extends ConcurrencySafeEntity {
     String firstName;
     String lastName;
     String email;
-    LoginType loginType;
+    AuthProvider provider;
 
     public User(
             UserId anId,
             String aFirstName,
             String aLastName,
             String anEmail,
-            LoginType aLoginType,
+            AuthProvider aProvider,
             UserRespository userRespository) {
         this.checkRule(new UserEmailMustBeUnique(userRespository, email));
         this.userId = anId;
         this.firstName = aFirstName;
         this.lastName = aLastName;
         this.email = anEmail;
-        this.loginType = aLoginType;
+        this.provider = aProvider;
     }
 
     public void setFirstName(String aFirstName) {
