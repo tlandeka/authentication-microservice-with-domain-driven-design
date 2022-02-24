@@ -10,4 +10,9 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class GoogleLoginCommand extends BaseCommand {
+    String accessCode;
+
+    public GoogleLoginCommand(String accessCode) {
+        this.accessCode = accessCode;
+    }
 }

@@ -4,14 +4,15 @@ import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserId;
 import com.tomo.mcauthentication.domain.users.UserRespository;
 
+import org.springframework.stereotype.Component;
+
 import java.util.UUID;
 
-public class UserRespositoryJpaAdapter implements UserRespository {
-
-    UserJpaRepository jpaRepository;
+@Component
+public class UserRespositoryJpaAdapter extends BaseJpaAdapter<UserJpaRepository> implements UserRespository {
 
     public UserRespositoryJpaAdapter(UserJpaRepository userJpaRepository) {
-        this.jpaRepository = userJpaRepository;
+        super(userJpaRepository);
     }
 
     @Override

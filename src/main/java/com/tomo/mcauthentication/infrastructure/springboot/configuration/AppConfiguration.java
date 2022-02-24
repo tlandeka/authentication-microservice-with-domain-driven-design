@@ -2,9 +2,14 @@ package com.tomo.mcauthentication.infrastructure.springboot.configuration;
 
 import com.tomo.mcauthentication.application.configuration.CommandHandler;
 import com.tomo.mcauthentication.application.contracts.McAuthenticationModule;
+import com.tomo.mcauthentication.domain.oauth2.OAuth2Authentication;
+import com.tomo.mcauthentication.domain.oauth2.OAuth2Service;
 import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationRepository;
 import com.tomo.mcauthentication.domain.users.UserRespository;
 import com.tomo.mcauthentication.infrastructure.McAuthenticationModuleExecutor;
+import com.tomo.mcauthentication.infrastructure.http.oauth2.CustomOAuth2UserService;
+import com.tomo.mcauthentication.infrastructure.http.oauth2.FacebookOAuth2Authentication;
+import com.tomo.mcauthentication.infrastructure.http.oauth2.GoogleOAuth2Authentication;
 import com.tomo.mcauthentication.infrastructure.persistence.UserJpaRepository;
 import com.tomo.mcauthentication.infrastructure.persistence.UserRegistrationJpaRepository;
 import com.tomo.mcauthentication.infrastructure.persistence.UserRegistrationJpaRepositoryAdapter;
@@ -64,5 +69,31 @@ public class AppConfiguration {
         String clientSecret = env.getProperty(clientRootProperty + ".client-secret");
         return CommonOAuth2Provider.FACEBOOK.getBuilder("facebook")
                 .clientId(clientId).clientSecret(clientSecret).build();
+    }
+
+    @Bean
+    @Qualifier("googleClientRegistration")
+    ClientRegistration googleClientRegistration() {
+        String clientRootProperty = "spring.security.oauth2.client.registration.facebook";
+        String clientId = env.getProperty(clientRootProperty + ".client-id");
+        String clientSecret = env.getProperty(clientRootProperty + ".client-secret");
+        return CommonOAuth2Provider.FACEBOOK.getBuilder("facebook")
+                .clientId(clientId).clientSecret(clientSecret).build();
+    }
+
+    @Bean
+    @Qualifier("facebookOAuth2Service")
+    OAuth2Service facebookOAuth2Service(
+            FacebookOAuth2Authentication facebookOAuth2Authentication,
+            UserRespository userRespository) {
+        return new OAuth2Service(facebookOAuth2Authentication, userRespository);
+    }
+
+    @Bean
+    @Qualifier("googleOAuth2Service")
+    OAuth2Service googleOAuth2Service(
+            GoogleOAuth2Authentication googleOAuth2Authentication,
+            UserRespository userRespository) {
+        return new OAuth2Service(googleOAuth2Authentication, userRespository);
     }
 }

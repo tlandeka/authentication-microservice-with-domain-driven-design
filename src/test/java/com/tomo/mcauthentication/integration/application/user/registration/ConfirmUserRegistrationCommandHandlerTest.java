@@ -8,6 +8,7 @@ import com.tomo.mcauthentication.domain.user_registrations.UserRegistration;
 import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationRepository;
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.infrastructure.persistence.UserRespositoryJpaAdapter;
+import com.tomo.mcauthentication.integration.application.ApplicationServiceTest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,11 +23,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertNotNull;
 
-@RunWith(SpringRunner.class)
-@Transactional
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles(value = "local")
-public class ConfirmUserRegistrationCommandHandlerTest {
+public class ConfirmUserRegistrationCommandHandlerTest extends ApplicationServiceTest {
 
     @Autowired
     ConfirmUserRegistrationCommandHandler commandHandler;
@@ -43,10 +40,7 @@ public class ConfirmUserRegistrationCommandHandlerTest {
     @Test
     @Transactional
     public void testConfirmUserRegistration() {
-        registerNewUserCommandHandler.handle(new RegisterNewUserCommand("ac", "bc", "tomo@gmail.com", "AA123bb##"));
-        Optional<UserRegistration> userRegistration = userRegistrationRepository.findAllByEmail(Arrays.asList("tomo@gmail.com")).stream().findFirst();
-        commandHandler.handle(new ConfirmUserRegistrationCommand(userRegistration.get().getConfirmLink()));
-        User user = userRespositoryJpaAdapter.findByEmail("tomo@gmail.com");
+        User user = createFormUser();
         assertNotNull(user);
     }
 }

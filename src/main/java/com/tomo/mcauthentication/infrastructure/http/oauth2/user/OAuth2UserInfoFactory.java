@@ -1,21 +1,18 @@
 package com.tomo.mcauthentication.infrastructure.http.oauth2.user;
 
-import com.example.springsocial.exception.OAuth2AuthenticationProcessingException;
-import com.example.springsocial.model.AuthProvider;
+import com.tomo.mcauthentication.domain.users.User;
 
 import java.util.Map;
 
 public class OAuth2UserInfoFactory {
 
     public static OAuth2UserInfo getOAuth2UserInfo(String registrationId, Map<String, Object> attributes) {
-        if(registrationId.equalsIgnoreCase(AuthProvider.google.toString())) {
+        if(registrationId.equalsIgnoreCase(User.AuthProvider.GOOGLE.toString().toLowerCase())) {
             return new GoogleOAuth2UserInfo(attributes);
-        } else if (registrationId.equalsIgnoreCase(AuthProvider.facebook.toString())) {
+        } else if (registrationId.equalsIgnoreCase(User.AuthProvider.FACEBOOK.toString().toLowerCase())) {
             return new FacebookOAuth2UserInfo(attributes);
-        } else if (registrationId.equalsIgnoreCase(AuthProvider.github.toString())) {
-            return new GithubOAuth2UserInfo(attributes);
         } else {
-            throw new OAuth2AuthenticationProcessingException("Sorry! Login with " + registrationId + " is not supported yet.");
+            throw new IllegalArgumentException("Sorry! Login with " + registrationId + " is not supported yet.");
         }
     }
 }

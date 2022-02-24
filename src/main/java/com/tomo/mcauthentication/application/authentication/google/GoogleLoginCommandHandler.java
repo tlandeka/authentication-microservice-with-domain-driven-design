@@ -2,26 +2,30 @@ package com.tomo.mcauthentication.application.authentication.google;
 
 import com.tomo.mcauthentication.application.configuration.ResultableCommandHandler;
 import com.tomo.mcauthentication.application.users.BaseUserDto;
-import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationRepository;
-import com.tomo.mcauthentication.domain.users.UserRespository;
+import com.tomo.mcauthentication.domain.SessionService;
+import com.tomo.mcauthentication.domain.oauth2.OAuth2Service;
+import com.tomo.mcauthentication.domain.users.User;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
 public class GoogleLoginCommandHandler implements ResultableCommandHandler<GoogleLoginCommand, BaseUserDto> {
 
-    UserRegistrationRepository userRegistrationRepository;
-    UserRespository userRespository;
+    OAuth2Service oAuth2Service;
+    SessionService sessionService;
 
     public GoogleLoginCommandHandler(
-            UserRegistrationRepository userRegistrationRepository,
-            UserRespository userRespository) {
-        this.userRegistrationRepository = userRegistrationRepository;
-        this.userRespository = userRespository;
+            @Qualifier("googleOAuth2Service") OAuth2Service oAuth2Service,
+            SessionService sessionService) {
+        this.oAuth2Service = oAuth2Service;
+        this.sessionService = sessionService;
     }
 
     @Override
     public BaseUserDto handle(GoogleLoginCommand command) {
+        User user = oAuth2Service.tryRegister(command.getAccessCode());
+        sessionService.login(user);
         return null;
     }
 }

@@ -1,13 +1,13 @@
 package com.tomo.mcauthentication.infrastructure.http.oauth2;
 
-import com.tomo.mcauthentication.domain.oauth2.OAuth2Authentication;
-import com.tomo.mcauthentication.domain.oauth2.OAuth2Principal;
-
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-public class AbstractOAuth2Authentication {
+import java.time.Instant;
+
+public abstract class AbstractOAuth2Authentication {
 
     ClientRegistration clientRegistration;
     CustomOAuth2UserService customOAuth2UserService;
@@ -18,7 +18,11 @@ public class AbstractOAuth2Authentication {
         this.customOAuth2UserService = customOAuth2UserService;
     }
 
-    public OAuth2User authenticate(OAuth2UserRequest oAuth2UserRequest) {
+    protected OAuth2User authenticateUser(String anAccessCode) {
+        OAuth2UserRequest oAuth2UserRequest = new OAuth2UserRequest(clientRegistration, new OAuth2AccessToken(
+                OAuth2AccessToken.TokenType.BEARER,
+                anAccessCode,
+                Instant.now(), Instant.now().plusSeconds(10000L)));
         return customOAuth2UserService.loadUser(oAuth2UserRequest);
     }
 }

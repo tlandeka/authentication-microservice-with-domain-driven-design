@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@Qualifier("UserJpaRepository")
+@Qualifier("userJpaRepository")
 public interface UserJpaRepository extends McCrudRepository <User, UserId> {
 
     User findUserByEmail(String email);

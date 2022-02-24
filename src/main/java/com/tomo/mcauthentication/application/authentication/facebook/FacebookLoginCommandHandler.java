@@ -10,6 +10,7 @@ import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationRepos
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserRespository;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,7 +19,9 @@ public class FacebookLoginCommandHandler implements ResultableCommandHandler<Fac
     OAuth2Service oAuth2Service;
     SessionService sessionService;
 
-    public FacebookLoginCommandHandler(OAuth2Service oAuth2Service, SessionService sessionService) {
+    public FacebookLoginCommandHandler(
+            @Qualifier("facebookOAuth2Service") OAuth2Service oAuth2Service,
+            SessionService sessionService) {
         this.oAuth2Service = oAuth2Service;
         this.sessionService = sessionService;
     }

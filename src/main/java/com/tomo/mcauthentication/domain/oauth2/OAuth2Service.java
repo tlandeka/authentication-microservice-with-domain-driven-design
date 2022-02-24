@@ -45,13 +45,4 @@ public class OAuth2Service {
 
        return userRespository.save(user);
     }
-
-    protected User login(OAuth2Principal user) {
-        user = userRespository.findByEmail(principal.getEmail());
-        if (user.getProvider().equals(User.AuthProvider.valueOf(principal.getProvider()))) {
-            user = login(user);
-        } else {
-            throw exception;
-        }
-    }
 }
