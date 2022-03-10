@@ -6,22 +6,12 @@ import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationStatu
 
 import java.util.List;
 
-public class UserRegistrationJpaRepositoryAdapter implements UserRegistrationRepository {
+public class UserRegistrationJpaRepositoryAdapter
+        extends BaseJpaAdapter<UserRegistration, Long, UserRegistrationJpaRepository>
+        implements UserRegistrationRepository {
 
-    UserRegistrationJpaRepository jpaRepository;
-
-    public UserRegistrationJpaRepositoryAdapter(UserRegistrationJpaRepository userRegistrationJpaRepository) {
-        this.jpaRepository = userRegistrationJpaRepository;
-    }
-
-    @Override
-    public UserRegistration add(UserRegistration userRegistration) {
-        return jpaRepository.save(userRegistration);
-    }
-
-    @Override
-    public List<UserRegistration> findAll() {
-        return jpaRepository.findAll();
+    public UserRegistrationJpaRepositoryAdapter(UserRegistrationJpaRepository jpaRepository) {
+        super(jpaRepository);
     }
 
     @Override

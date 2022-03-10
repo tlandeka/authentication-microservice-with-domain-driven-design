@@ -1,5 +1,6 @@
-package com.tomo.mcauthentication.application.authentication.email;
+package com.tomo.mcauthentication.application.authentication;
 
+import com.tomo.mcauthentication.application.authentication.command.EmailLoginCommand;
 import com.tomo.mcauthentication.application.configuration.ResultableCommandHandler;
 import com.tomo.mcauthentication.application.users.BaseUserDto;
 import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationRepository;

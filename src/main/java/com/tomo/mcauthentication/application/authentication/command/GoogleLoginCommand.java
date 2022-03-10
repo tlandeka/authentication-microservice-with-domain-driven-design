@@ -1,4 +1,4 @@
-package com.tomo.mcauthentication.application.authentication.google;
+package com.tomo.mcauthentication.application.authentication.command;
 
 import com.tomo.mcauthentication.application.contracts.BaseCommand;
 
@@ -10,7 +10,10 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class GoogleLoginCommand extends BaseCommand {
-    String accessCode;
+    private String accessCode;
+    private Boolean rememberMe;
+    private String userAgent;
+    private String ipAddress;
 
     public GoogleLoginCommand(String accessCode) {
         this.accessCode = accessCode;

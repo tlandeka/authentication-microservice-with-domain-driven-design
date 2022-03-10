@@ -1,4 +1,4 @@
-package com.tomo.mcauthentication.application.userregistration.get_user_registration;
+package com.tomo.mcauthentication.application.userregistration.query;
 
 import com.tomo.mcauthentication.application.contracts.BaseQuery;
 import com.tomo.mcauthentication.application.contracts.Query;

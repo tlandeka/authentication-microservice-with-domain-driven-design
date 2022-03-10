@@ -21,15 +21,6 @@ public class FacebookOAuth2Authentication extends AbstractOAuth2Authentication i
 
     @Override
     public OAuth2Principal authenticate(String anAccessCode) {
-        OAuth2User oAuth2User = super.authenticateUser(anAccessCode);
-        FacebookOAuth2UserInfo userInfo = (FacebookOAuth2UserInfo) OAuth2UserInfoFactory
-                .getOAuth2UserInfo(clientRegistration.getRegistrationId(), oAuth2User.getAttributes());
-        return new OAuth2Principal(
-                userInfo.getId(),
-                userInfo.getEmail(),
-                userInfo.getName(),
-                userInfo.getName(),
-                userInfo.getImageUrl(),
-                clientRegistration.getRegistrationId());
+        return super.authenticateUser(anAccessCode);
     }
 }

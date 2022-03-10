@@ -1,4 +1,4 @@
-package com.tomo.mcauthentication.application.authentication.facebook;
+package com.tomo.mcauthentication.application.authentication.command;
 
 import com.tomo.mcauthentication.application.contracts.BaseCommand;
 
@@ -12,7 +12,10 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class FacebookLoginCommand extends BaseCommand {
-    String accessCode;
+    private String accessCode;
+    private Boolean rememberMe;
+    private String userAgent;
+    private String ipAddress;
 
     public FacebookLoginCommand(String accessCode) {
         this.accessCode = accessCode;

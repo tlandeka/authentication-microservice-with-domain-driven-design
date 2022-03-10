@@ -9,15 +9,10 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-public class UserRespositoryJpaAdapter extends BaseJpaAdapter<UserJpaRepository> implements UserRespository {
+public class UserRespositoryJpaAdapter extends BaseJpaAdapter<User, UserId, UserJpaRepository> implements UserRespository {
 
     public UserRespositoryJpaAdapter(UserJpaRepository userJpaRepository) {
         super(userJpaRepository);
-    }
-
-    @Override
-    public User save(User anUser) {
-        return jpaRepository.save(anUser);
     }
 
     @Override

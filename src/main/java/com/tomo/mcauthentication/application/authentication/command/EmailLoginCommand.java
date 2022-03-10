@@ -1,4 +1,4 @@
-package com.tomo.mcauthentication.application.authentication.email;
+package com.tomo.mcauthentication.application.authentication.command;
 
 import com.tomo.mcauthentication.application.contracts.BaseCommand;
 

@@ -27,12 +27,14 @@ CREATE TABLE user_registration (
 );
 
 create table session (
-    id      BIGSERIAL PRIMARY KEY,
-    user_id UUID        NOT NULL
-        CONSTRAINT session_mcuser_id_fk REFERENCES mcuser,
+    id                  UUID PRIMARY KEY,
+    user_id             UUID NOT NULL CONSTRAINT session_mcuser_id_fk REFERENCES mcuser,
+    access_token        TEXT NOT NULL,
+    token_type          TEXT NOT NULL,
+    refresh_token       TEXT,
     user_agent          TEXT,
+    ip_address          VARCHAR(45),
     last_activity       TIMESTAMP,
-    expiration_date     TIMESTAMP NOT NULL,
     created             TIMESTAMP DEFAULT now() NOT NULL,
     modified            TIMESTAMP
 );

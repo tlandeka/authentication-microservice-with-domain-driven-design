@@ -1,6 +1,7 @@
-package com.tomo.mcauthentication.application.userregistration.register_new_user;
+package com.tomo.mcauthentication.application.userregistration;
 
 import com.tomo.mcauthentication.application.configuration.CommandHandler;
+import com.tomo.mcauthentication.application.userregistration.command.RegisterNewUserCommand;
 import com.tomo.mcauthentication.domain.user_registrations.UserRegistration;
 import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationRepository;
 import com.tomo.mcauthentication.domain.users.UserRespository;
@@ -30,6 +31,6 @@ public class RegisterNewUserCommandHandler implements CommandHandler<RegisterNew
                 userRespository
         );
 
-        userRegistrationRepository.add(userRegistration);
+        userRegistrationRepository.save(userRegistration);
     }
 }

@@ -1,13 +1,13 @@
 package com.tomo.mcauthentication.integration.application;
 
-import com.tomo.mcauthentication.application.authentication.facebook.FacebookLoginCommand;
-import com.tomo.mcauthentication.application.authentication.facebook.FacebookLoginCommandHandler;
-import com.tomo.mcauthentication.application.authentication.google.GoogleLoginCommand;
-import com.tomo.mcauthentication.application.authentication.google.GoogleLoginCommandHandler;
-import com.tomo.mcauthentication.application.userregistration.confirm_user_registration.ConfirmUserRegistrationCommand;
-import com.tomo.mcauthentication.application.userregistration.confirm_user_registration.ConfirmUserRegistrationCommandHandler;
-import com.tomo.mcauthentication.application.userregistration.register_new_user.RegisterNewUserCommand;
-import com.tomo.mcauthentication.application.userregistration.register_new_user.RegisterNewUserCommandHandler;
+import com.tomo.mcauthentication.application.authentication.command.FacebookLoginCommand;
+import com.tomo.mcauthentication.application.authentication.FacebookLoginCommandHandler;
+import com.tomo.mcauthentication.application.authentication.command.GoogleLoginCommand;
+import com.tomo.mcauthentication.application.authentication.GoogleLoginCommandHandler;
+import com.tomo.mcauthentication.application.userregistration.command.ConfirmUserRegistrationCommand;
+import com.tomo.mcauthentication.application.userregistration.ConfirmUserRegistrationCommandHandler;
+import com.tomo.mcauthentication.application.userregistration.command.RegisterNewUserCommand;
+import com.tomo.mcauthentication.application.userregistration.RegisterNewUserCommandHandler;
 import com.tomo.mcauthentication.domain.oauth2.OAuth2Principal;
 import com.tomo.mcauthentication.domain.user_registrations.UserRegistration;
 import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationRepository;
@@ -18,7 +18,6 @@ import com.tomo.mcauthentication.infrastructure.http.oauth2.GoogleOAuth2Authenti
 
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;

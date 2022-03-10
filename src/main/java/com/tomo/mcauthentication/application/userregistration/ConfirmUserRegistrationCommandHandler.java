@@ -1,9 +1,7 @@
-package com.tomo.mcauthentication.application.userregistration.confirm_user_registration;
+package com.tomo.mcauthentication.application.userregistration;
 
-import com.tomo.mcauthentication.application.configuration.CommandHandler;
 import com.tomo.mcauthentication.application.configuration.ResultableCommandHandler;
-import com.tomo.mcauthentication.application.contracts.Command;
-import com.tomo.mcauthentication.application.contracts.Result;
+import com.tomo.mcauthentication.application.userregistration.command.ConfirmUserRegistrationCommand;
 import com.tomo.mcauthentication.application.users.BaseUserDto;
 import com.tomo.mcauthentication.domain.user_registrations.UserRegistration;
 import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationRepository;

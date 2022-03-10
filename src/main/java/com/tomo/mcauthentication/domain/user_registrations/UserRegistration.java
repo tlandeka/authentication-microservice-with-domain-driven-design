@@ -95,11 +95,8 @@ public class UserRegistration extends ConcurrencySafeEntity {
 
     protected void protectPassword(String aCurrentPassword, String aChangedPassword) {
         this.assertPasswordsNotSame(aCurrentPassword, aChangedPassword);
-
         this.assertPasswordNotWeak(aChangedPassword);
-
         this.assertUsernamePasswordNotSame(aChangedPassword);
-
         this.setPassword(this.asEncryptedValue(aChangedPassword));
     }
 

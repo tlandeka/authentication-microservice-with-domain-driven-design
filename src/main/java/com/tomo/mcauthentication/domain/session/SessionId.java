@@ -1,9 +1,8 @@
-package com.tomo.mcauthentication.domain.users;
+package com.tomo.mcauthentication.domain.session;
 
 import com.tomo.mcauthentication.ddd.domain.AbstractId;
 
 import javax.persistence.Embeddable;
-
 import java.util.UUID;
 
 import lombok.Getter;
@@ -14,23 +13,20 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserId extends AbstractId {
+public class SessionId extends AbstractId {
 
-    public UserId(UUID id) {
+    public SessionId(UUID id) {
         super(id);
-    }
-
-    public UserId(String id) {
-        super(UUID.fromString(id));
     }
 
     @Override
     protected int hashOddValue() {
-        return 83811;
+        return 5785;
     }
 
     @Override
     protected int hashPrimeValue() {
-        return 263;
+        return 31;
     }
 }
+
