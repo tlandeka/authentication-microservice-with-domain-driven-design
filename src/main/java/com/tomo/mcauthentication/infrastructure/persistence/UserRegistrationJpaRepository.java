@@ -1,7 +1,7 @@
 package com.tomo.mcauthentication.infrastructure.persistence;
 
 import com.tomo.mcauthentication.ddd.infrastructure.persistence.springdata.jpa.McCrudRepository;
-import com.tomo.mcauthentication.domain.user_registrations.UserRegistration;
+import com.tomo.mcauthentication.domain.registration.UserRegistration;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;

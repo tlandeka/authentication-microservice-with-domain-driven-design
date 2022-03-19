@@ -1,7 +1,7 @@
 package com.tomo.mcauthentication.infrastructure.springboot.controller;
 
 import com.tomo.mcauthentication.application.contracts.McAuthenticationModule;
-import com.tomo.mcauthentication.application.userregistration.command.RegisterNewUserCommand;
+import com.tomo.mcauthentication.application.registration.command.RegisterNewUserCommand;
 import com.tomo.mcauthentication.infrastructure.http.oauth2.CustomOAuth2UserService;
 import com.tomo.mcauthentication.infrastructure.util.CookieUtils;
 

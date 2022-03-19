@@ -1,4 +1,4 @@
-package com.tomo.mcauthentication.domain.user_registrations.rules;
+package com.tomo.mcauthentication.domain.registration.rules;
 
 import com.tomo.mcauthentication.ddd.domain.BusinessRule;
 

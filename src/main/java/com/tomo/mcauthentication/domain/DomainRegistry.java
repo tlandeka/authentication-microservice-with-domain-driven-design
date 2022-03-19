@@ -1,6 +1,6 @@
 package com.tomo.mcauthentication.domain;
 
-import com.tomo.mcauthentication.domain.user_registrations.PasswordService;
+import com.tomo.mcauthentication.domain.registration.PasswordService;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

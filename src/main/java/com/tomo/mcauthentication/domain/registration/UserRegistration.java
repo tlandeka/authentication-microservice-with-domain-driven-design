@@ -1,12 +1,12 @@
-package com.tomo.mcauthentication.domain.user_registrations;
+package com.tomo.mcauthentication.domain.registration;
 
 import com.tomo.mcauthentication.ddd.domain.ConcurrencySafeEntity;
 import com.tomo.mcauthentication.ddd.domain.DomainEventPublisher;
 import com.tomo.mcauthentication.domain.DomainRegistry;
-import com.tomo.mcauthentication.domain.user_registrations.events.NewUserRegistered;
-import com.tomo.mcauthentication.domain.user_registrations.rules.UserRegistrationCannotBeConfirmedAfterExpirationRule;
-import com.tomo.mcauthentication.domain.user_registrations.rules.UserRegistrationCannotBeConfirmedMoreThanOnceRule;
-import com.tomo.mcauthentication.domain.user_registrations.rules.UserRegistrationMustBeUniqueRule;
+import com.tomo.mcauthentication.domain.registration.events.NewUserRegistered;
+import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationCannotBeConfirmedAfterExpirationRule;
+import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationCannotBeConfirmedMoreThanOnceRule;
+import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationMustBeUniqueRule;
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserId;
 import com.tomo.mcauthentication.domain.users.UserRepository;

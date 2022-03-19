@@ -1,8 +1,8 @@
 package com.tomo.mcauthentication.integration.application.user.registration;
 
-import com.tomo.mcauthentication.application.userregistration.ConfirmUserRegistrationCommandHandler;
-import com.tomo.mcauthentication.application.userregistration.RegisterNewUserCommandHandler;
-import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationRepository;
+import com.tomo.mcauthentication.application.registration.ConfirmUserRegistrationCommandHandler;
+import com.tomo.mcauthentication.application.registration.RegisterNewUserCommandHandler;
+import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.infrastructure.persistence.UserRespositoryJpaAdapter;
 import com.tomo.mcauthentication.integration.application.ApplicationServiceTest;

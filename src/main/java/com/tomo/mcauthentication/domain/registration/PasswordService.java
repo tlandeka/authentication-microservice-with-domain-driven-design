@@ -1,11 +1,10 @@
-package com.tomo.mcauthentication.domain.user_registrations;
+package com.tomo.mcauthentication.domain.registration;
 
 import com.tomo.mcauthentication.ddd.AssertionConcern;
 
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
-import java.util.UUID;
 
 @Component
 public final class PasswordService extends AssertionConcern {

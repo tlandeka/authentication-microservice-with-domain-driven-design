@@ -1,4 +1,4 @@
-package com.tomo.mcauthentication.application.userregistration.dto;
+package com.tomo.mcauthentication.application.registration.dto;
 
 import com.tomo.mcauthentication.application.contracts.Result;
 

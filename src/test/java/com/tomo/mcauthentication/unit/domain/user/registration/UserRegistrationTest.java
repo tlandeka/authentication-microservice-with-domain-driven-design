@@ -2,10 +2,10 @@ package com.tomo.mcauthentication.unit.domain.user.registration;
 
 import com.tomo.mcauthentication.domain.DomainRegistry;
 import com.tomo.mcauthentication.domain.EncryptionService;
-import com.tomo.mcauthentication.domain.user_registrations.PasswordService;
-import com.tomo.mcauthentication.domain.user_registrations.UserRegistration;
-import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationRepository;
-import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationStatus;
+import com.tomo.mcauthentication.domain.registration.PasswordService;
+import com.tomo.mcauthentication.domain.registration.UserRegistration;
+import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
+import com.tomo.mcauthentication.domain.registration.UserRegistrationStatus;
 import com.tomo.mcauthentication.domain.users.UserRepository;
 
 import org.junit.Before;

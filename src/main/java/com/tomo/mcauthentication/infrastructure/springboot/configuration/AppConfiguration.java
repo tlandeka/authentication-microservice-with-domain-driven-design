@@ -3,7 +3,7 @@ package com.tomo.mcauthentication.infrastructure.springboot.configuration;
 import com.tomo.mcauthentication.application.configuration.CommandHandler;
 import com.tomo.mcauthentication.application.contracts.McAuthenticationModule;
 import com.tomo.mcauthentication.domain.oauth2.OAuth2Service;
-import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationRepository;
+import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
 import com.tomo.mcauthentication.domain.users.UserRepository;
 import com.tomo.mcauthentication.infrastructure.McAuthenticationModuleExecutor;
 import com.tomo.mcauthentication.infrastructure.http.oauth2.FacebookOAuth2Authentication;

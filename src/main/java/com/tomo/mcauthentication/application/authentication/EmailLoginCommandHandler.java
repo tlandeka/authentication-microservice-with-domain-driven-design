@@ -6,7 +6,7 @@ import com.tomo.mcauthentication.application.users.BaseUserDto;
 import com.tomo.mcauthentication.domain.session.Session;
 import com.tomo.mcauthentication.domain.session.SessionRepository;
 import com.tomo.mcauthentication.domain.session.TokenProvider;
-import com.tomo.mcauthentication.domain.user_registrations.EmailAuthenticationService;
+import com.tomo.mcauthentication.domain.registration.EmailAuthenticationService;
 import com.tomo.mcauthentication.domain.users.User;
 
 import org.springframework.stereotype.Component;

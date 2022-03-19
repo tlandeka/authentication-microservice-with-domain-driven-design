@@ -1,8 +1,8 @@
 package com.tomo.mcauthentication.infrastructure.persistence;
 
-import com.tomo.mcauthentication.domain.user_registrations.UserRegistration;
-import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationRepository;
-import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationStatus;
+import com.tomo.mcauthentication.domain.registration.UserRegistration;
+import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
+import com.tomo.mcauthentication.domain.registration.UserRegistrationStatus;
 
 import java.util.List;
 

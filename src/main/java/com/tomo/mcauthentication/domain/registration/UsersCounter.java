@@ -1,4 +1,4 @@
-package com.tomo.mcauthentication.domain.user_registrations;
+package com.tomo.mcauthentication.domain.registration;
 
 public interface UsersCounter {
     int countUsersWithLogin();

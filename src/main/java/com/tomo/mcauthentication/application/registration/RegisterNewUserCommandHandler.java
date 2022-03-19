@@ -1,9 +1,9 @@
-package com.tomo.mcauthentication.application.userregistration;
+package com.tomo.mcauthentication.application.registration;
 
 import com.tomo.mcauthentication.application.configuration.CommandHandler;
-import com.tomo.mcauthentication.application.userregistration.command.RegisterNewUserCommand;
-import com.tomo.mcauthentication.domain.user_registrations.UserRegistration;
-import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationRepository;
+import com.tomo.mcauthentication.application.registration.command.RegisterNewUserCommand;
+import com.tomo.mcauthentication.domain.registration.UserRegistration;
+import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
 import com.tomo.mcauthentication.domain.users.UserRepository;
 
 import org.springframework.stereotype.Component;

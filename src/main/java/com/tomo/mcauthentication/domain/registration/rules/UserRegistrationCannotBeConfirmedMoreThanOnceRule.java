@@ -1,7 +1,7 @@
-package com.tomo.mcauthentication.domain.user_registrations.rules;
+package com.tomo.mcauthentication.domain.registration.rules;
 
 import com.tomo.mcauthentication.ddd.domain.BusinessRule;
-import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationStatus;
+import com.tomo.mcauthentication.domain.registration.UserRegistrationStatus;
 
 public class UserRegistrationCannotBeConfirmedMoreThanOnceRule implements BusinessRule {
 

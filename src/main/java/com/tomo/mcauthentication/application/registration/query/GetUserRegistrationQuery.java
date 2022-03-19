@@ -1,7 +1,6 @@
-package com.tomo.mcauthentication.application.userregistration.query;
+package com.tomo.mcauthentication.application.registration.query;
 
 import com.tomo.mcauthentication.application.contracts.BaseQuery;
-import com.tomo.mcauthentication.application.contracts.Query;
 
 import java.util.UUID;
 

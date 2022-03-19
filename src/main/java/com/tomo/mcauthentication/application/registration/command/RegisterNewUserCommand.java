@@ -1,4 +1,4 @@
-package com.tomo.mcauthentication.application.userregistration.command;
+package com.tomo.mcauthentication.application.registration.command;
 
 import com.tomo.mcauthentication.application.contracts.BaseCommand;
 

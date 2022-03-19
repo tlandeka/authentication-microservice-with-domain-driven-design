@@ -1,8 +1,8 @@
-package com.tomo.mcauthentication.application.userregistration;
+package com.tomo.mcauthentication.application.registration;
 
 import com.tomo.mcauthentication.application.configuration.QueryHandler;
-import com.tomo.mcauthentication.application.userregistration.dto.UserRegistrationDto;
-import com.tomo.mcauthentication.application.userregistration.query.GetUserRegistrationQuery;
+import com.tomo.mcauthentication.application.registration.dto.UserRegistrationDto;
+import com.tomo.mcauthentication.application.registration.query.GetUserRegistrationQuery;
 
 public class GetUserRegistrationQueryHandler implements QueryHandler<GetUserRegistrationQuery, UserRegistrationDto> {
 

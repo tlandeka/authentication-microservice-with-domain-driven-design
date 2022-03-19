@@ -1,8 +1,8 @@
-package com.tomo.mcauthentication.domain.user_registrations;
+package com.tomo.mcauthentication.domain.registration;
 
 import com.tomo.mcauthentication.ddd.domain.BusinessRuleValidator;
 import com.tomo.mcauthentication.domain.EncryptionService;
-import com.tomo.mcauthentication.domain.user_registrations.rules.PasswordsMustMatch;
+import com.tomo.mcauthentication.domain.registration.rules.PasswordsMustMatch;
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserRepository;
 

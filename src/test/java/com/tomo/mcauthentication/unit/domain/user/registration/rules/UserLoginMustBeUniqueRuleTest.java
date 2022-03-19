@@ -1,7 +1,7 @@
 package com.tomo.mcauthentication.unit.domain.user.registration.rules;
 
-import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationRepository;
-import com.tomo.mcauthentication.domain.user_registrations.rules.UserRegistrationMustBeUniqueRule;
+import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
+import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationMustBeUniqueRule;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
