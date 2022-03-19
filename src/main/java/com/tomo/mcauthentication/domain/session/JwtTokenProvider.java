@@ -1,7 +1,6 @@
 package com.tomo.mcauthentication.domain.session;
 
 import com.tomo.mcauthentication.domain.session.Session.TokenType;
-import com.tomo.mcauthentication.domain.session.TokenProvider;
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserId;
 import com.tomo.mcauthentication.infrastructure.springboot.configuration.AppProperties;
@@ -71,6 +70,7 @@ public class JwtTokenProvider implements TokenProvider {
             logger.error("Invalid JWT token");
         } catch (ExpiredJwtException ex) {
             logger.error("Expired JWT token");
+            throw ex;
         } catch (UnsupportedJwtException ex) {
             logger.error("Unsupported JWT token");
         } catch (IllegalArgumentException ex) {

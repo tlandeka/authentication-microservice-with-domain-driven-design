@@ -1,18 +1,20 @@
 package com.tomo.mcauthentication.integration.application;
 
-import com.tomo.mcauthentication.application.authentication.command.FacebookLoginCommand;
+import com.tomo.mcauthentication.application.authentication.EmailLoginCommandHandler;
 import com.tomo.mcauthentication.application.authentication.FacebookLoginCommandHandler;
-import com.tomo.mcauthentication.application.authentication.command.GoogleLoginCommand;
 import com.tomo.mcauthentication.application.authentication.GoogleLoginCommandHandler;
-import com.tomo.mcauthentication.application.userregistration.command.ConfirmUserRegistrationCommand;
+import com.tomo.mcauthentication.application.authentication.command.EmailLoginCommand;
+import com.tomo.mcauthentication.application.authentication.command.FacebookLoginCommand;
+import com.tomo.mcauthentication.application.authentication.command.GoogleLoginCommand;
 import com.tomo.mcauthentication.application.userregistration.ConfirmUserRegistrationCommandHandler;
-import com.tomo.mcauthentication.application.userregistration.command.RegisterNewUserCommand;
 import com.tomo.mcauthentication.application.userregistration.RegisterNewUserCommandHandler;
+import com.tomo.mcauthentication.application.userregistration.command.ConfirmUserRegistrationCommand;
+import com.tomo.mcauthentication.application.userregistration.command.RegisterNewUserCommand;
 import com.tomo.mcauthentication.domain.oauth2.OAuth2Principal;
 import com.tomo.mcauthentication.domain.user_registrations.UserRegistration;
 import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationRepository;
 import com.tomo.mcauthentication.domain.users.User;
-import com.tomo.mcauthentication.domain.users.UserRespository;
+import com.tomo.mcauthentication.domain.users.UserRepository;
 import com.tomo.mcauthentication.infrastructure.http.oauth2.FacebookOAuth2Authentication;
 import com.tomo.mcauthentication.infrastructure.http.oauth2.GoogleOAuth2Authentication;
 
@@ -24,7 +26,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
-
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -50,6 +51,9 @@ public abstract class ApplicationServiceTest {
     @Autowired
     GoogleLoginCommandHandler googleLoginCommandHandler;
 
+    @Autowired
+    EmailLoginCommandHandler emailLoginCommandHandler;
+
     @MockBean
     FacebookOAuth2Authentication facebookOAuth2Authentication;
 
@@ -66,7 +70,7 @@ public abstract class ApplicationServiceTest {
     UserRegistrationRepository userRegistrationRepository;
 
     @Autowired
-    UserRespository userRespository;
+    UserRepository userRespository;
 
     protected User createFormUser() {
         confirmUserRegistrationCommandHandler.handle(
@@ -82,6 +86,12 @@ public abstract class ApplicationServiceTest {
                 .findFirst();
 
         return userRegistration.get();
+    }
+
+    protected User formLogin(){
+        User user = createFormUser();
+        emailLoginCommandHandler.handle(new EmailLoginCommand(USER_EMAIL, PASSWORD));
+        return user;
     }
 
     protected User createFacbookUser() {

@@ -3,26 +3,35 @@ package com.tomo.mcauthentication.application.authentication;
 import com.tomo.mcauthentication.application.authentication.command.EmailLoginCommand;
 import com.tomo.mcauthentication.application.configuration.ResultableCommandHandler;
 import com.tomo.mcauthentication.application.users.BaseUserDto;
-import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationRepository;
-import com.tomo.mcauthentication.domain.users.UserRespository;
+import com.tomo.mcauthentication.domain.session.Session;
+import com.tomo.mcauthentication.domain.session.SessionRepository;
+import com.tomo.mcauthentication.domain.session.TokenProvider;
+import com.tomo.mcauthentication.domain.user_registrations.EmailAuthenticationService;
+import com.tomo.mcauthentication.domain.users.User;
 
 import org.springframework.stereotype.Component;
 
 @Component
 public class EmailLoginCommandHandler implements ResultableCommandHandler<EmailLoginCommand, BaseUserDto> {
 
-    UserRegistrationRepository userRegistrationRepository;
-    UserRespository userRespository;
+    EmailAuthenticationService authenticationService;
+    SessionRepository sessionRepository;
+    TokenProvider tokenProvider;
 
-    public EmailLoginCommandHandler(
-            UserRegistrationRepository userRegistrationRepository,
-            UserRespository userRespository) {
-        this.userRegistrationRepository = userRegistrationRepository;
-        this.userRespository = userRespository;
+    public EmailLoginCommandHandler(EmailAuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
 
     @Override
     public BaseUserDto handle(EmailLoginCommand command) {
+        User user = authenticationService.authenticate(command.getEmail(), command.getPassword());
+        Session session = new Session(
+                sessionRepository.nextIdentity(),
+                user,tokenProvider,
+                command.getRememberMe(),
+                command.getUserAgent(), command.getIpAddress());
+
+        sessionRepository.save(session);
         return null;
     }
 }

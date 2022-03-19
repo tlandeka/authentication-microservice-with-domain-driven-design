@@ -3,10 +3,10 @@ package com.tomo.mcauthentication.application.authentication;
 import com.tomo.mcauthentication.application.authentication.command.FacebookLoginCommand;
 import com.tomo.mcauthentication.application.configuration.ResultableCommandHandler;
 import com.tomo.mcauthentication.application.users.BaseUserDto;
+import com.tomo.mcauthentication.domain.oauth2.OAuth2Service;
 import com.tomo.mcauthentication.domain.session.Session;
 import com.tomo.mcauthentication.domain.session.SessionRepository;
 import com.tomo.mcauthentication.domain.session.TokenProvider;
-import com.tomo.mcauthentication.domain.oauth2.OAuth2Service;
 import com.tomo.mcauthentication.domain.users.User;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,7 +22,7 @@ public class FacebookLoginCommandHandler implements ResultableCommandHandler<Fac
     public FacebookLoginCommandHandler(
             @Qualifier("facebookOAuth2Service") OAuth2Service oAuth2Service,
             @Qualifier("jwtTokenProvider") TokenProvider tokenProvider,
-            @Qualifier("SessionRespositoryJpaAdapter") SessionRepository sessionRepository) {
+            @Qualifier("sessionRespositoryJpaAdapter") SessionRepository sessionRepository) {
         this.oAuth2Service = oAuth2Service;
         this.tokenProvider = tokenProvider;
         this.sessionRepository = sessionRepository;
@@ -30,7 +30,7 @@ public class FacebookLoginCommandHandler implements ResultableCommandHandler<Fac
 
     @Override
     public BaseUserDto handle(FacebookLoginCommand command) {
-        User user = oAuth2Service.tryRegister(command.getAccessCode());
+        User user = oAuth2Service.registerAuthenticate(command.getAccessCode());
 
         Session session = new Session(
                 sessionRepository.nextIdentity(),

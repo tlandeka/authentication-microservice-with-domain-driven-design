@@ -4,12 +4,12 @@ import com.tomo.mcauthentication.ddd.domain.ConcurrencySafeEntity;
 import com.tomo.mcauthentication.ddd.domain.DomainEventPublisher;
 import com.tomo.mcauthentication.domain.DomainRegistry;
 import com.tomo.mcauthentication.domain.user_registrations.events.NewUserRegistered;
-import com.tomo.mcauthentication.domain.user_registrations.rules.UserRegistrationMustBeUniqueRule;
 import com.tomo.mcauthentication.domain.user_registrations.rules.UserRegistrationCannotBeConfirmedAfterExpirationRule;
 import com.tomo.mcauthentication.domain.user_registrations.rules.UserRegistrationCannotBeConfirmedMoreThanOnceRule;
+import com.tomo.mcauthentication.domain.user_registrations.rules.UserRegistrationMustBeUniqueRule;
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserId;
-import com.tomo.mcauthentication.domain.users.UserRespository;
+import com.tomo.mcauthentication.domain.users.UserRepository;
 import com.tomo.mcauthentication.domain.users.rules.UserEmailMustBeUnique;
 
 import javax.persistence.AttributeOverride;
@@ -53,7 +53,7 @@ public class UserRegistration extends ConcurrencySafeEntity {
             String firstName,
             String lastName,
             UserRegistrationRepository registrationRepository,
-            UserRespository userRespository)
+            UserRepository userRespository)
     {
         return new UserRegistration(password, email, firstName, lastName, registrationRepository, userRespository);
     }
@@ -64,7 +64,7 @@ public class UserRegistration extends ConcurrencySafeEntity {
             String aFirstName,
             String aLastName,
             UserRegistrationRepository aRepository,
-            UserRespository userRespository) {
+            UserRepository userRespository) {
         this.checkRule(new UserRegistrationMustBeUniqueRule(aRepository, anEmail));
         this.checkRule(new UserEmailMustBeUnique(userRespository, anEmail));
         this.email = anEmail;
@@ -81,7 +81,7 @@ public class UserRegistration extends ConcurrencySafeEntity {
         );
     }
 
-    public User createUser(UserRespository userRespository) {
+    public User createUser(UserRepository userRespository) {
         this.checkRule(new UserRegistrationCannotBeConfirmedMoreThanOnceRule(this.status));
         this.checkRule(new UserRegistrationCannotBeConfirmedAfterExpirationRule(this.registerDate));
 

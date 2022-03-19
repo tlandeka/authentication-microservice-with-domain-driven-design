@@ -6,16 +6,12 @@ import com.tomo.mcauthentication.domain.user_registrations.PasswordService;
 import com.tomo.mcauthentication.domain.user_registrations.UserRegistration;
 import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationRepository;
 import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationStatus;
-import com.tomo.mcauthentication.domain.users.UserRespository;
-import com.tomo.mcauthentication.infrastructure.service.MD5EncryptionService;
+import com.tomo.mcauthentication.domain.users.UserRepository;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
@@ -23,9 +19,8 @@ import org.springframework.context.ApplicationContext;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -37,7 +32,7 @@ public class UserRegistrationTest {
     UserRegistrationRepository repository;
 
     @Mock
-    UserRespository userRespository;
+    UserRepository userRespository;
 
     @Mock
     EncryptionService encryptionService;

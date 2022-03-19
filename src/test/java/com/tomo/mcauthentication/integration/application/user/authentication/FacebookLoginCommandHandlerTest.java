@@ -22,9 +22,6 @@ public class FacebookLoginCommandHandlerTest extends ApplicationServiceTest {
     @Transactional
     public void testNewFacebookUserFailedWhenGoogleUserExists() {
         createGoogleUser();
-
-        assertThrows(BusinessRuleValidationException.class, () -> {
-            createFacbookUser();
-        });
+        assertThrows(BusinessRuleValidationException.class, this::createFacbookUser);
     }
 }

@@ -8,4 +8,5 @@ import java.util.List;
 public interface SessionRepository extends BaseRepository<Session, SessionId> {
     SessionId nextIdentity();
     List<Session> findByUserId(UserId userId);
+    Session findByAccessToken(String anAccessToken);
 }

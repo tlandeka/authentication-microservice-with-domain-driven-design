@@ -24,6 +24,11 @@ public class UserRegistrationJpaRepositoryAdapter
         return jpaRepository.findAllByEmailIn(emails);
     }
 
+    @Override
+    public UserRegistration findByEmail(String anEmail) {
+        return jpaRepository.findUserRegistrationByEmail(anEmail);
+    }
+
     @Override public UserRegistration findByConfirmLink(String confirmLink) {
         return jpaRepository.findUserRegistrationByConfirmLink(confirmLink);
     }

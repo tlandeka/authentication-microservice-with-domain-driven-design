@@ -6,7 +6,7 @@ import com.tomo.mcauthentication.application.users.BaseUserDto;
 import com.tomo.mcauthentication.domain.user_registrations.UserRegistration;
 import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationRepository;
 import com.tomo.mcauthentication.domain.users.User;
-import com.tomo.mcauthentication.domain.users.UserRespository;
+import com.tomo.mcauthentication.domain.users.UserRepository;
 
 import org.springframework.stereotype.Component;
 
@@ -14,11 +14,11 @@ import org.springframework.stereotype.Component;
 public class ConfirmUserRegistrationCommandHandler implements ResultableCommandHandler<ConfirmUserRegistrationCommand, BaseUserDto> {
 
     UserRegistrationRepository userRegistrationRepository;
-    UserRespository userRespository;
+    UserRepository userRespository;
 
     public ConfirmUserRegistrationCommandHandler(
             UserRegistrationRepository userRegistrationRepository,
-            UserRespository userRespository) {
+            UserRepository userRespository) {
         this.userRegistrationRepository = userRegistrationRepository;
         this.userRespository = userRespository;
     }

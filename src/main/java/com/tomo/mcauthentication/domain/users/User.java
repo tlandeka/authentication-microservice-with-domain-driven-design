@@ -33,7 +33,7 @@ public class User extends ConcurrencySafeEntity {
             String aLastName,
             String anEmail,
             AuthProvider aProvider,
-            UserRespository userRespository) {
+            UserRepository userRespository) {
         this.checkRule(new UserEmailMustBeUnique(userRespository, anEmail));
         this.userId = anId;
         this.firstName = aFirstName;

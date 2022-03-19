@@ -4,7 +4,7 @@ import com.tomo.mcauthentication.application.configuration.CommandHandler;
 import com.tomo.mcauthentication.application.userregistration.command.RegisterNewUserCommand;
 import com.tomo.mcauthentication.domain.user_registrations.UserRegistration;
 import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationRepository;
-import com.tomo.mcauthentication.domain.users.UserRespository;
+import com.tomo.mcauthentication.domain.users.UserRepository;
 
 import org.springframework.stereotype.Component;
 
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 public class RegisterNewUserCommandHandler implements CommandHandler<RegisterNewUserCommand> {
 
     UserRegistrationRepository userRegistrationRepository;
-    UserRespository userRespository;
+    UserRepository userRespository;
 
     public RegisterNewUserCommandHandler(
             UserRegistrationRepository userRegistrationRepository,
-            UserRespository userRespository) {
+            UserRepository userRespository) {
         this.userRegistrationRepository = userRegistrationRepository;
         this.userRespository = userRespository;
     }

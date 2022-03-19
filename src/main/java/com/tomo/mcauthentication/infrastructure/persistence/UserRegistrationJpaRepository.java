@@ -2,8 +2,6 @@ package com.tomo.mcauthentication.infrastructure.persistence;
 
 import com.tomo.mcauthentication.ddd.infrastructure.persistence.springdata.jpa.McCrudRepository;
 import com.tomo.mcauthentication.domain.user_registrations.UserRegistration;
-import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationId;
-import com.tomo.mcauthentication.domain.user_registrations.UserRegistrationStatus;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -19,5 +17,7 @@ public interface UserRegistrationJpaRepository extends McCrudRepository <UserReg
     List<UserRegistration> findAllByEmailIn(List<String> email);
 
     UserRegistration findUserRegistrationByConfirmLink(String confirmLink);
+
+    UserRegistration findUserRegistrationByEmail(String email);
 
 }

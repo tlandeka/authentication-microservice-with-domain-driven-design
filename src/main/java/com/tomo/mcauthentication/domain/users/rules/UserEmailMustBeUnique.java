@@ -1,14 +1,14 @@
 package com.tomo.mcauthentication.domain.users.rules;
 
 import com.tomo.mcauthentication.ddd.domain.BusinessRule;
-import com.tomo.mcauthentication.domain.users.UserRespository;
+import com.tomo.mcauthentication.domain.users.UserRepository;
 
 public class UserEmailMustBeUnique implements BusinessRule {
 
-    UserRespository userRespository;
+    UserRepository userRespository;
     String email;
 
-    public UserEmailMustBeUnique(UserRespository userRespository, String email) {
+    public UserEmailMustBeUnique(UserRepository userRespository, String email) {
         this.userRespository = userRespository;
         this.email = email;
     }

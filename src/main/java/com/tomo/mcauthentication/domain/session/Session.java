@@ -10,8 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoField;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +23,8 @@ import lombok.Setter;
 @Setter
 public class Session extends RootEntity {
 
+    public static Long EXPIREATION_MSEC = 864000000L;
+
     public enum TokenType {
         CLIENT_SECRET_JWT,
         PRIVATE_KEY_JWT,
@@ -33,6 +35,7 @@ public class Session extends RootEntity {
     @EmbeddedId
     private SessionId sessionId;
     private String accessToken;
+    private LocalDateTime expirationDate;
     private TokenType tokenType;
     private String refreshToken;
     private String userAgent;
@@ -50,6 +53,7 @@ public class Session extends RootEntity {
         this.userAgent = userAgent;
         this.tokenType = tokenProvider.getTokenType();
         this.userId = user.getUserId();
+        this.expirationDate = LocalDateTime.now().plus(EXPIREATION_MSEC, ChronoField.MILLI_OF_DAY.getBaseUnit());
 
         String accestToken = tokenProvider.createToken(user);
         this.protectedAccessToken(accestToken);
@@ -58,6 +62,10 @@ public class Session extends RootEntity {
             refreshToken = tokenProvider.createRefreshToken(user);
             this.protectedRefreshToken(refreshToken);
         }
+    }
+
+    public boolean isExpired() {
+        return !expirationDate.isAfter(LocalDateTime.now());
     }
 
     private void protectedAccessToken(String anToken) {

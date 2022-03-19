@@ -5,14 +5,12 @@ import com.tomo.mcauthentication.domain.session.SessionId;
 import com.tomo.mcauthentication.domain.session.SessionRepository;
 import com.tomo.mcauthentication.domain.users.UserId;
 
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.UUID;
 
-@Component
-@Qualifier("SessionRespositoryJpaAdapter")
+@Repository
 public class SessionRespositoryJpaAdapter extends BaseJpaAdapter<Session, SessionId, SessionJpaRepository> implements SessionRepository {
 
     public SessionRespositoryJpaAdapter(SessionJpaRepository jpaRepository) {
@@ -24,7 +22,13 @@ public class SessionRespositoryJpaAdapter extends BaseJpaAdapter<Session, Sessio
         return new SessionId(UUID.randomUUID());
     }
 
-    @Override public List<Session> findByUserId(UserId userId) {
+    @Override
+    public List<Session> findByUserId(UserId userId) {
         return jpaRepository.findAllByUserId(userId);
+    }
+
+    @Override
+    public Session findByAccessToken(String anAccessToken) {
+        return jpaRepository.findSessionByAccessToken(anAccessToken);
     }
 }

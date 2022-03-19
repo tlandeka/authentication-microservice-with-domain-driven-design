@@ -30,6 +30,7 @@ create table session (
     id                  UUID PRIMARY KEY,
     user_id             UUID NOT NULL CONSTRAINT session_mcuser_id_fk REFERENCES mcuser,
     access_token        TEXT NOT NULL,
+    expiration_date      TIMESTAMP,
     token_type          TEXT NOT NULL,
     refresh_token       TEXT,
     user_agent          TEXT,

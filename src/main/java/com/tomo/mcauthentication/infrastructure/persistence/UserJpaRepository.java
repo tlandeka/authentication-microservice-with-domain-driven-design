@@ -4,11 +4,9 @@ import com.tomo.mcauthentication.ddd.infrastructure.persistence.springdata.jpa.M
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserId;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@Qualifier("userJpaRepository")
 public interface UserJpaRepository extends McCrudRepository<User, UserId> {
 
     User findUserByEmail(String email);

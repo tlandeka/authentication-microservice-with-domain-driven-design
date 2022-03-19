@@ -2,14 +2,14 @@ package com.tomo.mcauthentication.infrastructure.persistence;
 
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserId;
-import com.tomo.mcauthentication.domain.users.UserRespository;
+import com.tomo.mcauthentication.domain.users.UserRepository;
 
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 @Component
-public class UserRespositoryJpaAdapter extends BaseJpaAdapter<User, UserId, UserJpaRepository> implements UserRespository {
+public class UserRespositoryJpaAdapter extends BaseJpaAdapter<User, UserId, UserJpaRepository> implements UserRepository {
 
     public UserRespositoryJpaAdapter(UserJpaRepository userJpaRepository) {
         super(userJpaRepository);
