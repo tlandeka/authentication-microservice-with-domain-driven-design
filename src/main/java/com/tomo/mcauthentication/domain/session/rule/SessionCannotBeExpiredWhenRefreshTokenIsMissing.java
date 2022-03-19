@@ -3,11 +3,11 @@ package com.tomo.mcauthentication.domain.session.rule;
 import com.tomo.mcauthentication.ddd.domain.BusinessRule;
 import com.tomo.mcauthentication.domain.session.Session;
 
-public class SessionIsExpiredAndRefreshTokenIsMissing implements BusinessRule {
+public class SessionCannotBeExpiredWhenRefreshTokenIsMissing implements BusinessRule {
 
     Session session;
 
-    public SessionIsExpiredAndRefreshTokenIsMissing(Session session) {
+    public SessionCannotBeExpiredWhenRefreshTokenIsMissing(Session session) {
         this.session = session;
     }
 

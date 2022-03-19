@@ -2,7 +2,7 @@ package com.tomo.mcauthentication.domain.session;
 
 import com.tomo.mcauthentication.ddd.domain.BusinessRuleValidator;
 import com.tomo.mcauthentication.domain.EncryptionService;
-import com.tomo.mcauthentication.domain.session.rule.SessionIsExpiredAndRefreshTokenIsMissing;
+import com.tomo.mcauthentication.domain.session.rule.SessionCannotBeExpiredWhenRefreshTokenIsMissing;
 import com.tomo.mcauthentication.domain.users.UserRepository;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,7 +35,7 @@ public class SessionAuthenticationService extends BusinessRuleValidator {
             throw new IllegalStateException(String.format("Session with access code %s doesn't exist.", anAuthToken));
         }
 
-        checkRule(new SessionIsExpiredAndRefreshTokenIsMissing(session));
+        checkRule(new SessionCannotBeExpiredWhenRefreshTokenIsMissing(session));
 
         if (session.isExpired()) {
             return new Session(
