@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-public class UserRespositoryJpaAdapter extends BaseJpaAdapter<User, UserId, UserJpaRepository> implements UserRepository {
+public class UserRepositoryJpaAdapter extends BaseJpaAdapter<User, UserId, UserJpaRepository> implements UserRepository {
 
-    public UserRespositoryJpaAdapter(UserJpaRepository userJpaRepository) {
+    public UserRepositoryJpaAdapter(UserJpaRepository userJpaRepository) {
         super(userJpaRepository);
     }
 

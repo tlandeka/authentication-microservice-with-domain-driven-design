@@ -6,6 +6,7 @@ import com.tomo.mcauthentication.application.authentication.GoogleLoginCommandHa
 import com.tomo.mcauthentication.application.authentication.command.EmailLoginCommand;
 import com.tomo.mcauthentication.application.authentication.command.FacebookLoginCommand;
 import com.tomo.mcauthentication.application.authentication.command.GoogleLoginCommand;
+import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
 import com.tomo.mcauthentication.application.registration.ConfirmUserRegistrationCommandHandler;
 import com.tomo.mcauthentication.application.registration.RegisterNewUserCommandHandler;
 import com.tomo.mcauthentication.application.registration.command.ConfirmUserRegistrationCommand;
@@ -13,6 +14,7 @@ import com.tomo.mcauthentication.application.registration.command.RegisterNewUse
 import com.tomo.mcauthentication.domain.oauth2.OAuth2Principal;
 import com.tomo.mcauthentication.domain.registration.UserRegistration;
 import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
+import com.tomo.mcauthentication.domain.session.Session;
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserRepository;
 import com.tomo.mcauthentication.infrastructure.http.oauth2.FacebookOAuth2Authentication;
@@ -70,12 +72,12 @@ public abstract class ApplicationServiceTest {
     UserRegistrationRepository userRegistrationRepository;
 
     @Autowired
-    UserRepository userRespository;
+    UserRepository userRepository;
 
     protected User createFormUser() {
         confirmUserRegistrationCommandHandler.handle(
                 new ConfirmUserRegistrationCommand(createUserRegistration().getConfirmLink()));
-        return userRespository.findByEmail(USER_EMAIL);
+        return userRepository.findByEmail(USER_EMAIL);
     }
 
     protected UserRegistration createUserRegistration() {
@@ -88,10 +90,9 @@ public abstract class ApplicationServiceTest {
         return userRegistration.get();
     }
 
-    protected User formLogin(){
-        User user = createFormUser();
-        emailLoginCommandHandler.handle(new EmailLoginCommand(USER_EMAIL, PASSWORD));
-        return user;
+    protected SessionDto formLogin(){
+        createFormUser();
+        return emailLoginCommandHandler.handle(new EmailLoginCommand(USER_EMAIL, PASSWORD));
     }
 
     protected User createFacbookUser() {
@@ -99,7 +100,7 @@ public abstract class ApplicationServiceTest {
                 .thenReturn(oAuth2Principal(User.AuthProvider.FACEBOOK.toString()));
 
         facebookLoginCommandHandler.handle(new FacebookLoginCommand(ACCESS_CODE));
-        return userRespository.findByEmail(USER_EMAIL);
+        return userRepository.findByEmail(USER_EMAIL);
     }
 
     protected User createGoogleUser() {
@@ -107,7 +108,7 @@ public abstract class ApplicationServiceTest {
                 .thenReturn(oAuth2Principal(User.AuthProvider.GOOGLE.toString()));
 
        googleLoginCommandHandler.handle(new GoogleLoginCommand(ACCESS_CODE));
-        return userRespository.findByEmail(USER_EMAIL);
+        return userRepository.findByEmail(USER_EMAIL);
     }
 
     private OAuth2Principal oAuth2Principal(String anProvider) {

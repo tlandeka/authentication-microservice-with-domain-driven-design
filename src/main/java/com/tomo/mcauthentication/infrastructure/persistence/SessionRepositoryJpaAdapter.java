@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class SessionRespositoryJpaAdapter extends BaseJpaAdapter<Session, SessionId, SessionJpaRepository> implements SessionRepository {
+public class SessionRepositoryJpaAdapter extends BaseJpaAdapter<Session, SessionId, SessionJpaRepository> implements SessionRepository {
 
-    public SessionRespositoryJpaAdapter(SessionJpaRepository jpaRepository) {
+    public SessionRepositoryJpaAdapter(SessionJpaRepository jpaRepository) {
         super(jpaRepository);
     }
 

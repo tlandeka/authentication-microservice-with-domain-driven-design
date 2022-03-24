@@ -6,6 +6,7 @@ import com.tomo.mcauthentication.domain.registration.rules.PasswordsMustMatch;
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserRepository;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,15 @@ public class EmailAuthenticationService extends BusinessRuleValidator {
     UserRegistrationRepository userRegistrationRepository;
     UserRepository userRepository;
     EncryptionService encryptionService;
+
+    public EmailAuthenticationService(
+            UserRegistrationRepository userRegistrationRepository,
+            UserRepository userRepository,
+            EncryptionService encryptionService) {
+        this.userRegistrationRepository = userRegistrationRepository;
+        this.userRepository = userRepository;
+        this.encryptionService = encryptionService;
+    }
 
     public User authenticate(
             String anEmail,

@@ -1,15 +1,15 @@
 package com.tomo.mcauthentication.application.authentication;
 
 import com.tomo.mcauthentication.application.authentication.command.SessionAuthenticationCommand;
+import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
 import com.tomo.mcauthentication.application.configuration.ResultableCommandHandler;
 import com.tomo.mcauthentication.application.users.BaseUserDto;
-import com.tomo.mcauthentication.domain.session.Session;
 import com.tomo.mcauthentication.domain.session.SessionAuthenticationService;
 
 import org.springframework.stereotype.Service;
 
 @Service
-public class SessionAuthenticationCommandHandler implements ResultableCommandHandler<SessionAuthenticationCommand, BaseUserDto> {
+public class SessionAuthenticationCommandHandler extends BaseLoginCommandHandler implements ResultableCommandHandler<SessionAuthenticationCommand, SessionDto> {
 
     SessionAuthenticationService sessionAuthenticationService;
 
@@ -18,8 +18,9 @@ public class SessionAuthenticationCommandHandler implements ResultableCommandHan
     }
 
     @Override
-    public BaseUserDto handle(SessionAuthenticationCommand command) {
-        Session session = sessionAuthenticationService.authenticate(command.getAuthToken());
-        return null;
+    public SessionDto handle(SessionAuthenticationCommand command) {
+        return toDto(
+                sessionAuthenticationService.authenticate(command.getAuthToken())
+        );
     }
 }

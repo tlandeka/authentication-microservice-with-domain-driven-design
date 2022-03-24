@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
 public class RegisterNewUserCommandHandler implements CommandHandler<RegisterNewUserCommand> {
 
     UserRegistrationRepository userRegistrationRepository;
-    UserRepository userRespository;
+    UserRepository userRepository;
 
     public RegisterNewUserCommandHandler(
             UserRegistrationRepository userRegistrationRepository,
-            UserRepository userRespository) {
+            UserRepository userRepository) {
         this.userRegistrationRepository = userRegistrationRepository;
-        this.userRespository = userRespository;
+        this.userRepository = userRepository;
     }
 
     public void handle(RegisterNewUserCommand aCommand) {
@@ -28,7 +28,7 @@ public class RegisterNewUserCommandHandler implements CommandHandler<RegisterNew
                 aCommand.getFirstName(),
                 aCommand.getLastName(),
                 userRegistrationRepository,
-                userRespository
+                userRepository
         );
 
         userRegistrationRepository.save(userRegistration);

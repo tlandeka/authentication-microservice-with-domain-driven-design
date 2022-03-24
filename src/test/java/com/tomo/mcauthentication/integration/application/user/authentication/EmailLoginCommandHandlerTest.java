@@ -14,13 +14,13 @@ public class EmailLoginCommandHandlerTest extends ApplicationServiceTest {
 
     @Test
     @Transactional
-    public void testNewFacebookUserCreated() {
-        assertNotNull(createFormUser());
+    public void testUserFormLogin() {
+        assertNotNull(formLogin());
     }
 
     @Test
     @Transactional
-    public void testNewFacebookUserFailedWhenGoogleUserExists() {
+    public void testNewFormUserFailedWhenGoogleUserExists() {
         createGoogleUser();
         assertThrows(BusinessRuleValidationException.class, this::createFormUser);
     }

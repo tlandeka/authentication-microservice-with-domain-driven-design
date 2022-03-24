@@ -9,23 +9,24 @@ import com.tomo.mcauthentication.domain.session.SessionRepository;
 import com.tomo.mcauthentication.domain.session.TokenProvider;
 import com.tomo.mcauthentication.domain.users.User;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.ModelMap;
 
 @Component
-public class GoogleLoginCommandHandler implements ResultableCommandHandler<GoogleLoginCommand, BaseUserDto> {
+public class GoogleLoginCommandHandler extends BaseLoginCommandHandler implements ResultableCommandHandler<GoogleLoginCommand, BaseUserDto> {
 
     OAuth2Service oAuth2Service;
-    TokenProvider tokenProvider;
-    SessionRepository sessionRepository;
 
     public GoogleLoginCommandHandler(
             @Qualifier("googleOAuth2Service") OAuth2Service oAuth2Service,
             @Qualifier("jwtTokenProvider") TokenProvider tokenProvider,
-            @Qualifier("sessionRespositoryJpaAdapter") SessionRepository sessionRepository) {
+            @Qualifier("sessionRepositoryJpaAdapter") SessionRepository sessionRepository,
+            ModelMapper modelMapper) {
+        super(modelMapper, sessionRepository, tokenProvider);
         this.oAuth2Service = oAuth2Service;
         this.tokenProvider = tokenProvider;
-        this.sessionRepository = sessionRepository;
     }
 
     @Override

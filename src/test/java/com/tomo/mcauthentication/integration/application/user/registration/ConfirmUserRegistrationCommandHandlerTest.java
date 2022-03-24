@@ -4,7 +4,7 @@ import com.tomo.mcauthentication.application.registration.ConfirmUserRegistratio
 import com.tomo.mcauthentication.application.registration.RegisterNewUserCommandHandler;
 import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
 import com.tomo.mcauthentication.domain.users.User;
-import com.tomo.mcauthentication.infrastructure.persistence.UserRespositoryJpaAdapter;
+import com.tomo.mcauthentication.infrastructure.persistence.UserRepositoryJpaAdapter;
 import com.tomo.mcauthentication.integration.application.ApplicationServiceTest;
 
 import org.junit.Test;
@@ -26,7 +26,7 @@ public class ConfirmUserRegistrationCommandHandlerTest extends ApplicationServic
     UserRegistrationRepository userRegistrationRepository;
 
     @Autowired
-    UserRespositoryJpaAdapter userRespositoryJpaAdapter;
+    UserRepositoryJpaAdapter userRespositoryJpaAdapter;
 
     @Test
     @Transactional

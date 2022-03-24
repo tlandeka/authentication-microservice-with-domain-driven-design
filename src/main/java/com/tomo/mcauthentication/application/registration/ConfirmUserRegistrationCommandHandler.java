@@ -14,13 +14,13 @@ import org.springframework.stereotype.Component;
 public class ConfirmUserRegistrationCommandHandler implements ResultableCommandHandler<ConfirmUserRegistrationCommand, BaseUserDto> {
 
     UserRegistrationRepository userRegistrationRepository;
-    UserRepository userRespository;
+    UserRepository userRepository;
 
     public ConfirmUserRegistrationCommandHandler(
             UserRegistrationRepository userRegistrationRepository,
-            UserRepository userRespository) {
+            UserRepository userRepository) {
         this.userRegistrationRepository = userRegistrationRepository;
-        this.userRespository = userRespository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -33,8 +33,8 @@ public class ConfirmUserRegistrationCommandHandler implements ResultableCommandH
             );
         }
 
-        User user = userRegistration.createUser(userRespository);
-        userRespository.save(user);
+        User user = userRegistration.createUser(userRepository);
+        userRepository.save(user);
         return null;
     }
 }

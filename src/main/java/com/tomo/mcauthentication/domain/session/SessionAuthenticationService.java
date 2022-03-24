@@ -8,6 +8,8 @@ import com.tomo.mcauthentication.domain.users.UserRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class SessionAuthenticationService extends BusinessRuleValidator {
 
@@ -20,7 +22,7 @@ public class SessionAuthenticationService extends BusinessRuleValidator {
             TokenProvider tokenProvider,
             EncryptionService encryptionService,
             SessionRepository sessionRepository,
-            @Qualifier("userRespositoryJpaAdapter") UserRepository userRepository) {
+            @Qualifier("userRepositoryJpaAdapter") UserRepository userRepository) {
         this.tokenProvider = tokenProvider;
         this.encryptionService = encryptionService;
         this.sessionRepository = sessionRepository;
@@ -47,6 +49,7 @@ public class SessionAuthenticationService extends BusinessRuleValidator {
                     session.getIpAddress());
         }
 
+        session.setLastActivity(LocalDateTime.now());
         return session;
     }
 }

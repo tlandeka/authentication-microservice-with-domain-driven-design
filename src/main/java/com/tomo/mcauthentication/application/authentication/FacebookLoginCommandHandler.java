@@ -9,23 +9,23 @@ import com.tomo.mcauthentication.domain.session.SessionRepository;
 import com.tomo.mcauthentication.domain.session.TokenProvider;
 import com.tomo.mcauthentication.domain.users.User;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FacebookLoginCommandHandler implements ResultableCommandHandler<FacebookLoginCommand, BaseUserDto> {
+public class FacebookLoginCommandHandler extends BaseLoginCommandHandler implements ResultableCommandHandler<FacebookLoginCommand, BaseUserDto> {
 
     OAuth2Service oAuth2Service;
-    TokenProvider tokenProvider;
-    SessionRepository sessionRepository;
 
     public FacebookLoginCommandHandler(
             @Qualifier("facebookOAuth2Service") OAuth2Service oAuth2Service,
             @Qualifier("jwtTokenProvider") TokenProvider tokenProvider,
-            @Qualifier("sessionRespositoryJpaAdapter") SessionRepository sessionRepository) {
+            @Qualifier("sessionRepositoryJpaAdapter") SessionRepository sessionRepository,
+            ModelMapper modelMapper) {
+        super(modelMapper, sessionRepository, tokenProvider);
         this.oAuth2Service = oAuth2Service;
         this.tokenProvider = tokenProvider;
-        this.sessionRepository = sessionRepository;
     }
 
     @Override

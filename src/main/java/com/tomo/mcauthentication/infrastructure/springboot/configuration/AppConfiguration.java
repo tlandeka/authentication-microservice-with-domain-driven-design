@@ -11,9 +11,10 @@ import com.tomo.mcauthentication.infrastructure.http.oauth2.GoogleOAuth2Authenti
 import com.tomo.mcauthentication.infrastructure.persistence.UserJpaRepository;
 import com.tomo.mcauthentication.infrastructure.persistence.UserRegistrationJpaRepository;
 import com.tomo.mcauthentication.infrastructure.persistence.UserRegistrationJpaRepositoryAdapter;
-import com.tomo.mcauthentication.infrastructure.persistence.UserRespositoryJpaAdapter;
+import com.tomo.mcauthentication.infrastructure.persistence.UserRepositoryJpaAdapter;
 import com.tomo.mcauthentication.infrastructure.processing.builder.CommandHandlerPipelineBuilder;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -40,6 +41,11 @@ public class AppConfiguration {
     private Environment env;
 
     @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+
+    @Bean
     McAuthenticationModule authenticationModule(CommandHandlerPipelineBuilder commandHandlerPipelineBuilder) {
         return new McAuthenticationModuleExecutor(commandHandlerPipelineBuilder);
     }
@@ -55,8 +61,8 @@ public class AppConfiguration {
     }
 
     @Bean
-    UserRepository userRespository() {
-        return new UserRespositoryJpaAdapter(userJpaRepository);
+    UserRepository userRepository() {
+        return new UserRepositoryJpaAdapter(userJpaRepository);
     }
 
     @Bean
@@ -83,15 +89,15 @@ public class AppConfiguration {
     @Qualifier("facebookOAuth2Service")
     OAuth2Service facebookOAuth2Service(
             FacebookOAuth2Authentication facebookOAuth2Authentication,
-            UserRepository userRespository) {
-        return new OAuth2Service(facebookOAuth2Authentication, userRespository);
+            UserRepository userRepository) {
+        return new OAuth2Service(facebookOAuth2Authentication, userRepository);
     }
 
     @Bean
     @Qualifier("googleOAuth2Service")
     OAuth2Service googleOAuth2Service(
             GoogleOAuth2Authentication googleOAuth2Authentication,
-            UserRepository userRespository) {
-        return new OAuth2Service(googleOAuth2Authentication, userRespository);
+            UserRepository userRepository) {
+        return new OAuth2Service(googleOAuth2Authentication, userRepository);
     }
 }

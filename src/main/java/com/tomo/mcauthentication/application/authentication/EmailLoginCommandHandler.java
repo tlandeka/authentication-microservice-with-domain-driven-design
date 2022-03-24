@@ -1,29 +1,35 @@
 package com.tomo.mcauthentication.application.authentication;
 
 import com.tomo.mcauthentication.application.authentication.command.EmailLoginCommand;
+import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
 import com.tomo.mcauthentication.application.configuration.ResultableCommandHandler;
-import com.tomo.mcauthentication.application.users.BaseUserDto;
 import com.tomo.mcauthentication.domain.session.Session;
 import com.tomo.mcauthentication.domain.session.SessionRepository;
 import com.tomo.mcauthentication.domain.session.TokenProvider;
 import com.tomo.mcauthentication.domain.registration.EmailAuthenticationService;
 import com.tomo.mcauthentication.domain.users.User;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EmailLoginCommandHandler implements ResultableCommandHandler<EmailLoginCommand, BaseUserDto> {
+public class EmailLoginCommandHandler extends BaseLoginCommandHandler implements ResultableCommandHandler<EmailLoginCommand, SessionDto> {
 
     EmailAuthenticationService authenticationService;
-    SessionRepository sessionRepository;
-    TokenProvider tokenProvider;
 
-    public EmailLoginCommandHandler(EmailAuthenticationService authenticationService) {
-        this.authenticationService = authenticationService;
+    public EmailLoginCommandHandler(
+            EmailAuthenticationService emailAuthenticationService,
+            @Qualifier("sessionRepositoryJpaAdapter") SessionRepository sessionRepository,
+            @Qualifier("jwtTokenProvider") TokenProvider tokenProvider,
+            ModelMapper modelMapper) {
+        super(modelMapper, sessionRepository, tokenProvider);
+        this.authenticationService = emailAuthenticationService;
+        this.tokenProvider = tokenProvider;
     }
 
     @Override
-    public BaseUserDto handle(EmailLoginCommand command) {
+    public SessionDto handle(EmailLoginCommand command) {
         User user = authenticationService.authenticate(command.getEmail(), command.getPassword());
         Session session = new Session(
                 sessionRepository.nextIdentity(),
@@ -32,6 +38,6 @@ public class EmailLoginCommandHandler implements ResultableCommandHandler<EmailL
                 command.getUserAgent(), command.getIpAddress());
 
         sessionRepository.save(session);
-        return null;
+        return toDto(session);
     }
 }
