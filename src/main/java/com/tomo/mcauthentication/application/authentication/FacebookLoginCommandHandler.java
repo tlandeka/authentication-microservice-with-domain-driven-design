@@ -1,7 +1,7 @@
 package com.tomo.mcauthentication.application.authentication;
 
 import com.tomo.mcauthentication.application.authentication.command.FacebookLoginCommand;
-import com.tomo.mcauthentication.application.configuration.ResultableCommandHandler;
+import com.tomo.mcauthentication.application.configuration.CommandHandler;
 import com.tomo.mcauthentication.application.users.BaseUserDto;
 import com.tomo.mcauthentication.domain.oauth2.OAuth2Service;
 import com.tomo.mcauthentication.domain.session.Session;
@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FacebookLoginCommandHandler extends BaseLoginCommandHandler implements ResultableCommandHandler<FacebookLoginCommand, BaseUserDto> {
+public class FacebookLoginCommandHandler extends BaseLoginCommandHandler implements CommandHandler<FacebookLoginCommand, BaseUserDto> {
 
     OAuth2Service oAuth2Service;
 

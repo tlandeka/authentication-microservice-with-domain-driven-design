@@ -2,7 +2,7 @@ package com.tomo.mcauthentication.application.authentication;
 
 import com.tomo.mcauthentication.application.authentication.command.EmailLoginCommand;
 import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
-import com.tomo.mcauthentication.application.configuration.ResultableCommandHandler;
+import com.tomo.mcauthentication.application.configuration.CommandHandler;
 import com.tomo.mcauthentication.domain.session.Session;
 import com.tomo.mcauthentication.domain.session.SessionRepository;
 import com.tomo.mcauthentication.domain.session.TokenProvider;
@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EmailLoginCommandHandler extends BaseLoginCommandHandler implements ResultableCommandHandler<EmailLoginCommand, SessionDto> {
+public class EmailLoginCommandHandler extends BaseLoginCommandHandler implements CommandHandler<EmailLoginCommand, SessionDto> {
 
     EmailAuthenticationService authenticationService;
 

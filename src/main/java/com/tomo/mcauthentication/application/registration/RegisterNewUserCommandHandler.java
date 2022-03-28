@@ -1,6 +1,6 @@
 package com.tomo.mcauthentication.application.registration;
 
-import com.tomo.mcauthentication.application.configuration.CommandHandler;
+import com.tomo.mcauthentication.application.configuration.AbstractVoidyCommandHandler;
 import com.tomo.mcauthentication.application.registration.command.RegisterNewUserCommand;
 import com.tomo.mcauthentication.domain.registration.UserRegistration;
 import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
@@ -9,7 +9,7 @@ import com.tomo.mcauthentication.domain.users.UserRepository;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RegisterNewUserCommandHandler implements CommandHandler<RegisterNewUserCommand> {
+public class RegisterNewUserCommandHandler extends AbstractVoidyCommandHandler<RegisterNewUserCommand> {
 
     UserRegistrationRepository userRegistrationRepository;
     UserRepository userRepository;
@@ -21,7 +21,8 @@ public class RegisterNewUserCommandHandler implements CommandHandler<RegisterNew
         this.userRepository = userRepository;
     }
 
-    public void handle(RegisterNewUserCommand aCommand) {
+    @Override
+    protected void abstractHandle(RegisterNewUserCommand aCommand) {
         UserRegistration userRegistration = UserRegistration.registerNewUser(
                 aCommand.getPassword(),
                 aCommand.getEmail(),

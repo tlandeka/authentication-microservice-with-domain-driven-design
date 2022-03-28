@@ -14,7 +14,6 @@ import com.tomo.mcauthentication.application.registration.command.RegisterNewUse
 import com.tomo.mcauthentication.domain.oauth2.OAuth2Principal;
 import com.tomo.mcauthentication.domain.registration.UserRegistration;
 import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
-import com.tomo.mcauthentication.domain.session.Session;
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserRepository;
 import com.tomo.mcauthentication.infrastructure.http.oauth2.FacebookOAuth2Authentication;

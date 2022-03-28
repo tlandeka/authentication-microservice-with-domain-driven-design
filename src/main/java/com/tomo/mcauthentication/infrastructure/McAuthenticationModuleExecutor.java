@@ -4,7 +4,7 @@ import com.tomo.mcauthentication.application.configuration.CommandHandler;
 import com.tomo.mcauthentication.application.contracts.Command;
 import com.tomo.mcauthentication.application.contracts.McAuthenticationModule;
 import com.tomo.mcauthentication.application.contracts.Query;
-import com.tomo.mcauthentication.application.contracts.Result;
+import com.tomo.mcauthentication.application.contracts.Response;
 import com.tomo.mcauthentication.infrastructure.processing.builder.CommandHandlerPipelineBuilder;
 
 import org.springframework.stereotype.Component;
@@ -28,12 +28,12 @@ public class McAuthenticationModuleExecutor implements McAuthenticationModule {
     }
 
     @Override
-    public Result executeCommandWithResult(Command command) {
+    public Response executeCommandWithResult(Command command) {
         return null;
     }
 
     @Override
-    public Result executeQuery(Query query) {
+    public Response executeQuery(Query query) {
         return null;
     }
 }

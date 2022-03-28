@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public interface McAuthenticationModule {
         void executeCommand(Command command);
 
-        Result executeCommandWithResult(Command command);
+        Response executeCommandWithResult(Command command);
 
-        Result executeQuery(Query query);
+        Response executeQuery(Query query);
 }

@@ -1,10 +1,8 @@
 package com.tomo.mcauthentication.infrastructure.processing;
 
 import com.tomo.mcauthentication.application.configuration.QueryHandler;
-import com.tomo.mcauthentication.application.configuration.ResultableCommandHandler;
-import com.tomo.mcauthentication.application.contracts.Command;
 import com.tomo.mcauthentication.application.contracts.Query;
-import com.tomo.mcauthentication.application.contracts.Result;
+import com.tomo.mcauthentication.application.contracts.Response;
 
 public class LoggingQueryHandlerDecorator implements QueryHandler {
 
@@ -15,7 +13,7 @@ public class LoggingQueryHandlerDecorator implements QueryHandler {
     }
 
     @Override
-    public Result handle(Query query) {
+    public Response handle(Query query) {
         return queryHandler.handle(query);
     }
 }
