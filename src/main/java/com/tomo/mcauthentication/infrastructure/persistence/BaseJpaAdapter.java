@@ -4,6 +4,7 @@ import com.tomo.mcauthentication.ddd.domain.BaseRepository;
 import com.tomo.mcauthentication.ddd.infrastructure.persistence.springdata.jpa.McCrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 //https://github.com/benthurley82/generic-type-resolver-test/blob/main/src/main/java/com/example/test/AbstractFoo.java
 public class BaseJpaAdapter<T, ID, E extends McCrudRepository> implements BaseRepository<T, ID> {
@@ -21,7 +22,7 @@ public class BaseJpaAdapter<T, ID, E extends McCrudRepository> implements BaseRe
 
     @Override
     public T findById(ID id) {
-        return (T) jpaRepository.findById(id);
+        return ((Optional<T>) jpaRepository.findById(id)).get();
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.tomo.mcauthentication.application.authentication;
 
 import com.tomo.mcauthentication.application.authentication.command.GoogleLoginCommand;
 import com.tomo.mcauthentication.application.configuration.CommandHandler;
-import com.tomo.mcauthentication.application.users.BaseUserDto;
+import com.tomo.mcauthentication.application.users.dto.BaseUserDto;
 import com.tomo.mcauthentication.domain.oauth2.OAuth2Service;
 import com.tomo.mcauthentication.domain.session.Session;
 import com.tomo.mcauthentication.domain.session.SessionRepository;

@@ -6,12 +6,20 @@ public class BaseQuery implements Query {
 
     private UUID id;
 
-    public BaseQuery(UUID id) {
-        this.id = id;
+    public BaseQuery() {
+        setId(UUID.randomUUID());
+    }
+
+    public BaseQuery(UUID anId) {
+        this.id = anId;
     }
 
     @Override
     public UUID id() {
-        return id;
+        return this.id;
+    }
+
+    protected void setId(UUID anId) {
+        this.id = anId;
     }
 }

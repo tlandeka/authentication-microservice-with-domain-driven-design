@@ -71,7 +71,7 @@ public abstract class ApplicationServiceTest {
     UserRegistrationRepository userRegistrationRepository;
 
     @Autowired
-    UserRepository userRepository;
+    protected UserRepository userRepository;
 
     protected User createFormUser() {
         confirmUserRegistrationCommandHandler.handle(

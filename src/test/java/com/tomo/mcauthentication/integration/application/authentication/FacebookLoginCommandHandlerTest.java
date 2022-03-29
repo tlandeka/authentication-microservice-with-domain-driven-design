@@ -1,4 +1,4 @@
-package com.tomo.mcauthentication.integration.application.user.authentication;
+package com.tomo.mcauthentication.integration.application.authentication;
 
 import com.tomo.mcauthentication.ddd.domain.BusinessRuleValidationException;
 import com.tomo.mcauthentication.integration.application.ApplicationServiceTest;

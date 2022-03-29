@@ -1,4 +1,4 @@
-package com.tomo.mcauthentication.integration.application.user.registration;
+package com.tomo.mcauthentication.integration.application.registration;
 
 import com.tomo.mcauthentication.application.registration.ConfirmUserRegistrationCommandHandler;
 import com.tomo.mcauthentication.application.registration.RegisterNewUserCommandHandler;
