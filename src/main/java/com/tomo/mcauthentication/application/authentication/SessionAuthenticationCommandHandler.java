@@ -4,6 +4,7 @@ import com.tomo.mcauthentication.application.authentication.command.SessionAuthe
 import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
 import com.tomo.mcauthentication.application.configuration.CommandHandler;
 import com.tomo.mcauthentication.domain.session.SessionAuthenticationService;
+import com.tomo.mcauthentication.domain.session.TokenProvider;
 
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 public class SessionAuthenticationCommandHandler extends BaseLoginCommandHandler implements CommandHandler<SessionAuthenticationCommand, SessionDto> {
 
     SessionAuthenticationService sessionAuthenticationService;
+    TokenProvider tokenProvider;
 
     public SessionAuthenticationCommandHandler(SessionAuthenticationService sessionAuthenticationService) {
         this.sessionAuthenticationService = sessionAuthenticationService;
@@ -18,8 +20,6 @@ public class SessionAuthenticationCommandHandler extends BaseLoginCommandHandler
 
     @Override
     public SessionDto handle(SessionAuthenticationCommand command) {
-        return toDto(
-                sessionAuthenticationService.authenticate(command.getAuthToken())
-        );
+        return toDto(sessionAuthenticationService.authenticate(command.getAccessToken()));
     }
 }

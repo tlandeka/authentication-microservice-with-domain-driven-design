@@ -1,7 +1,7 @@
 package com.tomo.mcauthentication.infrastructure.springboot.configuration;
 
-import com.tomo.mcauthentication.infrastructure.http.oauth2.OAuth2AuthenticationFailureHandler;
-import com.tomo.mcauthentication.infrastructure.http.oauth2.OAuth2AuthenticationSuccessHandler;
+import com.tomo.mcauthentication.infrastructure.springboot.security.OAuth2AuthenticationFailureHandler;
+import com.tomo.mcauthentication.infrastructure.springboot.security.OAuth2AuthenticationSuccessHandler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +28,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().anyRequest().permitAll().and()
+        http.csrf().disable()
+                .authorizeRequests()
+                .anyRequest().permitAll()
+                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 .and()

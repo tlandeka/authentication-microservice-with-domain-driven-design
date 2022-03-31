@@ -1,4 +1,4 @@
-package com.tomo.mcauthentication.infrastructure.http.oauth2;
+package com.tomo.mcauthentication.infrastructure.springboot.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

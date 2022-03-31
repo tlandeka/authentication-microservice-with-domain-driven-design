@@ -1,4 +1,4 @@
-package com.tomo.mcauthentication.infrastructure.http.oauth2;
+package com.tomo.mcauthentication.infrastructure.springboot.security;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;

@@ -6,10 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
-public class SessionAuthenticationCommand extends BaseCommand {
+public class LogoutCommand extends BaseCommand {
+    private String accessToken;
 
-    String accessToken;
+    public LogoutCommand(String authToken) {
+        this.accessToken = authToken;
+    }
 }

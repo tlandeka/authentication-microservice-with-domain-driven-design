@@ -1,9 +1,12 @@
 package com.tomo.mcauthentication.domain.session;
 
+import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
 import com.tomo.mcauthentication.ddd.domain.RootEntity;
 import com.tomo.mcauthentication.domain.DomainRegistry;
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserId;
+
+import org.modelmapper.ModelMapper;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -54,13 +57,10 @@ public class Session extends RootEntity {
         this.tokenType = tokenProvider.getTokenType();
         this.userId = user.getUserId();
         this.expirationDate = LocalDateTime.now().plus(EXPIREATION_MSEC, ChronoField.MILLI_OF_DAY.getBaseUnit());
-
-        String accestToken = tokenProvider.createToken(user);
-        this.protectedAccessToken(accestToken);
+        this.accessToken = tokenProvider.createToken(user);
 
         if (Boolean.TRUE.equals(rememberMe)) {
-            refreshToken = tokenProvider.createRefreshToken(user);
-            this.protectedRefreshToken(refreshToken);
+            this.refreshToken = tokenProvider.createRefreshToken(user);
         }
     }
 

@@ -14,27 +14,24 @@ import java.time.LocalDateTime;
 public class SessionAuthenticationService extends BusinessRuleValidator {
 
     TokenProvider tokenProvider;
-    EncryptionService encryptionService;
     SessionRepository sessionRepository;
     UserRepository userRepository;
 
     public SessionAuthenticationService(
             TokenProvider tokenProvider,
-            EncryptionService encryptionService,
             SessionRepository sessionRepository,
             @Qualifier("userRepositoryJpaAdapter") UserRepository userRepository) {
         this.tokenProvider = tokenProvider;
-        this.encryptionService = encryptionService;
         this.sessionRepository = sessionRepository;
         this.userRepository = userRepository;
     }
 
-    public Session authenticate(String anAuthToken) {
-        assertArgumentNotEmpty(anAuthToken, "Session token cannot be empty.");
+    public Session authenticate(String anAccessToken) {
+        assertArgumentNotEmpty(anAccessToken, "Session token cannot be empty.");
 
-        Session session = sessionRepository.findByAccessToken(encryptionService.encryptedValue(anAuthToken));
+        Session session = sessionRepository.findByAccessToken(anAccessToken);
         if (session == null) {
-            throw new IllegalStateException(String.format("Session with access code %s doesn't exist.", anAuthToken));
+            throw new IllegalStateException(String.format("Session with access code %s doesn't exist.", anAccessToken));
         }
 
         checkRule(new SessionCannotBeExpiredWhenRefreshTokenIsMissing(session));
@@ -51,5 +48,19 @@ public class SessionAuthenticationService extends BusinessRuleValidator {
 
         session.setLastActivity(LocalDateTime.now());
         return session;
+    }
+
+    public Session logout(String anAccessToken) {
+        assertArgumentNotEmpty(anAccessToken, "Session token cannot be empty.");
+
+        Session session = sessionRepository.findByAccessToken(anAccessToken);
+        if (session == null) {
+            throw new IllegalStateException(String.format("Session with access code %s doesn't exist.", anAccessToken));
+        }
+
+        session.setExpirationDate(LocalDateTime.now());
+        session.setRefreshToken(null);
+
+        return sessionRepository.save(session);
     }
 }

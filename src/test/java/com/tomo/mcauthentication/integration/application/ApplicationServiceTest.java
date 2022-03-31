@@ -18,6 +18,7 @@ import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserRepository;
 import com.tomo.mcauthentication.infrastructure.http.oauth2.FacebookOAuth2Authentication;
 import com.tomo.mcauthentication.infrastructure.http.oauth2.GoogleOAuth2Authentication;
+import com.tomo.mcauthentication.integration.BaseServiceTest;
 
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +34,7 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-@Transactional
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles(value = "local")
-public abstract class ApplicationServiceTest {
+public class ApplicationServiceTest extends BaseServiceTest {
 
     private static final String ACCESS_CODE = "anAccessCode";
     private static final String USER_OAUTH_ID = "anAccessCode";

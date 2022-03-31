@@ -1,7 +1,9 @@
 package com.tomo.mcauthentication.domain;
 
 import com.tomo.mcauthentication.domain.registration.PasswordService;
+import com.tomo.mcauthentication.domain.session.TokenProvider;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -18,6 +20,14 @@ public class DomainRegistry implements ApplicationContextAware {
 
     public static PasswordService passwordService() {
         return (PasswordService) applicationContext.getBean("passwordService");
+    }
+
+    public static TokenProvider tokenProvider() {
+        return (TokenProvider) applicationContext.getBean("jwtTokenProvider");
+    }
+
+    public static ModelMapper modelMapper() {
+        return (ModelMapper) applicationContext.getBean("modelMapper");
     }
 
     @Override

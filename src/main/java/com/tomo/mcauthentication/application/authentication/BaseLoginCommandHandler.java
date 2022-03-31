@@ -15,6 +15,11 @@ public class BaseLoginCommandHandler extends BaseMapper {
     public BaseLoginCommandHandler() {
     }
 
+    public BaseLoginCommandHandler(ModelMapper modelMapper, TokenProvider tokenProvider) {
+        super(modelMapper);
+        this.tokenProvider = tokenProvider;
+    }
+
     public BaseLoginCommandHandler(
             ModelMapper modelMapper,
             SessionRepository sessionRepository,
