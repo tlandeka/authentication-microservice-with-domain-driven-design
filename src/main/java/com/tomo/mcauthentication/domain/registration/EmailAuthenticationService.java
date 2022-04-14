@@ -3,6 +3,7 @@ package com.tomo.mcauthentication.domain.registration;
 import com.tomo.mcauthentication.ddd.domain.BusinessRuleValidator;
 import com.tomo.mcauthentication.domain.EncryptionService;
 import com.tomo.mcauthentication.domain.registration.rules.PasswordsMustMatch;
+import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationMustBeConfirmed;
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserRepository;
 
@@ -40,5 +41,30 @@ public class EmailAuthenticationService extends BusinessRuleValidator {
         this.checkRule(new PasswordsMustMatch(userRegistration.getPassword(), encryptionService.encryptedValue(aPassword)));
 
         return userRepository.findByEmail(anEmail);
+    }
+
+    public String createPasswordRecoveryCode(String anEmail) {
+        this.assertArgumentNotEmpty(anEmail, "Email must be provided.");
+
+        UserRegistration userRegistration = userRegistrationRepository.findByEmail(anEmail);
+
+        if (userRegistration == null) {
+            throw new IllegalStateException(String.format("User with email %s doesn't exists.", anEmail));
+        }
+
+        return userRegistration.createRecoveryCode();
+    }
+
+    public void recoverPasswordWithRecoveryCode(String aRecoveryCode, String aNewPassword, String aNewPasswordRepeated) {
+        this.assertArgumentNotNull(aRecoveryCode, "Recovery code is missing.");
+
+        UserRegistration userRegistration = userRegistrationRepository
+                .findByRecoveryCode(encryptionService.encryptedValue(aRecoveryCode));
+
+        if (userRegistration == null) {
+            throw new IllegalStateException(String.format("User with recovery code %s doesn't exists.", aRecoveryCode));
+        }
+
+        userRegistration.updatePasswordWithRecoveryCode(aRecoveryCode, aNewPassword, aNewPasswordRepeated);
     }
 }

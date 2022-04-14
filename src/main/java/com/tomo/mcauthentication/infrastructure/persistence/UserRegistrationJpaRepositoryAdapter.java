@@ -32,4 +32,9 @@ public class UserRegistrationJpaRepositoryAdapter
     @Override public UserRegistration findByConfirmLink(String confirmLink) {
         return jpaRepository.findUserRegistrationByConfirmLink(confirmLink);
     }
+
+    @Override
+    public UserRegistration findByRecoveryCode(String aRecoveryCode) {
+        return jpaRepository.findUserRegistrationByRecoveryCode(aRecoveryCode);
+    }
 }

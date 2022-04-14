@@ -4,8 +4,12 @@ import com.tomo.mcauthentication.ddd.domain.ConcurrencySafeEntity;
 import com.tomo.mcauthentication.ddd.domain.DomainEventPublisher;
 import com.tomo.mcauthentication.domain.DomainRegistry;
 import com.tomo.mcauthentication.domain.registration.events.NewUserRegistered;
+import com.tomo.mcauthentication.domain.registration.rules.PasswordRecoveryCodeShouldBeExpiredOrNull;
+import com.tomo.mcauthentication.domain.registration.rules.PasswordRecoveryCodeShouldNotExpired;
+import com.tomo.mcauthentication.domain.registration.rules.RecoveryCodeMustMatch;
 import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationCannotBeConfirmedAfterExpirationRule;
 import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationCannotBeConfirmedMoreThanOnceRule;
+import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationMustBeConfirmed;
 import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationMustBeUniqueRule;
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserId;
@@ -20,6 +24,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoField;
 import java.util.UUID;
 
 import lombok.Getter;
@@ -32,6 +37,8 @@ import lombok.Setter;
 @Setter
 public class UserRegistration extends ConcurrencySafeEntity {
 
+    public static Long RECOVERY_CODE_EXPIREATION_MSEC = 172800000L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -42,6 +49,8 @@ public class UserRegistration extends ConcurrencySafeEntity {
     private String confirmLink;
     private LocalDateTime registerDate;
     private UserRegistrationStatus status;
+    private String recoveryCode;
+    private LocalDateTime recoveryCodeExpirationDate;
 
     @Embedded
     @AttributeOverride(name="id", column = @Column(name="user_id"))
@@ -91,6 +100,34 @@ public class UserRegistration extends ConcurrencySafeEntity {
         UserId userId = userRespository.nextIdentity();
 
         return new User(userId, getFirstName(), getLastName(), getEmail(), User.AuthProvider.EMAIL, userRespository);
+    }
+
+    public String createRecoveryCode() {
+        this.checkRule(new UserRegistrationMustBeConfirmed(this.getStatus()));
+        this.checkRule(new PasswordRecoveryCodeShouldBeExpiredOrNull(this));
+
+        String recoveryCode = UUID.randomUUID().toString();
+        this.recoveryCodeExpirationDate = LocalDateTime.now().plus(RECOVERY_CODE_EXPIREATION_MSEC, ChronoField.MILLI_OF_DAY.getBaseUnit());
+
+        this.setRecoveryCodeExpirationDate(recoveryCodeExpirationDate);
+        this.setPassword(this.asEncryptedValue(recoveryCode));
+
+        return recoveryCode;
+    }
+
+    public boolean isRecoveryCodeUnexpired() {
+        return recoveryCodeExpirationDate != null && recoveryCodeExpirationDate.isBefore(LocalDateTime.now());
+    }
+
+    public void updatePasswordWithRecoveryCode(String aRecoveryCode, String aNewPassword, String aNewPasswordRepeated) {
+        this.assertArgumentNotNull(aNewPassword, "New password is missing.");
+        this.assertArgumentNotNull(aNewPasswordRepeated, "Repeated password is missing.");
+        this.assertArgumentNotEquals(aNewPassword, aNewPasswordRepeated, "Provided passwords must be equal.");
+
+        this.checkRule(new RecoveryCodeMustMatch(aRecoveryCode, this.getRecoveryCode()));
+        this.checkRule(new PasswordRecoveryCodeShouldNotExpired(this));
+
+        this.protectPassword(this.getPassword(), aNewPassword);
     }
 
     protected void protectPassword(String aCurrentPassword, String aChangedPassword) {

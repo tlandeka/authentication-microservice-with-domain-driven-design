@@ -20,4 +20,6 @@ public interface UserRegistrationJpaRepository extends McCrudRepository <UserReg
 
     UserRegistration findUserRegistrationByEmail(String email);
 
+    UserRegistration findUserRegistrationByRecoveryCode(String recoveryCode);
+
 }

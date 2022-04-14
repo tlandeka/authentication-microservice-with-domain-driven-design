@@ -23,9 +23,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping(path = "/")
-public class UserController {
+@RequiredArgsConstructor
+public class UserController extends  {
 
     @Autowired
     private McAuthenticationModule authenticationModule;

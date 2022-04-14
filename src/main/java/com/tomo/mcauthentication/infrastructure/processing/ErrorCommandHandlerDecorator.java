@@ -4,11 +4,11 @@ import com.tomo.mcauthentication.application.configuration.AbstractVoidyCommandH
 import com.tomo.mcauthentication.application.configuration.CommandHandler;
 import com.tomo.mcauthentication.application.contracts.Command;
 
-public class LoggingCommandHandlerDecorator<T extends Command> extends AbstractVoidyCommandHandler<T> {
+public class ErrorCommandHandlerDecorator<T extends Command> extends AbstractVoidyCommandHandler<T> {
 
     CommandHandler commandHandler;
 
-    public LoggingCommandHandlerDecorator(CommandHandler commandHandler) {
+    public ErrorCommandHandlerDecorator(CommandHandler commandHandler) {
         this.commandHandler = commandHandler;
     }
 

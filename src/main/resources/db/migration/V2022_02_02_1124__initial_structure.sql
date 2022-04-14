@@ -19,6 +19,8 @@ CREATE TABLE user_registration (
     confirm_link        VARCHAR(255)            NOT NULL,
     status              VARCHAR(255)            NOT NULL,
     register_date       TIMESTAMP,
+    recovery_code       VARCHAR(255),
+    recovery_code_expiration_date TIMESTAMP,
     user_id             UUID
         CONSTRAINT user_registration_mcuser_id_fk REFERENCES mcuser,
     concurrency_version BIGINT,
