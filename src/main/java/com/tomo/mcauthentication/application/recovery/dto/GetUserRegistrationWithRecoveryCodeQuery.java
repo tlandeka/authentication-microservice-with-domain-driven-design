@@ -1,9 +1,8 @@
-package com.tomo.mcauthentication.application.registration.query;
+package com.tomo.mcauthentication.application.recovery.dto;
 
 import com.tomo.mcauthentication.application.contracts.BaseQuery;
 
 import javax.validation.constraints.NotNull;
-import java.util.UUID;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,5 +14,5 @@ import lombok.Setter;
 public class GetUserRegistrationWithRecoveryCodeQuery extends BaseQuery {
 
     @NotNull
-    UUID recoveryCode;
+    String recoveryCode;
 }

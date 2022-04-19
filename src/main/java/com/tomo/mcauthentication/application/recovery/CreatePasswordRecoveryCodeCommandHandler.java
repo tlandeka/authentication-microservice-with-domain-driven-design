@@ -1,6 +1,6 @@
-package com.tomo.mcauthentication.application.authentication;
+package com.tomo.mcauthentication.application.recovery;
 
-import com.tomo.mcauthentication.application.authentication.command.CreatePasswordRecoveryCodeCommand;
+import com.tomo.mcauthentication.application.recovery.command.CreatePasswordRecoveryCodeCommand;
 import com.tomo.mcauthentication.application.authentication.dto.RecoveryPasswordDto;
 import com.tomo.mcauthentication.application.configuration.CommandHandler;
 import com.tomo.mcauthentication.domain.registration.EmailAuthenticationService;

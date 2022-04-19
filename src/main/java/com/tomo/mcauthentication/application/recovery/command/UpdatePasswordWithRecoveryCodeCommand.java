@@ -1,4 +1,4 @@
-package com.tomo.mcauthentication.application.authentication.command;
+package com.tomo.mcauthentication.application.recovery.command;
 
 import com.tomo.mcauthentication.application.contracts.BaseCommand;
 

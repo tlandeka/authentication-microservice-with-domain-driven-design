@@ -1,11 +1,7 @@
-package com.tomo.mcauthentication.application.authentication;
+package com.tomo.mcauthentication.application.recovery;
 
-import com.tomo.mcauthentication.application.authentication.command.CreatePasswordRecoveryCodeCommand;
-import com.tomo.mcauthentication.application.authentication.command.UpdatePasswordWithRecoveryCodeCommand;
-import com.tomo.mcauthentication.application.authentication.dto.RecoveryPasswordDto;
-import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
+import com.tomo.mcauthentication.application.recovery.command.UpdatePasswordWithRecoveryCodeCommand;
 import com.tomo.mcauthentication.application.configuration.AbstractVoidyCommandHandler;
-import com.tomo.mcauthentication.application.configuration.CommandHandler;
 import com.tomo.mcauthentication.domain.registration.EmailAuthenticationService;
 
 import org.springframework.stereotype.Service;
