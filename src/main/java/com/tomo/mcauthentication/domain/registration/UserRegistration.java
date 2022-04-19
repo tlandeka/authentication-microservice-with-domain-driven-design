@@ -110,21 +110,21 @@ public class UserRegistration extends ConcurrencySafeEntity {
         this.recoveryCodeExpirationDate = LocalDateTime.now().plus(RECOVERY_CODE_EXPIREATION_MSEC, ChronoField.MILLI_OF_DAY.getBaseUnit());
 
         this.setRecoveryCodeExpirationDate(recoveryCodeExpirationDate);
-        this.setPassword(this.asEncryptedValue(recoveryCode));
+        this.setRecoveryCode(this.asEncryptedValue(recoveryCode));
 
         return recoveryCode;
     }
 
     public boolean isRecoveryCodeUnexpired() {
-        return recoveryCodeExpirationDate != null && recoveryCodeExpirationDate.isBefore(LocalDateTime.now());
+        return recoveryCodeExpirationDate != null && recoveryCodeExpirationDate.isAfter(LocalDateTime.now());
     }
 
     public void updatePasswordWithRecoveryCode(String aRecoveryCode, String aNewPassword, String aNewPasswordRepeated) {
         this.assertArgumentNotNull(aNewPassword, "New password is missing.");
         this.assertArgumentNotNull(aNewPasswordRepeated, "Repeated password is missing.");
-        this.assertArgumentNotEquals(aNewPassword, aNewPasswordRepeated, "Provided passwords must be equal.");
+        this.assertArgumentEquals(aNewPassword, aNewPasswordRepeated, "Provided passwords must be equal.");
 
-        this.checkRule(new RecoveryCodeMustMatch(aRecoveryCode, this.getRecoveryCode()));
+        this.checkRule(new RecoveryCodeMustMatch(this.asEncryptedValue(aRecoveryCode), this.getRecoveryCode()));
         this.checkRule(new PasswordRecoveryCodeShouldNotExpired(this));
 
         this.protectPassword(this.getPassword(), aNewPassword);

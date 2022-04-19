@@ -1,25 +1,32 @@
 package com.tomo.mcauthentication.application.authentication;
 
+import com.tomo.mcauthentication.application.BaseMapper;
 import com.tomo.mcauthentication.application.authentication.command.SessionAuthenticationCommand;
 import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
 import com.tomo.mcauthentication.application.configuration.CommandHandler;
+import com.tomo.mcauthentication.domain.registration.EmailAuthenticationService;
 import com.tomo.mcauthentication.domain.session.SessionAuthenticationService;
+import com.tomo.mcauthentication.domain.session.SessionRepository;
 import com.tomo.mcauthentication.domain.session.TokenProvider;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SessionAuthenticationCommandHandler extends BaseLoginCommandHandler implements CommandHandler<SessionAuthenticationCommand, SessionDto> {
+public class SessionAuthenticationCommandHandler extends BaseMapper implements CommandHandler<SessionAuthenticationCommand, SessionDto> {
 
     SessionAuthenticationService sessionAuthenticationService;
-    TokenProvider tokenProvider;
 
-    public SessionAuthenticationCommandHandler(SessionAuthenticationService sessionAuthenticationService) {
+    public SessionAuthenticationCommandHandler(
+            SessionAuthenticationService sessionAuthenticationService,
+            ModelMapper modelMapper) {
+        super(modelMapper);
         this.sessionAuthenticationService = sessionAuthenticationService;
     }
 
     @Override
     public SessionDto handle(SessionAuthenticationCommand command) {
-        return toDto(sessionAuthenticationService.authenticate(command.getAccessToken()));
+        return toDto(sessionAuthenticationService.authenticate(command.getAccessToken()), SessionDto.class);
     }
 }

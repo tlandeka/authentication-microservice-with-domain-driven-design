@@ -3,7 +3,7 @@ package com.tomo.mcauthentication.integration.application.users;
 import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
 import com.tomo.mcauthentication.application.users.GetUserQueryHandler;
 import com.tomo.mcauthentication.application.users.query.GetUserQuery;
-import com.tomo.mcauthentication.integration.application.ApplicationServiceTest;
+import com.tomo.mcauthentication.integration.application.AbstractApplicationServiceTest;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.UUID;
 
 import static org.junit.Assert.assertNotNull;
 
-public class GetUserQueryHandlerTest extends ApplicationServiceTest {
+public class GetUserQueryHandlerTest extends AbstractApplicationServiceTest {
 
     @Autowired
     GetUserQueryHandler getUserQueryHandler;

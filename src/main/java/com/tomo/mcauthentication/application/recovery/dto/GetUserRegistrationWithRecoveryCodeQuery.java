@@ -15,4 +15,8 @@ public class GetUserRegistrationWithRecoveryCodeQuery extends BaseQuery {
 
     @NotNull
     String recoveryCode;
+
+    public GetUserRegistrationWithRecoveryCodeQuery(String recoveryCode) {
+        this.recoveryCode = recoveryCode;
+    }
 }

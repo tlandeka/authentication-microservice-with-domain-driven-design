@@ -18,23 +18,18 @@ import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserRepository;
 import com.tomo.mcauthentication.infrastructure.http.oauth2.FacebookOAuth2Authentication;
 import com.tomo.mcauthentication.infrastructure.http.oauth2.GoogleOAuth2Authentication;
-import com.tomo.mcauthentication.integration.BaseServiceTest;
+import com.tomo.mcauthentication.integration.AbstractServiceTest;
 
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-public class ApplicationServiceTest extends BaseServiceTest {
+public abstract class AbstractApplicationServiceTest extends AbstractServiceTest {
 
     private static final String ACCESS_CODE = "anAccessCode";
     private static final String USER_OAUTH_ID = "anAccessCode";
@@ -44,28 +39,28 @@ public class ApplicationServiceTest extends BaseServiceTest {
     private static final String PASSWORD = "AA123bb##";
 
     @Autowired
-    FacebookLoginCommandHandler facebookLoginCommandHandler;
+    protected FacebookLoginCommandHandler facebookLoginCommandHandler;
 
     @Autowired
-    GoogleLoginCommandHandler googleLoginCommandHandler;
+    protected GoogleLoginCommandHandler googleLoginCommandHandler;
 
     @Autowired
-    EmailLoginCommandHandler emailLoginCommandHandler;
+    protected EmailLoginCommandHandler emailLoginCommandHandler;
 
     @MockBean
-    FacebookOAuth2Authentication facebookOAuth2Authentication;
+    protected FacebookOAuth2Authentication facebookOAuth2Authentication;
 
     @MockBean
-    GoogleOAuth2Authentication googleOAuth2Authentication;
+    protected GoogleOAuth2Authentication googleOAuth2Authentication;
 
     @Autowired
-    ConfirmUserRegistrationCommandHandler confirmUserRegistrationCommandHandler;
+    protected ConfirmUserRegistrationCommandHandler confirmUserRegistrationCommandHandler;
 
     @Autowired
-    RegisterNewUserCommandHandler registerNewUserCommandHandler;
+    protected RegisterNewUserCommandHandler registerNewUserCommandHandler;
 
     @Autowired
-    UserRegistrationRepository userRegistrationRepository;
+    protected UserRegistrationRepository userRegistrationRepository;
 
     @Autowired
     protected UserRepository userRepository;
@@ -107,6 +102,10 @@ public class ApplicationServiceTest extends BaseServiceTest {
         return userRepository.findByEmail(USER_EMAIL);
     }
 
+    protected String email() {
+        return USER_EMAIL;
+    }
+
     private OAuth2Principal oAuth2Principal(String anProvider) {
         return new OAuth2Principal(
                 USER_OAUTH_ID,
@@ -116,5 +115,4 @@ public class ApplicationServiceTest extends BaseServiceTest {
                 "img",
                 anProvider);
     }
-
 }

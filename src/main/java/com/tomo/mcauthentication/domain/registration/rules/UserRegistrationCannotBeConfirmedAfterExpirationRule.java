@@ -14,11 +14,13 @@ public class UserRegistrationCannotBeConfirmedAfterExpirationRule implements Bus
         this.registerDate = aRegisterDate;
     }
 
-    @Override public Boolean isBroken() {
+    @Override
+    public Boolean isBroken() {
         return LocalDateTime.now().isAfter(this.registerDate.plusDays(CONFIRMATION_LINK_DURATION));
     }
 
-    @Override public String message() {
+    @Override
+    public String message() {
         return null;
     }
 }

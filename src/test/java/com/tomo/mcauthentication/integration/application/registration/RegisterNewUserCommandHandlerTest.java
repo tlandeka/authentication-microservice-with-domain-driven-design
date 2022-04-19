@@ -4,7 +4,7 @@ import com.tomo.mcauthentication.application.registration.ConfirmUserRegistratio
 import com.tomo.mcauthentication.application.registration.RegisterNewUserCommandHandler;
 import com.tomo.mcauthentication.domain.registration.UserRegistration;
 import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
-import com.tomo.mcauthentication.integration.application.ApplicationServiceTest;
+import com.tomo.mcauthentication.integration.application.AbstractApplicationServiceTest;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThrows;
 
-public class RegisterNewUserCommandHandlerTest extends ApplicationServiceTest {
+public class RegisterNewUserCommandHandlerTest extends AbstractApplicationServiceTest {
 
     @Autowired
     RegisterNewUserCommandHandler commandHandler;

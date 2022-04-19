@@ -27,8 +27,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping(path = "/")
-@RequiredArgsConstructor
-public class UserController extends  {
+public class UserController {
 
     @Autowired
     private McAuthenticationModule authenticationModule;

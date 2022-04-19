@@ -11,4 +11,4 @@ import javax.transaction.Transactional;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(value = "local")
-public class BaseServiceTest { }
+public abstract class AbstractServiceTest { }

@@ -2,8 +2,9 @@ package com.tomo.mcauthentication.application.registration.dto;
 
 import com.tomo.mcauthentication.application.contracts.Response;
 import com.tomo.mcauthentication.domain.registration.UserRegistrationId;
+import com.tomo.mcauthentication.domain.registration.UserRegistrationStatus;
 
-import java.util.UUID;
+import java.time.LocalDateTime;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,9 +14,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class UserRegistrationDto implements Response {
-    private UUID id;
 
-    public void setId(UserRegistrationId id) {
-        this.id = id.id();
-    }
+    private String email;
+    private String firstName;
+    private String lastName;
+    private LocalDateTime registerDate;
+    private UserRegistrationStatus status;
+
 }

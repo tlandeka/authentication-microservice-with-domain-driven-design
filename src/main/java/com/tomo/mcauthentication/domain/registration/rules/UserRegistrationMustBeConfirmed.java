@@ -13,7 +13,7 @@ public class UserRegistrationMustBeConfirmed implements BusinessRule {
 
     @Override
     public Boolean isBroken() {
-        return userRegistrationStatus.equals(UserRegistrationStatus.Confirmed);
+        return !userRegistrationStatus.equals(UserRegistrationStatus.Confirmed);
     }
 
     @Override

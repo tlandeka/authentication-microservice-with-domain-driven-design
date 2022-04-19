@@ -22,4 +22,9 @@ public class UpdatePasswordWithRecoveryCodeCommand extends BaseCommand {
     @NotNull
     private String recoveryCode;
 
+    public UpdatePasswordWithRecoveryCodeCommand(String newPassword, String newPasswordRepeated, String recoveryCode) {
+        this.newPassword = newPassword;
+        this.newPasswordRepeated = newPasswordRepeated;
+        this.recoveryCode = recoveryCode;
+    }
 }

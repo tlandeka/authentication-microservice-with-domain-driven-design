@@ -12,4 +12,8 @@ import lombok.Setter;
 public class SessionAuthenticationCommand extends BaseCommand {
 
     String accessToken;
+
+    public SessionAuthenticationCommand(String accessToken) {
+        this.accessToken = accessToken;
+    }
 }
