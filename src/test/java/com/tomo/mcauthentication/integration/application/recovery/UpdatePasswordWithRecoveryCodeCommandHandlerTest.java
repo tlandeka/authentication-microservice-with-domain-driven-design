@@ -19,8 +19,6 @@ import static org.junit.Assert.assertEquals;
 
 public class UpdatePasswordWithRecoveryCodeCommandHandlerTest extends AbstractApplicationServiceTest {
 
-    public static final String NEW_PASS = "randomNewPass123";
-
     @Autowired
     CreatePasswordRecoveryCodeCommandHandler createPasswordRecoveryCodeCommandHandler;
 

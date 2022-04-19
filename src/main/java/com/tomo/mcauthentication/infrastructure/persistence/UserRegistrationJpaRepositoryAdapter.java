@@ -3,6 +3,7 @@ package com.tomo.mcauthentication.infrastructure.persistence;
 import com.tomo.mcauthentication.domain.registration.UserRegistration;
 import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
 import com.tomo.mcauthentication.domain.registration.UserRegistrationStatus;
+import com.tomo.mcauthentication.domain.users.UserId;
 
 import java.util.List;
 
@@ -36,5 +37,9 @@ public class UserRegistrationJpaRepositoryAdapter
     @Override
     public UserRegistration findByRecoveryCode(String aRecoveryCode) {
         return jpaRepository.findUserRegistrationByRecoveryCode(aRecoveryCode);
+    }
+
+    @Override public UserRegistration findByUserId(UserId anUserId) {
+        return jpaRepository.findUserRegistrationByUserId(anUserId);
     }
 }

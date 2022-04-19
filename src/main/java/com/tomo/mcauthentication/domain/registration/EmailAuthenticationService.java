@@ -3,11 +3,9 @@ package com.tomo.mcauthentication.domain.registration;
 import com.tomo.mcauthentication.ddd.domain.BusinessRuleValidator;
 import com.tomo.mcauthentication.domain.EncryptionService;
 import com.tomo.mcauthentication.domain.registration.rules.PasswordsMustMatch;
-import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationMustBeConfirmed;
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserRepository;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -65,6 +63,6 @@ public class EmailAuthenticationService extends BusinessRuleValidator {
             throw new IllegalStateException(String.format("User with recovery code %s doesn't exists.", aRecoveryCode));
         }
 
-        userRegistration.updatePasswordWithRecoveryCode(aRecoveryCode, aNewPassword, aNewPasswordRepeated);
+        userRegistration.changePasswordWithRecoveryCode(aRecoveryCode, aNewPassword, aNewPasswordRepeated);
     }
 }

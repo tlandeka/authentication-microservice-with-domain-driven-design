@@ -6,6 +6,7 @@ import com.tomo.mcauthentication.domain.DomainRegistry;
 import com.tomo.mcauthentication.domain.registration.events.NewUserRegistered;
 import com.tomo.mcauthentication.domain.registration.rules.PasswordRecoveryCodeShouldBeExpiredOrNull;
 import com.tomo.mcauthentication.domain.registration.rules.PasswordRecoveryCodeShouldNotExpired;
+import com.tomo.mcauthentication.domain.registration.rules.PasswordsMustMatch;
 import com.tomo.mcauthentication.domain.registration.rules.RecoveryCodeMustMatch;
 import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationCannotBeConfirmedAfterExpirationRule;
 import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationCannotBeConfirmedMoreThanOnceRule;
@@ -119,15 +120,30 @@ public class UserRegistration extends ConcurrencySafeEntity {
         return recoveryCodeExpirationDate != null && recoveryCodeExpirationDate.isAfter(LocalDateTime.now());
     }
 
-    public void updatePasswordWithRecoveryCode(String aRecoveryCode, String aNewPassword, String aNewPasswordRepeated) {
+    public void changePassword(String anOldPassword, String aNewPassword, String aNewPasswordRepeated) {
+        this.assertArgumentNotNull(anOldPassword, "Old password is missing.");
+        this.assertNewPassword(aNewPassword, aNewPasswordRepeated);
+
+        this.checkRule(new PasswordsMustMatch(this.getPassword(), this.asEncryptedValue(anOldPassword)));
+
+        this.protectPassword(this.getPassword(), aNewPassword);
+    }
+
+    public void changePasswordWithRecoveryCode(String aRecoveryCode, String aNewPassword, String aNewPasswordRepeated) {
         this.assertArgumentNotNull(aNewPassword, "New password is missing.");
-        this.assertArgumentNotNull(aNewPasswordRepeated, "Repeated password is missing.");
-        this.assertArgumentEquals(aNewPassword, aNewPasswordRepeated, "Provided passwords must be equal.");
+        this.assertNewPassword(aNewPassword, aNewPasswordRepeated);
 
         this.checkRule(new RecoveryCodeMustMatch(this.asEncryptedValue(aRecoveryCode), this.getRecoveryCode()));
         this.checkRule(new PasswordRecoveryCodeShouldNotExpired(this));
 
+        this.setRecoveryCodeExpirationDate(LocalDateTime.now());
         this.protectPassword(this.getPassword(), aNewPassword);
+    }
+
+    private void assertNewPassword(String aNewPassword, String aNewPasswordRepeated) {
+        this.assertArgumentNotNull(aNewPassword, "New password is missing.");
+        this.assertArgumentNotNull(aNewPasswordRepeated, "Repeated password is missing.");
+        this.assertArgumentEquals(aNewPassword, aNewPasswordRepeated, "Provided passwords must be equal.");
     }
 
     protected void protectPassword(String aCurrentPassword, String aChangedPassword) {

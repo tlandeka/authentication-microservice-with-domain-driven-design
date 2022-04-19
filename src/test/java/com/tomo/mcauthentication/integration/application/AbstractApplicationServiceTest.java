@@ -36,7 +36,8 @@ public abstract class AbstractApplicationServiceTest extends AbstractServiceTest
     private static final String USER_FIRST_NAME = "Tom";
     private static final String USER_LAST_NAME = "Land";
     private static final String USER_EMAIL = "random@email.com";
-    private static final String PASSWORD = "AA123bb##";
+    protected static final String PASSWORD = "AA123bb##";
+    protected static final String NEW_PASS = "randomNewPass123";
 
     @Autowired
     protected FacebookLoginCommandHandler facebookLoginCommandHandler;
@@ -104,6 +105,9 @@ public abstract class AbstractApplicationServiceTest extends AbstractServiceTest
 
     protected String email() {
         return USER_EMAIL;
+    }
+    protected String passwrod() {
+        return PASSWORD;
     }
 
     private OAuth2Principal oAuth2Principal(String anProvider) {

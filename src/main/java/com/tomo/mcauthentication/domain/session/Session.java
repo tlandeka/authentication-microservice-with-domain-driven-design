@@ -1,12 +1,9 @@
 package com.tomo.mcauthentication.domain.session;
 
-import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
 import com.tomo.mcauthentication.ddd.domain.RootEntity;
 import com.tomo.mcauthentication.domain.DomainRegistry;
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserId;
-
-import org.modelmapper.ModelMapper;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
