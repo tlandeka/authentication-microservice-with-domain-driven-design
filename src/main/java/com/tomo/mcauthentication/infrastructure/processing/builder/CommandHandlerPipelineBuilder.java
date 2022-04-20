@@ -32,15 +32,9 @@ public class CommandHandlerPipelineBuilder implements PipelineBuilder<Command, C
     }
 
     protected CommandHandler getCommandHandler() {
-        Class<? extends Command> commandClass = this.command.getClass();
-        try {
-            Class<? extends Command> commandHandlerClass = (Class<? extends Command>) Class.forName(commandClass.getName() + "Handler");
-            return (CommandHandler) applicationContext.getBean(commandHandlerClass);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        String fullHandlerName = this.command.getClass().getSimpleName() + "Handler";
+        String beanName = Character.toLowerCase(fullHandlerName.charAt(0)) + fullHandlerName.substring(1);
+        return (CommandHandler) applicationContext.getBean(beanName);
     }
 
     @Override

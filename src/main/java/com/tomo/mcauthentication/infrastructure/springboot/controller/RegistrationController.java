@@ -23,11 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
-import lombok.RequiredArgsConstructor;
-
 @RestController
 @RequestMapping(path = "/")
-public class UserController {
+public class RegistrationController {
 
     @Autowired
     private McAuthenticationModule authenticationModule;
@@ -39,5 +37,36 @@ public class UserController {
     @Autowired
     CustomOAuth2UserService customOAuth2UserService;
 
+    /**
+     * Register User
+     *
+     * @param command
+     */
+    @RequestMapping(method = RequestMethod.POST, path = "/user/register")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createCourse(@RequestBody @Validated RegisterNewUserCommand command){
+         authenticationModule.executeCommand(command);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/user/facebook")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void userFacebook(HttpServletRequest request){
+//        customOAuth2UserService.loadUser(new OAuth2UserRequest(clientRegistration, new OAuth2AccessToken(
+//                OAuth2AccessToken.TokenType.BEARER,
+//                "EAAC8IZAdZBTV0BAGsNumnmurG3clXddRZCzmkgSRIy2Ys6BEqYQpiYJWIpfeNGbOvWVoEH4qHEzcn9RoOaZC42JtkvE4A81ZCgRBtW6CKSkmDtASPFRnaIJhiLWAuQ8wNvCcTuFT2AiYFiNjCd4qj74GRAHTZBq3hcq9izTQrsZAuHLeUy8eO5OuC19LTNi1WoAjihA1QMfZB8iv7arcZBMo1iBUlakLxhkoZD",
+//                Instant.now(), Instant.now().plusSeconds(10000L))));
+
+        int a = 5;
+    }
+
+    @GetMapping("/random")
+    public ResponseEntity<?> authenticateUser(HttpServletRequest request, HttpServletResponse response) {
+        Optional<Cookie> cookie = CookieUtils.getCookie(request, "tomo_landeka");
+        if (cookie.isPresent()) {
+            int a = 5;
+        }
+        CookieUtils.addCookie(response, "tomo_landeka", "tomo", 60);
+        return ResponseEntity.ok(response);
+    }
 
 }
