@@ -7,6 +7,7 @@ import com.tomo.mcauthentication.application.users.command.ChangeUserDetailsComm
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserRepository;
 import com.tomo.mcauthentication.integration.application.AbstractApplicationServiceTest;
+import com.tomo.mcauthentication.testdata.CommandObjectMother;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class ChangeUserDetailsCommandHandlerTest extends AbstractApplicationServ
     @Transactional
     public void testChangeUserDetails() {
         User user = createFormUser();
-        SessionDto sessionDto = emailLoginCommandHandler.handle(new EmailLoginCommand(USER_EMAIL, PASSWORD));
+        SessionDto sessionDto = emailLoginCommandHandler.handle(CommandObjectMother.emailLoginCommand());
 
         ChangeUserDetailsCommand command = new ChangeUserDetailsCommand(
                 user.getUserId().id(),

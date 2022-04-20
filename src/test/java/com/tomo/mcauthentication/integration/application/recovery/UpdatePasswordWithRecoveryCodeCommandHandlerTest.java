@@ -6,9 +6,10 @@ import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
 import com.tomo.mcauthentication.application.contracts.Voidy;
 import com.tomo.mcauthentication.application.recovery.CreatePasswordRecoveryCodeCommandHandler;
 import com.tomo.mcauthentication.application.recovery.UpdatePasswordWithRecoveryCodeCommandHandler;
-import com.tomo.mcauthentication.application.recovery.command.CreatePasswordRecoveryCodeCommand;
 import com.tomo.mcauthentication.application.recovery.command.UpdatePasswordWithRecoveryCodeCommand;
 import com.tomo.mcauthentication.integration.application.AbstractApplicationServiceTest;
+import com.tomo.mcauthentication.testdata.CommandObjectMother;
+import com.tomo.mcauthentication.testdata.StaticFields;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +30,15 @@ public class UpdatePasswordWithRecoveryCodeCommandHandlerTest extends AbstractAp
     @Transactional
     public void testUpdatePasswordWithRecoveryCode() {
         formLogin();
-        RecoveryPasswordDto recoveryPasswordDto = createPasswordRecoveryCodeCommandHandler.handle(new CreatePasswordRecoveryCodeCommand(email()));
+        RecoveryPasswordDto recoveryPasswordDto = createPasswordRecoveryCodeCommandHandler.handle(CommandObjectMother.createPasswordRecoveryCodeCommand());
         assertEquals(commandHandler.handle(new UpdatePasswordWithRecoveryCodeCommand(
-                NEW_PASS,
-                NEW_PASS,
+                StaticFields.NEW_PASS,
+                StaticFields.NEW_PASS,
                 recoveryPasswordDto.getRecoveryCode())).getClass(),
                 Voidy.class);
 
         assertEquals(
-                emailLoginCommandHandler.handle(new EmailLoginCommand(email(), NEW_PASS)).getClass(),
+                emailLoginCommandHandler.handle(new EmailLoginCommand(StaticFields.USER_EMAIL, StaticFields.NEW_PASS)).getClass(),
                 SessionDto.class
         );
     }

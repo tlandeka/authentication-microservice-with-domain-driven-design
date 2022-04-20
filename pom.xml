@@ -121,6 +121,13 @@
 			<artifactId>modelmapper</artifactId>
 			<version>2.4.5</version>
 		</dependency>
+
+<!--		Java Faker-->
+		<dependency>
+			<groupId>com.github.javafaker</groupId>
+			<artifactId>javafaker</artifactId>
+			<version>1.0.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
