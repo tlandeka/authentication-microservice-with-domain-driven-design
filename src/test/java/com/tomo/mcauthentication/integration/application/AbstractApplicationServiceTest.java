@@ -35,7 +35,7 @@ public abstract class AbstractApplicationServiceTest extends AbstractServiceTest
     private static final String USER_OAUTH_ID = "anAccessCode";
     private static final String USER_FIRST_NAME = "Tom";
     private static final String USER_LAST_NAME = "Land";
-    private static final String USER_EMAIL = "random@email.com";
+    protected static final String USER_EMAIL = "random@email.com";
     protected static final String PASSWORD = "AA123bb##";
     protected static final String NEW_PASS = "randomNewPass123";
 

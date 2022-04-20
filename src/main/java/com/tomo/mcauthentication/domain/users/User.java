@@ -42,7 +42,19 @@ public class User extends ConcurrencySafeEntity {
         this.provider = aProvider;
     }
 
+
+    public void updateDetails(String aFirstName, String aLastName) {
+        this.setFirstName(aFirstName);
+        this.setLastName(aLastName);
+    }
+
+    public void setLastName(String aLastName) {
+        assertArgumentNotEmpty(lastName, "Last name cannot be empty.");
+        this.lastName = aLastName;
+    }
+
     public void setFirstName(String aFirstName) {
+        assertArgumentNotEmpty(aFirstName, "First name cannot be empty.");
         this.firstName = aFirstName;
     }
 }

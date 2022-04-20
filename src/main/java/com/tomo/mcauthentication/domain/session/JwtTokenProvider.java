@@ -38,7 +38,7 @@ public class JwtTokenProvider implements TokenProvider {
         Date expiryDate = new Date(now.getTime() + appProperties.getAuth().getTokenExpirationMsec());
 
         return Jwts.builder()
-                .setSubject(user.getUserId().toString())
+                .setSubject(user.getUserId().id().toString())
                 .setIssuedAt(new Date())
                 .setExpiration(expiryDate)
                 .signWith(secretKey())
