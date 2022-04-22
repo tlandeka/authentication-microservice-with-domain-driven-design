@@ -1,5 +1,9 @@
 package com.tomo.mcauthentication.infrastructure.springboot.controller;
 
+import com.tomo.mcauthentication.application.authentication.command.EmailLoginCommand;
+import com.tomo.mcauthentication.application.authentication.command.FacebookLoginCommand;
+import com.tomo.mcauthentication.application.authentication.command.GoogleLoginCommand;
+import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
 import com.tomo.mcauthentication.application.contracts.McAuthenticationModule;
 import com.tomo.mcauthentication.application.registration.command.RegisterNewUserCommand;
 import com.tomo.mcauthentication.infrastructure.http.oauth2.CustomOAuth2UserService;
@@ -25,7 +29,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/")
-public class RegistrationController extends AbstractController {
+public class AuthenticationController extends AbstractController {
+
+    @Autowired
+    @Qualifier("facebookClientRegistration")
+    ClientRegistration clientRegistration;
 
     @Autowired
     CustomOAuth2UserService customOAuth2UserService;
@@ -35,20 +43,26 @@ public class RegistrationController extends AbstractController {
      *
      * @param command
      */
-    @RequestMapping(method = RequestMethod.POST, path = "/register/form")
+    @RequestMapping(method = RequestMethod.POST, path = "/login/form")
     @ResponseStatus(HttpStatus.CREATED)
-    public void formRegister(@RequestBody @Validated RegisterNewUserCommand command){
-         this.executeCommand(command);
+    public void formLogin(HttpServletResponse response, @RequestBody @Validated EmailLoginCommand command){
+        SessionDto dto = this.executeCommand(command, SessionDto.class);
+        CookieUtils.addCookie(
+                response,
+                "session-id",
+                CookieUtils.serialize(dto.getAccessToken()),
+                (int) ((properties.getAuth().getTokenExpirationMsec() / 1000) % 60));
     }
 
-    @GetMapping("/random")
-    public ResponseEntity<?> authenticateUser(HttpServletRequest request, HttpServletResponse response) {
-        Optional<Cookie> cookie = CookieUtils.getCookie(request, "tomo_landeka");
-        if (cookie.isPresent()) {
-            int a = 5;
-        }
-        CookieUtils.addCookie(response, "tomo_landeka", "tomo", 60);
-        return ResponseEntity.ok(response);
+    @RequestMapping(method = RequestMethod.POST, path = "/login/facebook")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void facebookLogin(@RequestBody @Validated FacebookLoginCommand command){
+        this.executeCommand(command);
     }
 
+    @RequestMapping(method = RequestMethod.POST, path = "/login/google")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void googleLogin(@RequestBody @Validated GoogleLoginCommand command) {
+        this.executeCommand(command);
+    }
 }

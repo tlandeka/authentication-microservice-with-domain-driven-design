@@ -17,6 +17,7 @@ public class SessionDto extends BaseUserDto {
     private String sessionId;
     private String accessToken;
     private LocalDateTime expirationDate;
+    int expirationDateMilis;
     private String tokenType;
     private String refreshToken;
     private String userAgent;

@@ -19,17 +19,12 @@ public class McAuthenticationModuleExecutor implements McAuthenticationModule {
     }
 
     @Override
-    public void executeCommand(Command command) {
+    public Response executeCommand(Command command) {
         CommandHandler commandHandler = commandHandlerPipelineBuilder
                 .with(command)
                 .build();
 
-        commandHandler.handle(command);
-    }
-
-    @Override
-    public Response executeCommandWithResult(Command command) {
-        return null;
+        return commandHandler.handle(command);
     }
 
     @Override

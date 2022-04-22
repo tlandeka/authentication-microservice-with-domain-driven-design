@@ -23,7 +23,7 @@ import lombok.Setter;
 @Setter
 public class Session extends RootEntity {
 
-    public static Long EXPIREATION_MSEC = 864000000L;
+    public static Long EXPIRATION_MSEC = 864000000L;
 
     public enum TokenType {
         CLIENT_SECRET_JWT,
@@ -53,7 +53,7 @@ public class Session extends RootEntity {
         this.userAgent = userAgent;
         this.tokenType = tokenProvider.getTokenType();
         this.userId = user.getUserId();
-        this.expirationDate = LocalDateTime.now().plus(EXPIREATION_MSEC, ChronoField.MILLI_OF_DAY.getBaseUnit());
+        this.expirationDate = LocalDateTime.now().plus(EXPIRATION_MSEC, ChronoField.MILLI_OF_DAY.getBaseUnit());
         this.accessToken = tokenProvider.createToken(user);
 
         if (Boolean.TRUE.equals(rememberMe)) {
