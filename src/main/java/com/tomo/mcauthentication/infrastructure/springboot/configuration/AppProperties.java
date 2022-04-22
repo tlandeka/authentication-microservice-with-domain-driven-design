@@ -12,6 +12,7 @@ public class AppProperties {
 
     public static class Auth {
         private String tokenSecret;
+        private String sessionAuthTokenName;
         private long tokenExpirationMsec;
 
         public String getTokenSecret() {
@@ -28,6 +29,14 @@ public class AppProperties {
 
         public void setTokenExpirationMsec(long tokenExpirationMsec) {
             this.tokenExpirationMsec = tokenExpirationMsec;
+        }
+
+        public String getSessionAuthTokenName() {
+            return sessionAuthTokenName;
+        }
+
+        public void setSessionAuthTokenName(String sessionAuthTokenName) {
+            this.sessionAuthTokenName = sessionAuthTokenName;
         }
     }
 

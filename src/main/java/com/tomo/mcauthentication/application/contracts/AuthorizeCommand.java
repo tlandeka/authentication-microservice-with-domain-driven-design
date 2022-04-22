@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class AuthorizeCommand extends BaseCommand {
+
     String accessToken;
 
     public AuthorizeCommand(String accessToken) {

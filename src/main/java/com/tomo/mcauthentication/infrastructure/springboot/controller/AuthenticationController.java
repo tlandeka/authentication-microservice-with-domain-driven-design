@@ -26,6 +26,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping(path = "/")
@@ -49,9 +50,9 @@ public class AuthenticationController extends AbstractController {
         SessionDto dto = this.executeCommand(command, SessionDto.class);
         CookieUtils.addCookie(
                 response,
-                "session-id-kmee",
+                "session-id",
                 CookieUtils.serialize(dto.getAccessToken()),
-                (int) ((properties.getAuth().getTokenExpirationMsec() / 1000) % 60));
+                (int) TimeUnit.MILLISECONDS.toSeconds(properties.getAuth().getTokenExpirationMsec()));
 
         return new ResponseEntity<String>(HttpStatus.OK);
     }
