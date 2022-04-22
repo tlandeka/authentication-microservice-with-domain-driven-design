@@ -25,11 +25,11 @@ public class ConfirmUserRegistrationCommandHandler implements CommandHandler<Con
 
     @Override
     public BaseUserDto handle(ConfirmUserRegistrationCommand command) {
-        UserRegistration userRegistration = userRegistrationRepository.findByConfirmLink(command.getConfirmationUrl());
+        UserRegistration userRegistration = userRegistrationRepository.findByConfirmLink(command.getConfirmationLink());
 
         if (userRegistration == null) {
             throw new IllegalStateException(
-                    String.format("UserRegistration with confirmation link %s cannot be found.", command.getConfirmationUrl())
+                    String.format("UserRegistration with confirmation link %s cannot be found.", command.getConfirmationLink())
             );
         }
 

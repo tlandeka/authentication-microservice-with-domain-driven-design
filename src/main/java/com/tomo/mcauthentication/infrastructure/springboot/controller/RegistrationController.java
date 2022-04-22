@@ -1,6 +1,7 @@
 package com.tomo.mcauthentication.infrastructure.springboot.controller;
 
 import com.tomo.mcauthentication.application.contracts.McAuthenticationModule;
+import com.tomo.mcauthentication.application.registration.command.ConfirmUserRegistrationCommand;
 import com.tomo.mcauthentication.application.registration.command.RegisterNewUserCommand;
 import com.tomo.mcauthentication.infrastructure.http.oauth2.CustomOAuth2UserService;
 import com.tomo.mcauthentication.infrastructure.util.CookieUtils;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,6 +41,12 @@ public class RegistrationController extends AbstractController {
     @ResponseStatus(HttpStatus.CREATED)
     public void formRegister(@RequestBody @Validated RegisterNewUserCommand command){
          this.executeCommand(command);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/register/confirm/")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void formRegisterConfirmation(@RequestParam String confirmationCode){
+        this.executeCommand(new ConfirmUserRegistrationCommand(confirmationCode));
     }
 
     @GetMapping("/random")

@@ -45,13 +45,15 @@ public class AuthenticationController extends AbstractController {
      */
     @RequestMapping(method = RequestMethod.POST, path = "/login/form")
     @ResponseStatus(HttpStatus.CREATED)
-    public void formLogin(HttpServletResponse response, @RequestBody @Validated EmailLoginCommand command){
+    public ResponseEntity formLogin(HttpServletResponse response, @RequestBody @Validated EmailLoginCommand command){
         SessionDto dto = this.executeCommand(command, SessionDto.class);
         CookieUtils.addCookie(
                 response,
-                "session-id",
+                "session-id-kmee",
                 CookieUtils.serialize(dto.getAccessToken()),
                 (int) ((properties.getAuth().getTokenExpirationMsec() / 1000) % 60));
+
+        return new ResponseEntity<String>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/login/facebook")

@@ -13,10 +13,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ConfirmUserRegistrationCommand extends BaseCommand {
 
-    private String confirmationUrl;
+    private String confirmationLink;
 
-    public ConfirmUserRegistrationCommand(String confirmationUrl) {
+    public ConfirmUserRegistrationCommand(String confirmLink) {
         super(UUID.randomUUID());
-        this.confirmationUrl = confirmationUrl;
+        this.confirmationLink = confirmLink;
     }
 }
