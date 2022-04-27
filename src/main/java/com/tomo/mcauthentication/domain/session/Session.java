@@ -23,7 +23,7 @@ import lombok.Setter;
 @Setter
 public class Session extends RootEntity {
 
-    public static Long EXPIRATION_MSEC = 864000000L;
+    public static Long EXPIRATION_MSEC = 15000L;
 
     public enum TokenType {
         CLIENT_SECRET_JWT,

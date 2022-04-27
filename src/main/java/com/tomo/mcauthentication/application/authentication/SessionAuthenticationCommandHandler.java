@@ -4,6 +4,7 @@ import com.tomo.mcauthentication.application.BaseMapper;
 import com.tomo.mcauthentication.application.authentication.command.SessionAuthenticationCommand;
 import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
 import com.tomo.mcauthentication.application.configuration.CommandHandler;
+import com.tomo.mcauthentication.domain.session.Session;
 import com.tomo.mcauthentication.domain.session.SessionAuthenticationService;
 
 import org.modelmapper.ModelMapper;
@@ -23,6 +24,7 @@ public class SessionAuthenticationCommandHandler extends BaseMapper implements C
 
     @Override
     public SessionDto handle(SessionAuthenticationCommand command) {
-        return toDto(sessionAuthenticationService.authenticate(command.getAccessToken()), SessionDto.class);
+        Session session = sessionAuthenticationService.authenticate(command.getAuthToken());
+        return SessionDto.create(session, this.modelMapper);
     }
 }

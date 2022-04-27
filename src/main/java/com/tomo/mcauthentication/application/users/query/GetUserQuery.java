@@ -1,6 +1,6 @@
 package com.tomo.mcauthentication.application.users.query;
 
-import com.tomo.mcauthentication.application.contracts.BaseQuery;
+import com.tomo.mcauthentication.application.contracts.security.AbstractAuthenticateQuery;
 import com.tomo.mcauthentication.domain.users.UserId;
 
 import javax.validation.constraints.NotNull;
@@ -11,16 +11,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class GetUserQuery extends BaseQuery {
+public class GetUserQuery extends AbstractAuthenticateQuery {
 
     @NotNull
-    UUID userId;
+    String userId;
 
-    public GetUserQuery() {
-        super();
+    public GetUserQuery(String userId) {
+        this.userId = userId;
     }
 
     public UserId getUserId() {
-        return new UserId(userId);
+        return new UserId(UUID.fromString(this.userId));
     }
 }

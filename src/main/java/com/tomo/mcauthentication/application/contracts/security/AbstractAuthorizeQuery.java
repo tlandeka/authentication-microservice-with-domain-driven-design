@@ -10,6 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class AbstractAuthorizeQuery extends AbstractAuthenticateRequest implements Query {
+public abstract class AbstractAuthorizeQuery extends AbstractAuthorizeRequest implements Query {
 
 }

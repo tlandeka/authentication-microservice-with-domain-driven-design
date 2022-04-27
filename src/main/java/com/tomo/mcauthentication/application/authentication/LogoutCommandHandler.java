@@ -17,6 +17,6 @@ public class LogoutCommandHandler extends AbstractVoidyCommandHandler<LogoutComm
 
     @Override
     protected void abstractHandle(LogoutCommand aCommand) {
-        sessionAuthenticationService.logout(aCommand.getAccessToken());
+        sessionAuthenticationService.logout(aCommand.getAuthToken());
     }
 }

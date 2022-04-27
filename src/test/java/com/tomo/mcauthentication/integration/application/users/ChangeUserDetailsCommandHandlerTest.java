@@ -1,6 +1,5 @@
 package com.tomo.mcauthentication.integration.application.users;
 
-import com.tomo.mcauthentication.application.authentication.command.EmailLoginCommand;
 import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
 import com.tomo.mcauthentication.application.users.ChangeUserDetailsCommandHandler;
 import com.tomo.mcauthentication.application.users.command.ChangeUserDetailsCommand;
@@ -34,7 +33,7 @@ public class ChangeUserDetailsCommandHandlerTest extends AbstractApplicationServ
                 user.getUserId().id(),
                 "first name",
                 "last name");
-        command.setAccessToken(sessionDto.getAccessToken());
+        command.setAuthToken(sessionDto.getAccessToken());
 
         commandHandler.handle(command);
         User userFromDb = userRepository.findById(user.getUserId());

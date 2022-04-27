@@ -1,6 +1,6 @@
 package com.tomo.mcauthentication.application.authentication.command;
 
-import com.tomo.mcauthentication.application.contracts.security.AbstractAuthenticateRequest;
+import com.tomo.mcauthentication.application.contracts.security.AbstractAuthenticateCommand;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,11 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class SessionAuthenticationCommand extends AbstractAuthenticateRequest {
+public class SessionAuthenticationCommand extends AbstractAuthenticateCommand {
 
-    String accessToken;
-
-    public SessionAuthenticationCommand(String accessToken) {
-        this.accessToken = accessToken;
+    public SessionAuthenticationCommand(String authToken) {
+        super(authToken);
     }
 }

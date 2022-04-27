@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class EmailLoginCommand extends BaseLoginCommand {
+
     @NotBlank
     @Email
     private String email;

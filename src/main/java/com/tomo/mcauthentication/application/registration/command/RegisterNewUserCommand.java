@@ -4,26 +4,24 @@ import com.tomo.mcauthentication.application.contracts.BaseCommand;
 
 import java.util.UUID;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class RegisterNewUserCommand extends BaseCommand {
     String firstName;
     String lastName;
     String email;
     String password;
 
-    public RegisterNewUserCommand() {
-        super(UUID.randomUUID());
-    }
-
     public RegisterNewUserCommand(String firstName, String lastName, String email, String password) {
-        super(UUID.randomUUID());
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-    }
-
-    public RegisterNewUserCommand(UUID id) {
-        super(id);
     }
 
     public String getPassword() {

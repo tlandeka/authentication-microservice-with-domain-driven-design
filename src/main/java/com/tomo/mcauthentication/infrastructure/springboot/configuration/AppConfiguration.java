@@ -13,6 +13,8 @@ import com.tomo.mcauthentication.infrastructure.persistence.UserRegistrationJpaR
 import com.tomo.mcauthentication.infrastructure.persistence.UserRegistrationJpaRepositoryAdapter;
 import com.tomo.mcauthentication.infrastructure.persistence.UserRepositoryJpaAdapter;
 import com.tomo.mcauthentication.infrastructure.processing.builder.CommandHandlerPipelineBuilder;
+import com.tomo.mcauthentication.infrastructure.processing.builder.QueryHandlerPipelineBuilder;
+import com.tomo.mcauthentication.infrastructure.springboot.filter.TokenAuthenticationFilter;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.ObjectProvider;
@@ -46,13 +48,24 @@ public class AppConfiguration {
     }
 
     @Bean
-    McAuthenticationModule authenticationModule(CommandHandlerPipelineBuilder commandHandlerPipelineBuilder) {
-        return new McAuthenticationModuleExecutor(commandHandlerPipelineBuilder);
+    public TokenAuthenticationFilter tokenAuthenticationFilter() {
+        return new TokenAuthenticationFilter();
     }
 
     @Bean
-    CommandHandlerPipelineBuilder commandHandlerPipelineBuilder(ObjectProvider<CommandHandler> commandHandlers) {
-        return new CommandHandlerPipelineBuilder(commandHandlers.stream().collect(Collectors.toList()));
+    McAuthenticationModule authenticationModule(CommandHandlerPipelineBuilder commandHandlerPipelineBuilder,
+            QueryHandlerPipelineBuilder queryHandlerPipelineBuilder) {
+        return new McAuthenticationModuleExecutor(commandHandlerPipelineBuilder, queryHandlerPipelineBuilder);
+    }
+
+    @Bean
+    CommandHandlerPipelineBuilder commandHandlerPipelineBuilder() {
+        return new CommandHandlerPipelineBuilder();
+    }
+
+    @Bean
+    QueryHandlerPipelineBuilder queryHandlerPipelineBuilder() {
+        return new QueryHandlerPipelineBuilder();
     }
 
     @Bean

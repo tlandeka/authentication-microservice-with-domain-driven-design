@@ -1,10 +1,7 @@
 package com.tomo.mcauthentication.application.users.command;
 
-import com.tomo.mcauthentication.application.contracts.security.AbstractAuthenticateRequest;
 import com.tomo.mcauthentication.application.contracts.security.AbstractAuthorizeCommand;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,7 +24,8 @@ public class ChangeUserDetailsCommand extends AbstractAuthorizeCommand {
         this.lastName = lastName;
     }
 
-    @Override public List<String> getAuthorities() {
+    @Override
+    public List<String> getAuthorities() {
         List<String> authorities = super.getAuthorities();
         authorities.add("ADMIN");
         return authorities;

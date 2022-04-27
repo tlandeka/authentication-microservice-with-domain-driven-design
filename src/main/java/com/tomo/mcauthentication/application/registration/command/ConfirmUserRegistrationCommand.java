@@ -16,7 +16,6 @@ public class ConfirmUserRegistrationCommand extends BaseCommand {
     private String confirmationLink;
 
     public ConfirmUserRegistrationCommand(String confirmLink) {
-        super(UUID.randomUUID());
         this.confirmationLink = confirmLink;
     }
 }

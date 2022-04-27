@@ -22,7 +22,7 @@ public class ChangeUserDetailsCommandHandler extends AbstractVoidyCommandHandler
 
     @Override
     public void abstractHandle(ChangeUserDetailsCommand aCommand) {
-        UserId userId = tokenProvider.getUserIdFromToken(aCommand.getAccessToken());
+        UserId userId = tokenProvider.getUserIdFromToken(aCommand.getAuthToken());
 
         if (!aCommand.getUserId().equals(userId.id())) {
             throw new IllegalArgumentException(String.format("Forbidden access. User with ID %s cannot change user details for user with ID: %s", userId.id(), aCommand.getUserId()));

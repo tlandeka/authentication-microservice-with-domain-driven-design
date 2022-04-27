@@ -11,4 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public abstract class AbstractAuthenticateCommand extends AbstractAuthenticateRequest implements Command {
 
+    public AbstractAuthenticateCommand(String authToken) {
+        super(authToken);
+    }
 }

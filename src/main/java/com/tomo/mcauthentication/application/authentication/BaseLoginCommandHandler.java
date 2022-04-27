@@ -30,8 +30,6 @@ public class BaseLoginCommandHandler extends BaseMapper {
     }
 
     protected SessionDto toDto(Session session) {
-        SessionDto dto = toDto(session, SessionDto.class);
-        dto.setSessionId(session.getSessionId());
-        return dto;
+        return SessionDto.create(session, this.modelMapper);
     }
 }

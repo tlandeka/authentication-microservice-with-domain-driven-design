@@ -1,20 +1,20 @@
 package com.tomo.mcauthentication.infrastructure.springboot.filter;
 
-import com.tomo.mcauthentication.application.authentication.SessionAuthenticationCommandHandler;
 import com.tomo.mcauthentication.application.authentication.command.SessionAuthenticationCommand;
 import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
 import com.tomo.mcauthentication.application.contracts.McAuthenticationModule;
 import com.tomo.mcauthentication.domain.session.TokenProvider;
+import com.tomo.mcauthentication.domain.users.UserId;
+import com.tomo.mcauthentication.domain.users.UserRepository;
 import com.tomo.mcauthentication.infrastructure.springboot.configuration.AppProperties;
+import com.tomo.mcauthentication.infrastructure.springboot.security.UserAuthPrincipal;
+import com.tomo.mcauthentication.infrastructure.springboot.security.UserAuthToken;
 import com.tomo.mcauthentication.infrastructure.util.CookieUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -23,7 +23,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
@@ -31,10 +32,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private TokenProvider tokenProvider;
 
     @Autowired
-    private SessionAuthenticationCommandHandler customUserDetailsService;
-
-    @Autowired
-    McAuthenticationModule mcAuthenticationModule;
+    McAuthenticationModule mcAuthenticationModuleExecutor;
 
     @Autowired
     protected AppProperties properties;
@@ -47,16 +45,22 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             String jwt = getJwtFromRequest(request);
 
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
-                //ovdje postavi authentikaciju, stavim UserId, SessionId, AccessToken
+                //maybe set authentication, UserId, SessionId, AccessToken
+                //But only if the intention is to use hasRole, isAuthenticate on RestController
 
-                //onda u customDijelu radim hasRole gdje cu gadjati authorization service za toga usera.
+                SessionDto dto = (SessionDto) mcAuthenticationModuleExecutor.executeCommand(new SessionAuthenticationCommand(jwt));
+                jwt = dto.getAccessToken();
 
-                SessionDto userDetails = (SessionDto) mcAuthenticationModule.executeCommand(new SessionAuthenticationCommand(jwt));
+                if (!dto.getAccessToken().equals(jwt)) {
+                    CookieUtils.updateCookie(
+                            request,
+                            response,
+                            properties.getAuth().getSessionAuthTokenName(),
+                            CookieUtils.serialize(dto.getAccessToken()),
+                            (int) TimeUnit.MILLISECONDS.toSeconds(properties.getAuth().getTokenExpirationMsec()));
+                }
 
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, Collections.
-                        singletonList(new SimpleGrantedAuthority("ROLE_USER")));
-
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                UserAuthToken authentication = new UserAuthToken(new UserAuthPrincipal(dto));
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
@@ -70,9 +74,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private String getJwtFromRequest(HttpServletRequest request) {
         return CookieUtils.getCookie(request, properties.getAuth().getSessionAuthTokenName())
                 .map(cookie -> CookieUtils.deserialize(cookie, String.class))
-                .filter(cookie -> StringUtils.hasText(cookie) && cookie.startsWith("Bearer "))
-                .map(cookie -> cookie.substring(7))
+//                .filter(cookie -> StringUtils.hasText(cookie) && cookie.startsWith("Bearer "))
+//                .map(cookie -> cookie.substring(7))
                 .orElse(null);
-
     }
 }

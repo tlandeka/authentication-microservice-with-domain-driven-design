@@ -24,8 +24,7 @@ public class GetUserQueryHandlerTest extends AbstractApplicationServiceTest {
     public void testGetUser() {
         SessionDto sessionDto = formLogin();
 
-        GetUserQuery query = new GetUserQuery();
-        query.setUserId(UUID.fromString(sessionDto.getUserId()));
+        GetUserQuery query = new GetUserQuery(sessionDto.getUserId());
         assertNotNull(getUserQueryHandler.handle(query));
     }
 }
