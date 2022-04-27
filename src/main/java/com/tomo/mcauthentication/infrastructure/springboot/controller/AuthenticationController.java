@@ -35,7 +35,7 @@ public class AuthenticationController extends AbstractController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity formLogin(HttpServletResponse response, @AuthenticationPrincipal UserAuthPrincipal user, @RequestBody @Validated EmailLoginCommand command) {
         if (user != null) {
-            ResponseEntity.ok(user.getSession());
+           return ResponseEntity.ok(user.getSession());
         }
 
         SessionDto dto = this.executeCommand(command, SessionDto.class);
