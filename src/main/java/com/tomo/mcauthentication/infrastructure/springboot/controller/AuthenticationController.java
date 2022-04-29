@@ -3,16 +3,15 @@ package com.tomo.mcauthentication.infrastructure.springboot.controller;
 import com.tomo.mcauthentication.application.authentication.command.EmailLoginCommand;
 import com.tomo.mcauthentication.application.authentication.command.FacebookLoginCommand;
 import com.tomo.mcauthentication.application.authentication.command.GoogleLoginCommand;
-import com.tomo.mcauthentication.application.authentication.command.SessionAuthenticationCommand;
 import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
+import com.tomo.mcauthentication.application.contracts.Command;
 import com.tomo.mcauthentication.infrastructure.springboot.security.CurrentUser;
 import com.tomo.mcauthentication.infrastructure.springboot.security.UserAuthPrincipal;
-import com.tomo.mcauthentication.infrastructure.springboot.security.UserAuthToken;
 import com.tomo.mcauthentication.infrastructure.util.CookieUtils;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,38 +26,46 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping(path = "/")
 public class AuthenticationController extends AbstractController {
 
-    /**
-     * Register User
-     *
-     * @param command
-     */
+    @Autowired
+    private HttpServletResponse response;
+
     @RequestMapping(method = RequestMethod.POST, path = "/login/form")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity formLogin(HttpServletResponse response, @CurrentUser UserAuthPrincipal user, @RequestBody @Validated EmailLoginCommand command) {
-        if (user != null) {
-           return ResponseEntity.ok(user.getSession());
-        }
-
-        SessionDto dto = this.executeCommand(command, SessionDto.class);
-
-        CookieUtils.addCookie(
-                response,
-                properties.getAuth().getSessionAuthTokenName(),
-                CookieUtils.serialize(dto.getAccessToken()),
-                (int) TimeUnit.MILLISECONDS.toSeconds(properties.getAuth().getTokenExpirationMsec()));
-
-        return ResponseEntity.ok(dto);
+    public ResponseEntity formLogin(@CurrentUser UserAuthPrincipal user,
+            @RequestBody @Validated EmailLoginCommand command) {
+        return ResponseEntity.ok(this.executeCommand(command, user));
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/login/facebook")
     @ResponseStatus(HttpStatus.CREATED)
-    public void facebookLogin(@RequestBody @Validated FacebookLoginCommand command){
-        this.executeCommand(command);
+    public ResponseEntity facebookLogin(@CurrentUser UserAuthPrincipal user,
+            @RequestBody @Validated FacebookLoginCommand command){
+        return ResponseEntity.ok(this.executeCommand(command, user));
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/login/google")
     @ResponseStatus(HttpStatus.CREATED)
-    public void googleLogin(@RequestBody @Validated GoogleLoginCommand command) {
-        this.executeCommand(command);
+    public ResponseEntity googleLogin(@CurrentUser UserAuthPrincipal user,
+            @RequestBody @Validated GoogleLoginCommand command) {
+        return ResponseEntity.ok(this.executeCommand(command, user));
+    }
+
+    protected SessionDto executeCommand(Command command, UserAuthPrincipal user) {
+        if (user != null) {
+            return user.getSession();
+        }
+
+        SessionDto session = super.executeCommand(command, SessionDto.class);
+        addAccessTokenToCookie(session.getAccessToken());
+
+        return session;
+    }
+
+    private void addAccessTokenToCookie(String accessToken) {
+        CookieUtils.addCookie(
+                response,
+                properties.getAuth().getSessionAuthTokenName(),
+                CookieUtils.serialize(accessToken),
+                (int) TimeUnit.MILLISECONDS.toSeconds(properties.getAuth().getTokenExpirationMsec()));
     }
 }
