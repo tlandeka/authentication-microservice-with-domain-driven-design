@@ -5,6 +5,7 @@ import com.tomo.mcauthentication.application.authentication.command.FacebookLogi
 import com.tomo.mcauthentication.application.authentication.command.GoogleLoginCommand;
 import com.tomo.mcauthentication.application.authentication.command.SessionAuthenticationCommand;
 import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
+import com.tomo.mcauthentication.infrastructure.springboot.security.CurrentUser;
 import com.tomo.mcauthentication.infrastructure.springboot.security.UserAuthPrincipal;
 import com.tomo.mcauthentication.infrastructure.springboot.security.UserAuthToken;
 import com.tomo.mcauthentication.infrastructure.util.CookieUtils;
@@ -33,7 +34,7 @@ public class AuthenticationController extends AbstractController {
      */
     @RequestMapping(method = RequestMethod.POST, path = "/login/form")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity formLogin(HttpServletResponse response, @AuthenticationPrincipal UserAuthPrincipal user, @RequestBody @Validated EmailLoginCommand command) {
+    public ResponseEntity formLogin(HttpServletResponse response, @CurrentUser UserAuthPrincipal user, @RequestBody @Validated EmailLoginCommand command) {
         if (user != null) {
            return ResponseEntity.ok(user.getSession());
         }

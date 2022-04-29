@@ -14,6 +14,7 @@ import com.tomo.mcauthentication.infrastructure.util.CookieUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -48,27 +49,51 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 //maybe set authentication, UserId, SessionId, AccessToken
                 //But only if the intention is to use hasRole, isAuthenticate on RestController
 
-                SessionDto dto = (SessionDto) mcAuthenticationModuleExecutor.executeCommand(new SessionAuthenticationCommand(jwt));
-                jwt = dto.getAccessToken();
+                SessionDto sessionDetails = (SessionDto) mcAuthenticationModuleExecutor.executeCommand(new SessionAuthenticationCommand(jwt));
+                jwt = sessionDetails.getAccessToken();
 
-                if (!dto.getAccessToken().equals(jwt)) {
+                if (!sessionDetails.getAccessToken().equals(jwt)) {
                     CookieUtils.updateCookie(
                             request,
                             response,
                             properties.getAuth().getSessionAuthTokenName(),
-                            CookieUtils.serialize(dto.getAccessToken()),
+                            CookieUtils.serialize(sessionDetails.getAccessToken()),
                             (int) TimeUnit.MILLISECONDS.toSeconds(properties.getAuth().getTokenExpirationMsec()));
                 }
 
-                UserAuthToken authentication = new UserAuthToken(new UserAuthPrincipal(dto));
-
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                setAuthentication(sessionDetails);
             }
         } catch (Exception ex) {
             logger.error("Could not set user authentication in security context", ex);
+            SecurityContextHolder.getContext().setAuthentication(null);
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private void setAuthentication(SessionDto sessionDetails) {
+        UserAuthToken currentAuthentication = null;
+
+        try {
+            currentAuthentication = (UserAuthToken) SecurityContextHolder.getContext().getAuthentication();
+        } catch (Exception e) {
+            currentAuthentication = null;
+        }
+
+        UserAuthToken newAuthentication = null;
+
+        if (currentAuthentication == null) {
+            newAuthentication = new UserAuthToken(new UserAuthPrincipal(sessionDetails));
+        } else {
+            UserAuthPrincipal principal = (UserAuthPrincipal) currentAuthentication.getPrincipal();
+            if (!principal.getSession().getAccessToken().equals(sessionDetails.getAccessToken())) {
+                newAuthentication = new UserAuthToken(new UserAuthPrincipal(sessionDetails));
+            }
+        }
+
+        if (newAuthentication != null) {
+            SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+        }
     }
 
     private String getJwtFromRequest(HttpServletRequest request) {
