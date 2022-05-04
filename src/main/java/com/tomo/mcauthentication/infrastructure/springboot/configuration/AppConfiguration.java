@@ -44,14 +44,23 @@ public class AppConfiguration {
     AppProperties appProperties;
 
     @Bean
+    String recoveryLink() {
+        return appProperties.getGui().getRecoveryRoute();
+    }
+
+    @Bean
+    String confirmationLink() {
+        return appProperties.getGui().getConfirmationRoute();
+    }
+
+    @Bean
     net.sargue.mailgun.Configuration mailGunConfiguration() {
         MessageProperties.Email.MailGun mailGun = appProperties.getMessage().getEmail().getMailGun();
         net.sargue.mailgun.Configuration configuration = new net.sargue.mailgun.Configuration()
                 .domain(mailGun.getDomains())
                 .apiUrl(mailGun.getApiUrl())
                 .apiKey(mailGun.getApiKey())
-                        .from(mailGun.getFrom().getName(), mailGun.getFrom().getEmail());
-//                .apiKey("key-xxxxxxxxxxxxxxxxxxxxxxxxx");
+                .from(mailGun.getFrom().getName(), mailGun.getFrom().getEmail());
 
         return configuration;
     }

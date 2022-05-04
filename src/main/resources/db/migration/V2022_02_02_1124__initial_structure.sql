@@ -16,7 +16,7 @@ CREATE TABLE user_registration (
     last_name           VARCHAR(255),
     email               VARCHAR(255)            NOT NULL,
     password            VARCHAR(255)            NOT NULL,
-    confirm_link        VARCHAR(255)            NOT NULL,
+    confirmation_code   VARCHAR(255)            NOT NULL,
     status              VARCHAR(255)            NOT NULL,
     register_date       TIMESTAMP,
     recovery_code       VARCHAR(255),

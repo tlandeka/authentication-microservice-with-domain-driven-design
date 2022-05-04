@@ -73,3 +73,7 @@ app:
         from:
           name: "mc team"
           email: "tomo.landeka02@gmail.com"
+  gui:
+    base-url: "localhost:3000"
+    recovery-route: "${app.gui.base-url}/reset-password/?recoveryCode="
+    confirmation-route: "${app.gui.base-url}/register/confirm/?confirmationCode="

@@ -16,49 +16,44 @@ package com.tomo.mcauthentication.application;
 
 import com.tomo.mcauthentication.application.contracts.McAuthenticationModule;
 import com.tomo.mcauthentication.application.registration.command.SendRegistrationConfirmationEmailCommand;
-import com.tomo.mcauthentication.ddd.domain.DomainEvent;
 import com.tomo.mcauthentication.ddd.domain.DomainEventPublisher;
 import com.tomo.mcauthentication.ddd.domain.DomainEventSubscriber;
-import com.tomo.mcauthentication.ddd.event.EventStore;
 import com.tomo.mcauthentication.domain.registration.events.NewUserRegistered;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Aspect
+@Component
 public class NewUserRegisteredEventProcessor {
 
-    @Autowired
-    private McAuthenticationModule module;
+    private McAuthenticationModule authenticationModule;
 
     /**
-     * This factory method is provided in the case where
-     * Spring AOP wiring is not desired.
+     * In order to not mix business logic with plugins like a GUI..
+     * baseUrl + URI + queryString eg. localhost/register/confirm/?confirmationCode=
      */
-    public static void register() {
-        (new NewUserRegisteredEventProcessor()).listen();
-    }
+    private String confirmationLink;
 
-    /**
-     * Constructs my default state.
-     */
-    public NewUserRegisteredEventProcessor() {
-        super();
+    public NewUserRegisteredEventProcessor(McAuthenticationModule authenticationModule, String confirmationLink) {
+        this.authenticationModule = authenticationModule;
+        this.confirmationLink = confirmationLink;
     }
 
     /**
      * Listens for all domain events and stores them.
      */
-    @Before("execution(* com.tomo.mcauthentication.application.*.*(..))")
+    @Before("execution(public * com.tomo.mcauthentication.application.registration.RegisterNewUserCommandHandler+.handle(..))")
     public void listen() {
         DomainEventPublisher
             .instance()
             .subscribe(new DomainEventSubscriber<NewUserRegistered>() {
 
                 public void handleEvent(NewUserRegistered aDomainEvent) {
-                    module.executeCommand(new SendRegistrationConfirmationEmailCommand(
+                    authenticationModule.executeCommand(new SendRegistrationConfirmationEmailCommand(
                             aDomainEvent.getEmail(),
+                            confirmationLink,
                             aDomainEvent.getConfirmationCode()));
                 }
 

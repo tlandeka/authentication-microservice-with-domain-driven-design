@@ -12,9 +12,11 @@ import lombok.Setter;
 public class SendRegistrationConfirmationEmailCommand extends BaseCommand {
     String email;
     String confirmLink;
+    String confirmationCode;
 
-    public SendRegistrationConfirmationEmailCommand(String email, String confirmLink) {
+    public SendRegistrationConfirmationEmailCommand(String email, String confirmLink, String confirmationCode) {
         this.email = email;
         this.confirmLink = confirmLink;
+        this.confirmationCode = confirmationCode;
     }
 }

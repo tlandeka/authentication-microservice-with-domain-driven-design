@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/")
-public class UserController extends AbstractController{
+public class UserController extends AbstractController {
 
     @RequestMapping(method = RequestMethod.GET, path = "/user/{userId}")
     public ResponseEntity user(@PathVariable(value = "userId") String userId){

@@ -18,7 +18,7 @@ public interface UserRegistrationJpaRepository extends McCrudRepository <UserReg
 
     List<UserRegistration> findAllByEmailIn(List<String> email);
 
-    UserRegistration findUserRegistrationByConfirmLink(String confirmLink);
+    UserRegistration findUserRegistrationByConfirmationCode(String confirmLink);
 
     UserRegistration findUserRegistrationByEmail(String email);
 

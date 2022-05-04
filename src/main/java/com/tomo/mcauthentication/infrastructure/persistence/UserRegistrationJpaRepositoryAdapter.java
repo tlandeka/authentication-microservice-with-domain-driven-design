@@ -30,8 +30,8 @@ public class UserRegistrationJpaRepositoryAdapter
         return jpaRepository.findUserRegistrationByEmail(anEmail);
     }
 
-    @Override public UserRegistration findByConfirmLink(String confirmLink) {
-        return jpaRepository.findUserRegistrationByConfirmLink(confirmLink);
+    @Override public UserRegistration findByConfirmationCode(String confirmationCode) {
+        return jpaRepository.findUserRegistrationByConfirmationCode(confirmationCode);
     }
 
     @Override

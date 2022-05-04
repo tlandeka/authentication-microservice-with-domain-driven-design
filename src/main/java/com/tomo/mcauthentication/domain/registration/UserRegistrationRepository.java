@@ -9,7 +9,7 @@ public interface UserRegistrationRepository extends BaseRepository<UserRegistrat
     List<UserRegistration> findAllByEmail(List<String> emails);
     UserRegistration findByEmail(String anEmail);
     long countByEmailAndStatus(String email, UserRegistrationStatus status);
-    UserRegistration findByConfirmLink(String confirmLink);
+    UserRegistration findByConfirmationCode(String confirmationCode);
     UserRegistration findByRecoveryCode(String aRecoveryCode);
     UserRegistration findByUserId(UserId anUserId);
 }
