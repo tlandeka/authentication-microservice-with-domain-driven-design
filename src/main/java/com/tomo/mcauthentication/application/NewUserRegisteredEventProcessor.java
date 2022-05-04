@@ -44,8 +44,9 @@ public class NewUserRegisteredEventProcessor {
     /**
      * Listens for all domain events and stores them.
      */
-    @Before("execution(public * com.tomo.mcauthentication.application.registration.RegisterNewUserCommandHandler+.handle(..))")
+    @Before("execution(public * com.tomo.mcauthentication.application.configuration.AbstractVoidyCommandHandler.*(..)) && target(com.tomo.mcauthentication.application.registration.RegisterNewUserCommandHandler))")
     public void listen() {
+        int a = 5;
         DomainEventPublisher
             .instance()
             .subscribe(new DomainEventSubscriber<NewUserRegistered>() {

@@ -21,13 +21,16 @@ import com.tomo.mcauthentication.ddd.event.EventStore;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Aspect
+@Component
 public class McAuthenticationEventProcessor {
 
-    @Autowired
+
     private EventStore eventStore;
+
+    public McAuthenticationEventProcessor() {}
 
     /**
      * Registers a McAuthenticationEventProcessor to listen
@@ -35,28 +38,18 @@ public class McAuthenticationEventProcessor {
      * This factory method is provided in the case where
      * Spring AOP wiring is not desired.
      */
-    public static void register() {
-        (new McAuthenticationEventProcessor()).listen();
-    }
-
-    /**
-     * Constructs my default state.
-     */
-    public McAuthenticationEventProcessor() {
-        super();
-    }
 
     /**
      * Listens for all domain events and stores them.
      */
-    @Before("execution(* com.tomo.mcauthentication.application.*.*(..))")
+    @Before(value = "execution(* *(..)) && within(com.tomo.mcauthentication.application..*)")
     public void listen() {
         DomainEventPublisher
             .instance()
             .subscribe(new DomainEventSubscriber<DomainEvent>() {
 
                 public void handleEvent(DomainEvent aDomainEvent) {
-                    store(aDomainEvent);
+                    //store(aDomainEvent);
                 }
 
                 public Class<DomainEvent> subscribedToEventType() {
