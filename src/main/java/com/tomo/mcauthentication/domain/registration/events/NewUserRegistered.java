@@ -1,10 +1,20 @@
 package com.tomo.mcauthentication.domain.registration.events;
 
 import com.tomo.mcauthentication.ddd.domain.BaseDomainEvent;
-import com.tomo.mcauthentication.domain.registration.UserRegistrationId;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class NewUserRegistered extends BaseDomainEvent  {
-    private UserRegistrationId userRegistrationId;
-    private String username;
-    private String password;
+    private String email;
+    private String confirmationCode;
+
+    public NewUserRegistered(String email, String confirmationCode) {
+        this.email = email;
+        this.confirmationCode = confirmationCode;
+    }
 }

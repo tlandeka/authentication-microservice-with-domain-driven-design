@@ -4,6 +4,7 @@ import com.tomo.mcauthentication.ddd.domain.ConcurrencySafeEntity;
 import com.tomo.mcauthentication.ddd.domain.DomainEventPublisher;
 import com.tomo.mcauthentication.domain.DomainRegistry;
 import com.tomo.mcauthentication.domain.registration.events.NewUserRegistered;
+import com.tomo.mcauthentication.domain.registration.events.PasswordRecoveryCodeCreated;
 import com.tomo.mcauthentication.domain.registration.rules.PasswordRecoveryCodeShouldBeExpiredOrNull;
 import com.tomo.mcauthentication.domain.registration.rules.PasswordRecoveryCodeShouldNotExpired;
 import com.tomo.mcauthentication.domain.registration.rules.PasswordsMustMatch;
@@ -47,7 +48,7 @@ public class UserRegistration extends ConcurrencySafeEntity {
     private String email;
     private String firstName;
     private String lastName;
-    private String confirmLink;
+    private String confirmationCode;
     private LocalDateTime registerDate;
     private UserRegistrationStatus status;
     private String recoveryCode;
@@ -80,15 +81,16 @@ public class UserRegistration extends ConcurrencySafeEntity {
         this.email = anEmail;
         this.firstName = aFirstName;
         this.lastName = aLastName;
-        this.confirmLink = UUID.randomUUID().toString();
+        this.confirmationCode = UUID.randomUUID().toString();
         this.registerDate = LocalDateTime.now();
         this.status = UserRegistrationStatus.WaitingForConfirmation;
 
         this.protectPassword("", aPassword);
 
-        DomainEventPublisher.instance().publish(
-                new NewUserRegistered()
-        );
+        DomainEventPublisher.instance().publish(new NewUserRegistered(
+                this.email,
+                this.confirmationCode
+        ));
     }
 
     public User createUser(UserRepository userRespository) {
@@ -112,6 +114,12 @@ public class UserRegistration extends ConcurrencySafeEntity {
 
         this.setRecoveryCodeExpirationDate(recoveryCodeExpirationDate);
         this.setRecoveryCode(this.asEncryptedValue(recoveryCode));
+
+        DomainEventPublisher.instance().publish(new PasswordRecoveryCodeCreated(
+                this.email,
+                recoveryCode,
+                this.recoveryCodeExpirationDate
+        ));
 
         return recoveryCode;
     }

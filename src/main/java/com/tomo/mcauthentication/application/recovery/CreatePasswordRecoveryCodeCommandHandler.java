@@ -22,5 +22,7 @@ public class CreatePasswordRecoveryCodeCommandHandler implements CommandHandler<
                 emailAuthenticationService
                         .createPasswordRecoveryCode(aCommand.getEmail())
         );
+
+        //todo send recovery code
     }
 }

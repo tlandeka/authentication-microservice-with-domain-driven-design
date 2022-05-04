@@ -128,8 +128,20 @@
 			<artifactId>javafaker</artifactId>
 			<version>1.0.2</version>
 		</dependency>
-	</dependencies>
 
+<!--		mailgun lib for ddd folder-->
+		<dependency>
+			<groupId>net.sargue</groupId>
+			<artifactId>mailgun</artifactId>
+			<version>1.10.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.jersey.inject</groupId>
+			<artifactId>jersey-hk2</artifactId>
+			<version>2.28</version>
+		</dependency>
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>

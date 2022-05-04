@@ -58,7 +58,7 @@ public abstract class AbstractApplicationServiceTest extends BaseIntegrationTest
 
     protected User createFormUser() {
         confirmUserRegistrationCommandHandler.handle(
-                new ConfirmUserRegistrationCommand(createUserRegistration().getConfirmLink()));
+                new ConfirmUserRegistrationCommand(createUserRegistration().getConfirmationCode()));
         return userRepository.findByEmail(StaticFields.USER_EMAIL);
     }
 

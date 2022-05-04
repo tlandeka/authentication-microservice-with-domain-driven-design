@@ -10,6 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
 
@@ -36,6 +38,8 @@ public class Session extends RootEntity {
     private SessionId sessionId;
     private String accessToken;
     private LocalDateTime expirationDate;
+
+    @Enumerated(EnumType.STRING)
     private TokenType tokenType;
     private String refreshToken;
     private String userAgent;

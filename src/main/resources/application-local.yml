@@ -1,3 +1,6 @@
+server:
+  port: 8080
+debug: true
 
 spring:
   datasource:
@@ -60,6 +63,13 @@ app:
       - http://localhost:3000/oauth2/redirect
       - myandroidapp://oauth2/redirect
       - myiosapp://oauth2/redirect
-server:
-  port: 8080
-debug: true
+
+  message:
+    email:
+      mailgun:
+        domains: "sandbox54d5cde9529947a98f6b72b63096812a.mailgun.org"
+        api-url: "https://api.mailgun.net/v3/"
+        api-key: "dea3df8a018ca20a51e4258732b3b536-fe066263-9793037e"
+        from:
+          name: "mc team"
+          email: "tomo.landeka02@gmail.com"

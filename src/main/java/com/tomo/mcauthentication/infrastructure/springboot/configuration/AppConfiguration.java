@@ -1,7 +1,8 @@
 package com.tomo.mcauthentication.infrastructure.springboot.configuration;
 
-import com.tomo.mcauthentication.application.configuration.CommandHandler;
 import com.tomo.mcauthentication.application.contracts.McAuthenticationModule;
+import com.tomo.mcauthentication.ddd.email.EmailSender;
+import com.tomo.mcauthentication.ddd.port.adapter.message.email.MailGunMessageSender;
 import com.tomo.mcauthentication.domain.oauth2.OAuth2Service;
 import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
 import com.tomo.mcauthentication.domain.users.UserRepository;
@@ -17,7 +18,6 @@ import com.tomo.mcauthentication.infrastructure.processing.builder.QueryHandlerP
 import com.tomo.mcauthentication.infrastructure.springboot.filter.TokenAuthenticationFilter;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -26,8 +26,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
-
-import java.util.stream.Collectors;
 
 @Configuration
 @EnableJpaRepositories
@@ -41,6 +39,27 @@ public class AppConfiguration {
 
     @Autowired
     private Environment env;
+
+    @Autowired
+    AppProperties appProperties;
+
+    @Bean
+    net.sargue.mailgun.Configuration mailGunConfiguration() {
+        MessageProperties.Email.MailGun mailGun = appProperties.getMessage().getEmail().getMailGun();
+        net.sargue.mailgun.Configuration configuration = new net.sargue.mailgun.Configuration()
+                .domain(mailGun.getDomains())
+                .apiUrl(mailGun.getApiUrl())
+                .apiKey(mailGun.getApiKey())
+                        .from(mailGun.getFrom().getName(), mailGun.getFrom().getEmail());
+//                .apiKey("key-xxxxxxxxxxxxxxxxxxxxxxxxx");
+
+        return configuration;
+    }
+
+    @Bean
+    EmailSender emailMessageSender(net.sargue.mailgun.Configuration mailGunConfiguration) {
+        return new MailGunMessageSender(mailGunConfiguration);
+    }
 
     @Bean
     public ModelMapper modelMapper() {

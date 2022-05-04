@@ -5,6 +5,8 @@ import com.tomo.mcauthentication.domain.users.rules.UserEmailMustBeUnique;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +27,8 @@ public class User extends ConcurrencySafeEntity {
     String firstName;
     String lastName;
     String email;
+
+    @Enumerated(EnumType.STRING)
     AuthProvider provider;
 
     public User(
