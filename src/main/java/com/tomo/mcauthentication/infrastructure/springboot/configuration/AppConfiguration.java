@@ -2,6 +2,9 @@ package com.tomo.mcauthentication.infrastructure.springboot.configuration;
 
 import com.tomo.mcauthentication.application.contracts.McAuthenticationModule;
 import com.tomo.mcauthentication.ddd.email.EmailSender;
+import com.tomo.mcauthentication.ddd.event.EventStore;
+import com.tomo.mcauthentication.ddd.infrastructure.persistence.springdata.jpa.EventStoreJpaRepositoryAdapter;
+import com.tomo.mcauthentication.ddd.infrastructure.persistence.springdata.jpa.StoredEventJpaRepository;
 import com.tomo.mcauthentication.ddd.port.adapter.message.email.MailGunMessageSender;
 import com.tomo.mcauthentication.domain.oauth2.OAuth2Service;
 import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
@@ -42,6 +45,14 @@ public class AppConfiguration {
 
     @Autowired
     AppProperties appProperties;
+
+    @Autowired
+    StoredEventJpaRepository storedEventJpaRepository;
+
+    @Bean
+    EventStore eventStore() {
+        return new EventStoreJpaRepositoryAdapter(storedEventJpaRepository);
+    }
 
     @Bean
     String recoveryLink() {

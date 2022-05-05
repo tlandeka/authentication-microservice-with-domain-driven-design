@@ -43,3 +43,10 @@ create table session (
 );
 
 CREATE UNIQUE INDEX user_registration_user_id_uindex ON user_registration(user_id);
+
+CREATE TABLE stored_event (
+    event_id BIGSERIAL PRIMARY KEY,
+    event_body TEXT NOT NULL,
+    occurred_on TIMESTAMP NOT NULL,
+    type_name VARCHAR (200) NOT NULL
+);

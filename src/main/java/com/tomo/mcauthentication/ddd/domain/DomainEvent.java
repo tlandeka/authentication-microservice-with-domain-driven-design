@@ -5,5 +5,5 @@ import java.time.LocalDateTime;
 public interface DomainEvent {
     int eventVersion();
 
-    LocalDateTime occuredOn();
+    LocalDateTime occurredOn();
 }

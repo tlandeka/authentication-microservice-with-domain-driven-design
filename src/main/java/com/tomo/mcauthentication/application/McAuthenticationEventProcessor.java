@@ -1,17 +1,3 @@
-//   Copyright 2012,2013 Vaughn Vernon
-//
-//   Licensed under the Apache License, Version 2.0 (the "License");
-//   you may not use this file except in compliance with the License.
-//   You may obtain a copy of the License at
-//
-//       http://www.apache.org/licenses/LICENSE-2.0
-//
-//   Unless required by applicable law or agreed to in writing, software
-//   distributed under the License is distributed on an "AS IS" BASIS,
-//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//   See the License for the specific language governing permissions and
-//   limitations under the License.
-
 package com.tomo.mcauthentication.application;
 
 import com.tomo.mcauthentication.ddd.domain.DomainEvent;
@@ -27,20 +13,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class McAuthenticationEventProcessor {
 
-
     private EventStore eventStore;
 
-    public McAuthenticationEventProcessor() {}
+    public McAuthenticationEventProcessor(EventStore eventStore) {
+        this.eventStore = eventStore;
+    }
 
     /**
-     * Registers a McAuthenticationEventProcessor to listen
-     * and forward all domain events to external subscribers.
-     * This factory method is provided in the case where
-     * Spring AOP wiring is not desired.
-     */
-
-    /**
-     * Listens for all domain events and stores them.
+     * Listens for applications service calls.
      */
     @Before(value = "execution(* *(..)) && within(com.tomo.mcauthentication.application..*)")
     public void listen() {
@@ -49,7 +29,7 @@ public class McAuthenticationEventProcessor {
             .subscribe(new DomainEventSubscriber<DomainEvent>() {
 
                 public void handleEvent(DomainEvent aDomainEvent) {
-                    //store(aDomainEvent);
+                    store(aDomainEvent);
                 }
 
                 public Class<DomainEvent> subscribedToEventType() {

@@ -3,16 +3,23 @@ package com.tomo.mcauthentication.ddd.event;
 import com.tomo.mcauthentication.ddd.AssertionConcern;
 import com.tomo.mcauthentication.ddd.domain.DomainEvent;
 
-import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.time.LocalDateTime;
 
+@Entity
 public class StoredEvent extends AssertionConcern {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long eventId;
     private String eventBody;
-    private long eventId;
-    private Date occurredOn;
+    private LocalDateTime occurredOn;
     private String typeName;
 
-    public StoredEvent(String aTypeName, Date anOccurredOn, String anEventBody) {
+    public StoredEvent(String aTypeName, LocalDateTime anOccurredOn, String anEventBody) {
         this();
 
         this.setEventBody(anEventBody);
@@ -20,7 +27,7 @@ public class StoredEvent extends AssertionConcern {
         this.setTypeName(aTypeName);
     }
 
-    public StoredEvent(String aTypeName, Date anOccurredOn, String anEventBody, long anEventId) {
+    public StoredEvent(String aTypeName, LocalDateTime anOccurredOn, String anEventBody, long anEventId) {
         this(aTypeName, anOccurredOn, anEventBody);
 
         this.setEventId(anEventId);
@@ -34,7 +41,7 @@ public class StoredEvent extends AssertionConcern {
         return this.eventId;
     }
 
-    public Date occurredOn() {
+    public LocalDateTime occurredOn() {
         return this.occurredOn;
     }
 
@@ -106,7 +113,7 @@ public class StoredEvent extends AssertionConcern {
         this.eventId = anEventId;
     }
 
-    protected void setOccurredOn(Date anOccurredOn) {
+    protected void setOccurredOn(LocalDateTime anOccurredOn) {
         this.occurredOn = anOccurredOn;
     }
 

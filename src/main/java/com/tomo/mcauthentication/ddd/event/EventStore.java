@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface EventStore {
 
-    public List<StoredEvent> allStoredEventsBetween(long aLowStoredEventId, long aHighStoredEventId);
+    List<StoredEvent> allStoredEventsBetween(Long aLowStoredEventId, Long aHighStoredEventId);
 
-    public List<StoredEvent> allStoredEventsSince(long aStoredEventId);
+    List<StoredEvent> allStoredEventsSince(Long aStoredEventId);
 
-    public StoredEvent append(DomainEvent aDomainEvent);
+    StoredEvent append(DomainEvent aDomainEvent);
 
-    public void close();
+    void close();
 
-    public long countStoredEvents();
+    long countStoredEvents();
 }

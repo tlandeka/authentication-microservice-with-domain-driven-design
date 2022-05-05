@@ -3,7 +3,7 @@ package com.tomo.mcauthentication.domain.registration;
 import com.tomo.mcauthentication.ddd.domain.ConcurrencySafeEntity;
 import com.tomo.mcauthentication.ddd.domain.DomainEventPublisher;
 import com.tomo.mcauthentication.domain.DomainRegistry;
-import com.tomo.mcauthentication.domain.registration.events.NewUserRegistered;
+import com.tomo.mcauthentication.domain.registration.events.UserRegistrationRequested;
 import com.tomo.mcauthentication.domain.registration.events.PasswordRecoveryCodeCreated;
 import com.tomo.mcauthentication.domain.registration.rules.PasswordRecoveryCodeShouldBeExpiredOrNull;
 import com.tomo.mcauthentication.domain.registration.rules.PasswordRecoveryCodeShouldNotExpired;
@@ -87,9 +87,13 @@ public class UserRegistration extends ConcurrencySafeEntity {
 
         this.protectPassword("", aPassword);
 
-        DomainEventPublisher.instance().publish(new NewUserRegistered(
+        DomainEventPublisher.instance().publish(new UserRegistrationRequested(
                 this.email,
-                this.confirmationCode
+                this.confirmationCode,
+                this.firstName,
+                this.lastName,
+                this.registerDate,
+                this.status
         ));
     }
 

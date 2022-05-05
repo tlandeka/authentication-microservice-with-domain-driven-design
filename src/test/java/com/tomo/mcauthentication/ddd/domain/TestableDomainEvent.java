@@ -23,7 +23,7 @@ public class TestableDomainEvent implements DomainEvent {
     }
 
     @Override
-    public LocalDateTime occuredOn() {
+    public LocalDateTime occurredOn() {
         return occuredOn;
     }
 }
