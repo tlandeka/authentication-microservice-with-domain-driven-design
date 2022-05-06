@@ -3,6 +3,7 @@ package com.tomo.mcauthentication.infrastructure.springboot.controller;
 import com.tomo.mcauthentication.application.authentication.command.EmailLoginCommand;
 import com.tomo.mcauthentication.application.authentication.command.FacebookLoginCommand;
 import com.tomo.mcauthentication.application.authentication.command.GoogleLoginCommand;
+import com.tomo.mcauthentication.application.authentication.command.LogoutCommand;
 import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
 import com.tomo.mcauthentication.application.contracts.Command;
 import com.tomo.mcauthentication.infrastructure.springboot.security.CurrentUser;
@@ -48,6 +49,19 @@ public class AuthenticationController extends AbstractController {
     public ResponseEntity googleLogin(@CurrentUser UserAuthPrincipal user,
             @RequestBody @Validated GoogleLoginCommand command) {
         return ResponseEntity.ok(this.executeCommand(command, user));
+    }
+
+    @RequestMapping(method = RequestMethod.PATCH, path = "/logout")
+    public ResponseEntity googleLogin(@CurrentUser UserAuthPrincipal user,
+            @RequestBody @Validated LogoutCommand command) {
+        if (user == null) {
+            return ResponseEntity.badRequest().body("Missing session cookie.");
+        }
+
+        command.setAuthToken(user.getSession().getAccessToken());
+        authenticationModule.executeCommand(command);
+
+        return ResponseEntity.ok().build();
     }
 
     protected SessionDto executeCommand(Command command, UserAuthPrincipal user) {

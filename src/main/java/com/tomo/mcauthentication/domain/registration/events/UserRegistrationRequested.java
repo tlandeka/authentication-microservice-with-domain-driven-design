@@ -13,6 +13,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class UserRegistrationRequested extends BaseDomainEvent  {
+    private long userRegistrationId;
     private String email;
     private String confirmationCode;
     private String firstName;

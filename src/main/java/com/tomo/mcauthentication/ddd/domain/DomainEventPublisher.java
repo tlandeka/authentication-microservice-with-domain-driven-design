@@ -1,13 +1,13 @@
 package com.tomo.mcauthentication.ddd.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DomainEventPublisher {
 
     private static final ThreadLocal<DomainEventPublisher> instance = ThreadLocal.withInitial(() -> new DomainEventPublisher());
 
-    List<DomainEventSubscriber> subscribers;
+    Map<Class, DomainEventSubscriber> subscribers;
 
     private boolean publishing = false;
 
@@ -22,7 +22,7 @@ public class DomainEventPublisher {
             try {
                 Class<?> eventType = aDomainEvent.getClass();
 
-                this.subscribers().stream()
+                this.subscribers().values().stream()
                         .filter(subscriber -> {
                             Class<?> subscibedType = subscriber.subscribedToEventType();
                             return subscibedType == eventType || subscibedType == DomainEvent.class;
@@ -38,8 +38,8 @@ public class DomainEventPublisher {
     public void subscribe(DomainEventSubscriber aSubscriber) {
         this.ensureSubscribers();
 
-        if (!this.isPublishing()) {
-            this.subscribers().add(aSubscriber);
+        if (!this.isPublishing() && !this.subscribers.containsKey(aSubscriber.getClass())) {
+            this.subscribers.put(aSubscriber.getClass(), aSubscriber);
         }
     }
 
@@ -53,15 +53,15 @@ public class DomainEventPublisher {
 
     private void ensureSubscribers() {
         if (!this.hasSubscribers()) {
-            this.setSubscribers(new ArrayList());
+            this.setSubscribers(new HashMap<>());
         }
     }
 
-    private void setSubscribers(List sSubscriberList) {
-        this.subscribers = sSubscriberList;
+    private void setSubscribers(Map<Class, DomainEventSubscriber> sSubscriberMap) {
+        this.subscribers = sSubscriberMap;
     }
 
-    private List<DomainEventSubscriber> subscribers() {
+    private Map<Class, DomainEventSubscriber> subscribers() {
         return this.subscribers;
     }
 

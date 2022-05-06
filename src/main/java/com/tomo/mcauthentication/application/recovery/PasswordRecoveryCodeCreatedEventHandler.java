@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class PasswordRecoveryCodeCreatedEventProcessor {
+public class PasswordRecoveryCodeCreatedEventHandler {
 
     private McAuthenticationModule module;
 
@@ -22,27 +22,14 @@ public class PasswordRecoveryCodeCreatedEventProcessor {
      */
     private String recoveryLink;
 
-    public PasswordRecoveryCodeCreatedEventProcessor(McAuthenticationModule module, String recoveryLink) {
-        this.module = module;
+    public PasswordRecoveryCodeCreatedEventHandler(McAuthenticationModule authenticationModule, String recoveryLink) {
+        this.module = authenticationModule;
         this.recoveryLink = recoveryLink;
     }
 
-    /**
-     * This factory method is provided in the case where
-     * Spring AOP wiring is not desired.
-     */
-    public static void register() {
-        (new PasswordRecoveryCodeCreatedEventProcessor()).listen();
-    }
-
-    /**
-     * Constructs my default state.
-     */
-    public PasswordRecoveryCodeCreatedEventProcessor() {
-        super();
-    }
-
-    @Before("execution(* com.tomo.mcauthentication.application.*.*(..))")
+    @Before("execution(" +
+                    "public * com.tomo.mcauthentication.application.configuration.CommandHandler.*(..)) && " +
+                    "target(com.tomo.mcauthentication.application.recovery.CreatePasswordRecoveryCodeCommandHandler))")
     public void listen() {
         DomainEventPublisher
             .instance()
@@ -57,7 +44,7 @@ public class PasswordRecoveryCodeCreatedEventProcessor {
                 }
 
                 public Class<PasswordRecoveryCodeCreated> subscribedToEventType() {
-                    return PasswordRecoveryCodeCreated.class; // all domain events
+                    return PasswordRecoveryCodeCreated.class;
                 }
             });
     }

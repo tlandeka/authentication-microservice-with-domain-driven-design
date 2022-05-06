@@ -1,7 +1,9 @@
 package com.tomo.mcauthentication.domain.session;
 
+import com.tomo.mcauthentication.ddd.domain.DomainEventPublisher;
 import com.tomo.mcauthentication.ddd.domain.RootEntity;
 import com.tomo.mcauthentication.domain.DomainRegistry;
+import com.tomo.mcauthentication.domain.session.events.SessionCreated;
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserId;
 
@@ -63,6 +65,10 @@ public class Session extends RootEntity {
         if (Boolean.TRUE.equals(rememberMe)) {
             this.refreshToken = tokenProvider.createRefreshToken(user);
         }
+
+        DomainEventPublisher.instance().publish(
+                new SessionCreated(this.getSessionId(), this.getUserId())
+        );
     }
 
     public boolean isExpired() {

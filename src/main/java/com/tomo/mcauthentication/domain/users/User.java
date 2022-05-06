@@ -1,6 +1,10 @@
 package com.tomo.mcauthentication.domain.users;
 
 import com.tomo.mcauthentication.ddd.domain.ConcurrencySafeEntity;
+import com.tomo.mcauthentication.ddd.domain.DomainEvent;
+import com.tomo.mcauthentication.ddd.domain.DomainEventPublisher;
+import com.tomo.mcauthentication.domain.users.events.UserCreated;
+import com.tomo.mcauthentication.domain.users.events.UserNameChanged;
 import com.tomo.mcauthentication.domain.users.rules.UserEmailMustBeUnique;
 
 import javax.persistence.EmbeddedId;
@@ -44,12 +48,24 @@ public class User extends ConcurrencySafeEntity {
         this.lastName = aLastName;
         this.email = anEmail;
         this.provider = aProvider;
-    }
 
+        this.publish(new UserCreated(
+                this.getUserId(),
+                this.getFirstName(),
+                this.getLastName(),
+                this.getEmail(),
+                this.getProvider()
+        ));
+    }
 
     public void updateDetails(String aFirstName, String aLastName) {
         this.setFirstName(aFirstName);
         this.setLastName(aLastName);
+
+        publish(new UserNameChanged(
+                this.getEmail(),
+                this.getFirstName(),
+                this.getLastName()));
     }
 
     public void setLastName(String aLastName) {
@@ -60,5 +76,9 @@ public class User extends ConcurrencySafeEntity {
     public void setFirstName(String aFirstName) {
         assertArgumentNotEmpty(aFirstName, "First name cannot be empty.");
         this.firstName = aFirstName;
+    }
+
+    private void publish(DomainEvent event) {
+        DomainEventPublisher.instance().publish(event);
     }
 }

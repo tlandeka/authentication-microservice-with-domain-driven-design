@@ -32,13 +32,13 @@ public class RegistrationController extends AbstractController {
 
     @RequestMapping(method = RequestMethod.PATCH, path = "/register/password/reset")
     @ResponseStatus(HttpStatus.OK)
-    public void formRegisterRecovery(@RequestParam CreatePasswordRecoveryCodeCommand command){
+    public void formRegisterRecovery(@RequestBody @Validated CreatePasswordRecoveryCodeCommand command){
         this.executeCommand(command);
     }
 
     @RequestMapping(method = RequestMethod.PATCH, path = "/register/password/reset/confirm")
     @ResponseStatus(HttpStatus.OK)
-    public void passwordReset(@RequestParam UpdatePasswordWithRecoveryCodeCommand command){
+    public void passwordReset(@RequestBody @Validated UpdatePasswordWithRecoveryCodeCommand command) {
         this.executeCommand(command);
     }
 }

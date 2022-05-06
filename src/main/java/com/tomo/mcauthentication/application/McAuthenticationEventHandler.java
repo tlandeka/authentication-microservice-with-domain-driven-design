@@ -11,17 +11,14 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class McAuthenticationEventProcessor {
+public class McAuthenticationEventHandler {
 
     private EventStore eventStore;
 
-    public McAuthenticationEventProcessor(EventStore eventStore) {
+    public McAuthenticationEventHandler(EventStore eventStore) {
         this.eventStore = eventStore;
     }
 
-    /**
-     * Listens for applications service calls.
-     */
     @Before(value = "execution(* *(..)) && within(com.tomo.mcauthentication.application..*)")
     public void listen() {
         DomainEventPublisher

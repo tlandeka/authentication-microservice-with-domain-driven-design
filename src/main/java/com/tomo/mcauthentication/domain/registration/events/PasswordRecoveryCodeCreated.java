@@ -12,11 +12,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PasswordRecoveryCodeCreated extends BaseDomainEvent  {
+    long userRegistrationId;
     private String email;
     private String recoveryCode;
     private LocalDateTime recoveryCodeExpirationDate;
 
-    public PasswordRecoveryCodeCreated(String email, String recoveryCode, LocalDateTime recoveryCodeExpirationDate) {
+    public PasswordRecoveryCodeCreated(long userRegistrationId, String email, String recoveryCode, LocalDateTime recoveryCodeExpirationDate) {
+        this.userRegistrationId = userRegistrationId;
         this.email = email;
         this.recoveryCode = recoveryCode;
         this.recoveryCodeExpirationDate = recoveryCodeExpirationDate;

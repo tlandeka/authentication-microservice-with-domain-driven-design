@@ -17,6 +17,7 @@ public class McAuthenticationModuleExecutor implements McAuthenticationModule {
     CommandHandlerPipelineBuilder commandHandlerPipelineBuilder;
     QueryHandlerPipelineBuilder queryHandlerPipelineBuilder;
 
+
     public McAuthenticationModuleExecutor(
             CommandHandlerPipelineBuilder commandHandlerPipelineBuilder,
             QueryHandlerPipelineBuilder queryHandlerPipelineBuilder) {

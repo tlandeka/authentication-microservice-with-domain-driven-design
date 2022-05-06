@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class NewUserRegisteredEventProcessor {
+public class NewUserRegisteredEventHandler {
 
     private McAuthenticationModule authenticationModule;
 
@@ -22,7 +22,7 @@ public class NewUserRegisteredEventProcessor {
      */
     private String confirmationLink;
 
-    public NewUserRegisteredEventProcessor(McAuthenticationModule authenticationModule, String confirmationLink) {
+    public NewUserRegisteredEventHandler(McAuthenticationModule authenticationModule, String confirmationLink) {
         this.authenticationModule = authenticationModule;
         this.confirmationLink = confirmationLink;
     }

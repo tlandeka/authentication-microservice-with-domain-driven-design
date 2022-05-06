@@ -1,8 +1,12 @@
 package com.tomo.mcauthentication.domain.registration;
 
 import com.tomo.mcauthentication.ddd.domain.ConcurrencySafeEntity;
+import com.tomo.mcauthentication.ddd.domain.DomainEvent;
 import com.tomo.mcauthentication.ddd.domain.DomainEventPublisher;
 import com.tomo.mcauthentication.domain.DomainRegistry;
+import com.tomo.mcauthentication.domain.registration.events.PasswordChanged;
+import com.tomo.mcauthentication.domain.registration.events.PasswordRecovered;
+import com.tomo.mcauthentication.domain.registration.events.UserRegistrationConfirmed;
 import com.tomo.mcauthentication.domain.registration.events.UserRegistrationRequested;
 import com.tomo.mcauthentication.domain.registration.events.PasswordRecoveryCodeCreated;
 import com.tomo.mcauthentication.domain.registration.rules.PasswordRecoveryCodeShouldBeExpiredOrNull;
@@ -22,6 +26,8 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -50,6 +56,7 @@ public class UserRegistration extends ConcurrencySafeEntity {
     private String lastName;
     private String confirmationCode;
     private LocalDateTime registerDate;
+    @Enumerated(EnumType.STRING)
     private UserRegistrationStatus status;
     private String recoveryCode;
     private LocalDateTime recoveryCodeExpirationDate;
@@ -87,7 +94,7 @@ public class UserRegistration extends ConcurrencySafeEntity {
 
         this.protectPassword("", aPassword);
 
-        DomainEventPublisher.instance().publish(new UserRegistrationRequested(
+        this.publishEvent(new UserRegistrationRequested(
                 this.email,
                 this.confirmationCode,
                 this.firstName,
@@ -106,6 +113,8 @@ public class UserRegistration extends ConcurrencySafeEntity {
 
         UserId userId = userRespository.nextIdentity();
 
+        this.publishEvent(new UserRegistrationConfirmed(this.id, this.getStatus(), this.getUserId()));
+
         return new User(userId, getFirstName(), getLastName(), getEmail(), User.AuthProvider.EMAIL, userRespository);
     }
 
@@ -119,11 +128,11 @@ public class UserRegistration extends ConcurrencySafeEntity {
         this.setRecoveryCodeExpirationDate(recoveryCodeExpirationDate);
         this.setRecoveryCode(this.asEncryptedValue(recoveryCode));
 
-        DomainEventPublisher.instance().publish(new PasswordRecoveryCodeCreated(
+        this.publishEvent(new PasswordRecoveryCodeCreated(
+                this.id,
                 this.email,
                 recoveryCode,
-                this.recoveryCodeExpirationDate
-        ));
+                this.recoveryCodeExpirationDate));
 
         return recoveryCode;
     }
@@ -139,6 +148,8 @@ public class UserRegistration extends ConcurrencySafeEntity {
         this.checkRule(new PasswordsMustMatch(this.getPassword(), this.asEncryptedValue(anOldPassword)));
 
         this.protectPassword(this.getPassword(), aNewPassword);
+
+        this.publishEvent(new PasswordChanged(this.id, this.password));
     }
 
     public void changePasswordWithRecoveryCode(String aRecoveryCode, String aNewPassword, String aNewPasswordRepeated) {
@@ -150,9 +161,15 @@ public class UserRegistration extends ConcurrencySafeEntity {
 
         this.setRecoveryCodeExpirationDate(LocalDateTime.now());
         this.protectPassword(this.getPassword(), aNewPassword);
+
+        this.publishEvent(new PasswordRecovered(
+                this.id,
+                this.getPassword(),
+                this.getRecoveryCode()
+        ));
     }
 
-    private void assertNewPassword(String aNewPassword, String aNewPasswordRepeated) {
+    protected void assertNewPassword(String aNewPassword, String aNewPasswordRepeated) {
         this.assertArgumentNotNull(aNewPassword, "New password is missing.");
         this.assertArgumentNotNull(aNewPasswordRepeated, "Repeated password is missing.");
         this.assertArgumentEquals(aNewPassword, aNewPasswordRepeated, "Provided passwords must be equal.");
@@ -196,5 +213,9 @@ public class UserRegistration extends ConcurrencySafeEntity {
 
     protected void setPassword(String aPassword) {
         this.password = aPassword;
+    }
+
+    private void publishEvent(DomainEvent domainEvent) {
+        DomainEventPublisher.instance().publish(domainEvent);
     }
 }
