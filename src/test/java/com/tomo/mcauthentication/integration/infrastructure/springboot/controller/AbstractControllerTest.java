@@ -19,7 +19,7 @@ public abstract class AbstractControllerTest extends BaseIntegrationTest {
     protected int randomServerPort;
 
     protected URI uri() throws URISyntaxException {
-        final String baseUrl = "http://localhost:" + randomServerPort+ "/user/register/";
+        final String baseUrl = "http://localhost:" + randomServerPort+ "/register/form";
         return new URI(baseUrl);
     }
 
