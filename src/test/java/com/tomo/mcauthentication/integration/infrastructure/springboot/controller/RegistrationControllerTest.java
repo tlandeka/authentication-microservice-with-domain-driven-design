@@ -1,6 +1,8 @@
 package com.tomo.mcauthentication.integration.infrastructure.springboot.controller;
 
 import com.tomo.mcauthentication.application.registration.command.RegisterNewUserCommand;
+import com.tomo.mcauthentication.infrastructure.springboot.controller.RestApiRoutes;
+import com.tomo.mcauthentication.infrastructure.springboot.controller.RestApiRoutes.RegistrationRoutes;
 import com.tomo.mcauthentication.testdata.CommandObjectMother;
 
 import org.junit.Assert;
@@ -30,7 +32,10 @@ public class RegistrationControllerTest extends AbstractControllerTest {
         HttpHeaders headers = baseHeaders();
         HttpEntity<RegisterNewUserCommand> request = new HttpEntity<>(command, headers);
 
-        ResponseEntity<String> result = this.restTemplate.postForEntity(uri(), request, String.class);
+        ResponseEntity<String> result = this.restTemplate.postForEntity(
+                url(RegistrationRoutes.FORM_REGISTRATION),
+                request,
+                String.class);
 
         //Verify request succeed
         Assert.assertEquals(201, result.getStatusCodeValue());

@@ -6,6 +6,7 @@ import com.tomo.mcauthentication.application.authentication.command.GoogleLoginC
 import com.tomo.mcauthentication.application.authentication.command.LogoutCommand;
 import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
 import com.tomo.mcauthentication.application.contracts.Command;
+import com.tomo.mcauthentication.infrastructure.springboot.controller.RestApiRoutes.AuthRoutes;
 import com.tomo.mcauthentication.infrastructure.springboot.security.CurrentUser;
 import com.tomo.mcauthentication.infrastructure.springboot.security.UserAuthPrincipal;
 import com.tomo.mcauthentication.infrastructure.util.CookieUtils;
@@ -30,28 +31,28 @@ public class AuthenticationController extends AbstractController {
     @Autowired
     private HttpServletResponse response;
 
-    @RequestMapping(method = RequestMethod.POST, path = "/login/form")
+    @RequestMapping(method = RequestMethod.POST, path = AuthRoutes.FORM_LOGIN)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity formLogin(@CurrentUser UserAuthPrincipal user,
             @RequestBody @Validated EmailLoginCommand command) {
         return ResponseEntity.ok(this.executeCommand(command, user));
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "/login/facebook")
+    @RequestMapping(method = RequestMethod.POST, path = AuthRoutes.FACEBOOK_LOGIN)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity facebookLogin(@CurrentUser UserAuthPrincipal user,
             @RequestBody @Validated FacebookLoginCommand command){
         return ResponseEntity.ok(this.executeCommand(command, user));
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "/login/google")
+    @RequestMapping(method = RequestMethod.POST, path = AuthRoutes.GOOGLE_LOGIN)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity googleLogin(@CurrentUser UserAuthPrincipal user,
             @RequestBody @Validated GoogleLoginCommand command) {
         return ResponseEntity.ok(this.executeCommand(command, user));
     }
 
-    @RequestMapping(method = RequestMethod.PATCH, path = "/logout")
+    @RequestMapping(method = RequestMethod.PATCH, path = AuthRoutes.LOGOUT)
     public ResponseEntity googleLogin(@CurrentUser UserAuthPrincipal user,
             @RequestBody @Validated LogoutCommand command) {
         if (user == null) {
