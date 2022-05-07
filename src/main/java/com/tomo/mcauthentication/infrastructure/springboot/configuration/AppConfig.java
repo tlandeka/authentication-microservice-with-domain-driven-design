@@ -32,7 +32,7 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 
 @Configuration
 @EnableJpaRepositories
-public class AppConfiguration {
+public class AppConfig {
 
     @Autowired
     UserRegistrationJpaRepository userRegistrationJpaRepository;
