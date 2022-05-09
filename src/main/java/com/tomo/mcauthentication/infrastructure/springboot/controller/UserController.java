@@ -14,19 +14,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(path = "/")
 public class UserController extends AbstractController {
 
-    @RequestMapping(method = RequestMethod.GET, path = User.GET_USER)
+    @RequestMapping(method = RequestMethod.GET, path = User.USER_DETAILS)
     public ResponseEntity user(@PathVariable(value = "userId") String userId){
         BaseUserDto dto = this.executeQuery(new GetUserQuery(userId), BaseUserDto.class);
 
         return ResponseEntity.ok(dto);
     }
 
-    @RequestMapping(method = RequestMethod.PATCH, path = User.USER)
-    public ResponseEntity user(@RequestBody @Validated ChangeUserDetailsCommand command){
+    @RequestMapping(method = RequestMethod.PATCH, path = User.USER_DETAILS)
+    public ResponseEntity user(
+            @PathVariable(value = "userId") UUID userId,
+            @RequestBody @Validated ChangeUserDetailsCommand command){
+        command.setUserId(userId);
         this.executeCommand(command);
         return new ResponseEntity(HttpStatus.OK);
     }

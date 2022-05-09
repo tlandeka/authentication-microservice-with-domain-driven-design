@@ -21,6 +21,6 @@ public class RestApiRoutes {
 
     public static class User {
         public static final String USER = PRIVATE + "/user";
-        public static final String GET_USER = PRIVATE + USER + "/{userId}";
+        public static final String USER_DETAILS = USER + "/{userId}";
     }
 }

@@ -53,7 +53,7 @@ public class AuthenticationController extends AbstractController {
     }
 
     @RequestMapping(method = RequestMethod.PATCH, path = AuthRoutes.LOGOUT)
-    public ResponseEntity googleLogin(@CurrentUser UserAuthPrincipal user,
+    public ResponseEntity logout(@CurrentUser UserAuthPrincipal user,
             @RequestBody @Validated LogoutCommand command) {
         if (user == null) {
             return ResponseEntity.badRequest().body("Missing session cookie.");

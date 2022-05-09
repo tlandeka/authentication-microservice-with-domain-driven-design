@@ -148,6 +148,7 @@
             <version>2.8.5</version>
         </dependency>
 
+<!--		swagger 2.0 with spring boot-->
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-boot-starter</artifactId>
