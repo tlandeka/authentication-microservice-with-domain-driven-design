@@ -12,8 +12,8 @@ public class PasswordRecoveryCodeShouldNotExpired implements BusinessRule {
     }
 
     @Override
-    public Boolean isBroken() {
-        return !userRegistration.isRecoveryCodeUnexpired();
+    public Boolean isRuleComplied() {
+        return userRegistration.isRecoveryCodeUnexpired();
     }
 
     @Override

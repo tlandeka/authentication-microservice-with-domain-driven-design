@@ -13,11 +13,13 @@ public class UserEmailMustBeUnique implements BusinessRule {
         this.email = email;
     }
 
-    @Override public Boolean isBroken() {
-        return userRespository.findByEmail(this.email) != null;
+    @Override
+    public Boolean isRuleComplied() {
+        return userRespository.findByEmail(this.email) == null;
     }
 
-    @Override public String message() {
+    @Override
+    public String message() {
         return "User with this email already exists.";
     }
 }

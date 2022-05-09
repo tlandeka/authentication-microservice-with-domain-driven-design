@@ -12,8 +12,8 @@ public class SessionCannotBeExpiredWhenRefreshTokenIsMissing implements Business
     }
 
     @Override
-    public Boolean isBroken() {
-        return session.isExpired() && session.getRefreshToken() == null;
+    public Boolean isRuleComplied() {
+        return (!session.isExpired()) || (session.isExpired() && session.getRefreshToken() != null);
     }
 
     @Override

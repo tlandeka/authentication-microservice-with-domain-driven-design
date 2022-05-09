@@ -13,10 +13,10 @@ import com.tomo.mcauthentication.domain.registration.rules.PasswordRecoveryCodeS
 import com.tomo.mcauthentication.domain.registration.rules.PasswordRecoveryCodeShouldNotExpired;
 import com.tomo.mcauthentication.domain.registration.rules.PasswordsMustMatch;
 import com.tomo.mcauthentication.domain.registration.rules.RecoveryCodeMustMatch;
-import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationCannotBeConfirmedAfterExpirationRule;
-import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationCannotBeConfirmedMoreThanOnceRule;
+import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationCannotBeConfirmedAfterExpiration;
+import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationCannotBeConfirmedMoreThanOnce;
 import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationMustBeConfirmed;
-import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationMustBeUniqueRule;
+import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationMustBeUnique;
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserId;
 import com.tomo.mcauthentication.domain.users.UserRepository;
@@ -83,7 +83,7 @@ public class UserRegistration extends ConcurrencySafeEntity {
             String aLastName,
             UserRegistrationRepository aRepository,
             UserRepository userRespository) {
-        this.checkRule(new UserRegistrationMustBeUniqueRule(aRepository, anEmail));
+        this.checkRule(new UserRegistrationMustBeUnique(aRepository, anEmail));
         this.checkRule(new UserEmailMustBeUnique(userRespository, anEmail));
         this.email = anEmail;
         this.firstName = aFirstName;
@@ -105,8 +105,8 @@ public class UserRegistration extends ConcurrencySafeEntity {
     }
 
     public User createUser(UserRepository userRespository) {
-        this.checkRule(new UserRegistrationCannotBeConfirmedMoreThanOnceRule(this.status));
-        this.checkRule(new UserRegistrationCannotBeConfirmedAfterExpirationRule(this.registerDate));
+        this.checkRule(new UserRegistrationCannotBeConfirmedMoreThanOnce(this.status));
+        this.checkRule(new UserRegistrationCannotBeConfirmedAfterExpiration(this.registerDate));
 
         this.setStatus(UserRegistrationStatus.Confirmed);
         this.setUserId(userId);
@@ -139,6 +139,10 @@ public class UserRegistration extends ConcurrencySafeEntity {
 
     public boolean isRecoveryCodeUnexpired() {
         return recoveryCodeExpirationDate != null && recoveryCodeExpirationDate.isAfter(LocalDateTime.now());
+    }
+
+    public boolean isRecoveryCodeExpired() {
+        return recoveryCodeExpirationDate != null && recoveryCodeExpirationDate.isBefore(LocalDateTime.now());
     }
 
     public void changePassword(String anOldPassword, String aNewPassword, String aNewPasswordRepeated) {

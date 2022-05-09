@@ -13,8 +13,8 @@ public class RecoveryCodeMustMatch implements BusinessRule {
     }
 
     @Override
-    public Boolean isBroken() {
-        return !providedCode.equals(storedCode);
+    public Boolean isRuleComplied() {
+        return providedCode.equals(storedCode);
     }
 
     @Override

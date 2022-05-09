@@ -13,8 +13,8 @@ public class PasswordsMustMatch implements BusinessRule {
     }
 
     @Override
-    public Boolean isBroken() {
-        return !providedPassoword.equals(storedPassword);
+    public Boolean isRuleComplied() {
+        return providedPassoword.equals(storedPassword);
     }
 
     @Override

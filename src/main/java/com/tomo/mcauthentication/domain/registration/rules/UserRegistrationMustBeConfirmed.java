@@ -1,6 +1,7 @@
 package com.tomo.mcauthentication.domain.registration.rules;
 
 import com.tomo.mcauthentication.ddd.domain.BusinessRule;
+import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
 import com.tomo.mcauthentication.domain.registration.UserRegistrationStatus;
 
 public class UserRegistrationMustBeConfirmed implements BusinessRule {
@@ -12,8 +13,8 @@ public class UserRegistrationMustBeConfirmed implements BusinessRule {
     }
 
     @Override
-    public Boolean isBroken() {
-        return !userRegistrationStatus.equals(UserRegistrationStatus.Confirmed);
+    public Boolean isRuleComplied() {
+        return userRegistrationStatus.equals(UserRegistrationStatus.Confirmed);
     }
 
     @Override

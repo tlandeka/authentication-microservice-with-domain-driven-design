@@ -1,4 +1,4 @@
-package com.tomo.mcauthentication.unit.domain.user.registration;
+package com.tomo.mcauthentication.integration.registration;
 
 import com.tomo.mcauthentication.domain.DomainRegistry;
 import com.tomo.mcauthentication.domain.EncryptionService;
