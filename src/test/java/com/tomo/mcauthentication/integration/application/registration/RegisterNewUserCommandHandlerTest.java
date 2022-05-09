@@ -7,12 +7,16 @@ import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
 import com.tomo.mcauthentication.integration.application.AbstractApplicationServiceTest;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThrows;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 
 public class RegisterNewUserCommandHandlerTest extends AbstractApplicationServiceTest {
 
@@ -30,6 +34,7 @@ public class RegisterNewUserCommandHandlerTest extends AbstractApplicationServic
     public void testNewUserRegistrationCreated() {
         UserRegistration userRegistration = createUserRegistration();
         assertNotNull(userRegistration);
+        verify(this.emailMessageSender, Mockito.times(1)).send(any());
     }
 
     @Test

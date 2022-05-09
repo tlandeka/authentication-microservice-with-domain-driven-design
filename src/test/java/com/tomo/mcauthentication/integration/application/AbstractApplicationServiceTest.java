@@ -7,6 +7,7 @@ import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
 import com.tomo.mcauthentication.application.registration.ConfirmUserRegistrationCommandHandler;
 import com.tomo.mcauthentication.application.registration.RegisterNewUserCommandHandler;
 import com.tomo.mcauthentication.application.registration.command.ConfirmUserRegistrationCommand;
+import com.tomo.mcauthentication.ddd.email.EmailSender;
 import com.tomo.mcauthentication.domain.oauth2.OAuth2Principal;
 import com.tomo.mcauthentication.domain.registration.UserRegistration;
 import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
@@ -55,6 +56,9 @@ public abstract class AbstractApplicationServiceTest extends BaseIntegrationTest
 
     @Autowired
     protected UserRepository userRepository;
+
+    @MockBean
+    protected EmailSender emailMessageSender;
 
     protected User createFormUser() {
         confirmUserRegistrationCommandHandler.handle(
