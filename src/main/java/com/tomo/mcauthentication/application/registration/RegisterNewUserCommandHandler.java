@@ -30,9 +30,7 @@ public class RegisterNewUserCommandHandler extends AbstractVoidyCommandHandler<R
                 aCommand.getPassword(),
                 aCommand.getEmail(),
                 aCommand.getFirstName(),
-                aCommand.getLastName(),
-                userRegistrationRepository,
-                userRepository
+                aCommand.getLastName()
         );
 
         userRegistrationRepository.save(userRegistration);

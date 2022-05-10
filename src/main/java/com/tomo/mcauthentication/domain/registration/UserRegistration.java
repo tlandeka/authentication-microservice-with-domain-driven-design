@@ -6,9 +6,9 @@ import com.tomo.mcauthentication.ddd.domain.DomainEventPublisher;
 import com.tomo.mcauthentication.domain.DomainRegistry;
 import com.tomo.mcauthentication.domain.registration.events.PasswordChanged;
 import com.tomo.mcauthentication.domain.registration.events.PasswordRecovered;
+import com.tomo.mcauthentication.domain.registration.events.PasswordRecoveryCodeCreated;
 import com.tomo.mcauthentication.domain.registration.events.UserRegistrationConfirmed;
 import com.tomo.mcauthentication.domain.registration.events.UserRegistrationRequested;
-import com.tomo.mcauthentication.domain.registration.events.PasswordRecoveryCodeCreated;
 import com.tomo.mcauthentication.domain.registration.rules.PasswordRecoveryCodeShouldBeExpiredOrNull;
 import com.tomo.mcauthentication.domain.registration.rules.PasswordRecoveryCodeShouldNotExpired;
 import com.tomo.mcauthentication.domain.registration.rules.PasswordsMustMatch;
@@ -16,11 +16,9 @@ import com.tomo.mcauthentication.domain.registration.rules.RecoveryCodeMustMatch
 import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationCannotBeConfirmedAfterExpiration;
 import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationCannotBeConfirmedMoreThanOnce;
 import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationMustBeConfirmed;
-import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationMustBeUnique;
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserId;
 import com.tomo.mcauthentication.domain.users.UserRepository;
-import com.tomo.mcauthentication.domain.users.rules.UserEmailMustBeUnique;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -69,22 +67,18 @@ public class UserRegistration extends ConcurrencySafeEntity {
             String password,
             String email,
             String firstName,
-            String lastName,
-            UserRegistrationRepository registrationRepository,
-            UserRepository userRespository)
+            String lastName)
     {
-        return new UserRegistration(password, email, firstName, lastName, registrationRepository, userRespository);
+        return new UserRegistration(password, email, firstName, lastName);
     }
 
     private UserRegistration(
             String aPassword,
             String anEmail,
             String aFirstName,
-            String aLastName,
-            UserRegistrationRepository aRepository,
-            UserRepository userRespository) {
-        this.checkRule(new UserRegistrationMustBeUnique(aRepository, anEmail));
-        this.checkRule(new UserEmailMustBeUnique(userRespository, anEmail));
+            String aLastName) {
+        this.checkRule(DomainRegistry.userRegistrationMustBeUnique(anEmail));
+        this.checkRule(DomainRegistry.userEmailMustBeUnique(anEmail));
         this.email = anEmail;
         this.firstName = aFirstName;
         this.lastName = aLastName;
@@ -115,7 +109,7 @@ public class UserRegistration extends ConcurrencySafeEntity {
 
         this.publishEvent(new UserRegistrationConfirmed(this.id, this.getStatus(), this.getUserId()));
 
-        return new User(userId, getFirstName(), getLastName(), getEmail(), User.AuthProvider.EMAIL, userRespository);
+        return new User(userId, getFirstName(), getLastName(), getEmail(), User.AuthProvider.EMAIL);
     }
 
     public String createRecoveryCode() {

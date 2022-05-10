@@ -1,7 +1,9 @@
 package com.tomo.mcauthentication.integration.application.registration;
 
 import com.tomo.mcauthentication.application.registration.ConfirmUserRegistrationCommandHandler;
+import com.tomo.mcauthentication.application.registration.NewUserRegisteredEventHandler;
 import com.tomo.mcauthentication.application.registration.RegisterNewUserCommandHandler;
+import com.tomo.mcauthentication.application.registration.SendRegistrationConfirmationEmailCommandHandler;
 import com.tomo.mcauthentication.domain.registration.UserRegistration;
 import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
 import com.tomo.mcauthentication.integration.application.AbstractApplicationServiceTest;
@@ -29,12 +31,15 @@ public class RegisterNewUserCommandHandlerTest extends AbstractApplicationServic
     @Autowired
     UserRegistrationRepository userRegistrationRepository;
 
+    @Autowired
+    NewUserRegisteredEventHandler newUserRegisteredEventHandler;
+
     @Test
     @Transactional
     public void testNewUserRegistrationCreated() {
         UserRegistration userRegistration = createUserRegistration();
         assertNotNull(userRegistration);
-        verify(this.emailMessageSender, Mockito.times(1)).send(any());
+        verify(this.sendRegistrationConfirmationEmailCommandHandler, Mockito.times(1)).handle(any());
     }
 
     @Test

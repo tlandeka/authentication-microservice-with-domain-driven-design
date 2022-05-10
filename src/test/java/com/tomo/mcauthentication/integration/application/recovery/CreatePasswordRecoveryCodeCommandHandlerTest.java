@@ -6,11 +6,14 @@ import com.tomo.mcauthentication.integration.application.AbstractApplicationServ
 import com.tomo.mcauthentication.testdata.CommandObjectMother;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
 
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 
 public class CreatePasswordRecoveryCodeCommandHandlerTest extends AbstractApplicationServiceTest {
 
@@ -23,5 +26,6 @@ public class CreatePasswordRecoveryCodeCommandHandlerTest extends AbstractApplic
         formLogin();
         RecoveryPasswordDto recoveryPasswordDto = commandHandler.handle(CommandObjectMother.createPasswordRecoveryCodeCommand());
         assertNotNull(recoveryPasswordDto);
+        verify(this.sendPasswordRecoveryEmailCommandHandler, Mockito.times(1)).handle(any());
     }
 }

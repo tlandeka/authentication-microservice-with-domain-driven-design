@@ -3,6 +3,7 @@ package com.tomo.mcauthentication.domain.users;
 import com.tomo.mcauthentication.ddd.domain.ConcurrencySafeEntity;
 import com.tomo.mcauthentication.ddd.domain.DomainEvent;
 import com.tomo.mcauthentication.ddd.domain.DomainEventPublisher;
+import com.tomo.mcauthentication.domain.DomainRegistry;
 import com.tomo.mcauthentication.domain.users.events.UserCreated;
 import com.tomo.mcauthentication.domain.users.events.UserNameChanged;
 import com.tomo.mcauthentication.domain.users.rules.UserEmailMustBeUnique;
@@ -40,9 +41,8 @@ public class User extends ConcurrencySafeEntity {
             String aFirstName,
             String aLastName,
             String anEmail,
-            AuthProvider aProvider,
-            UserRepository userRespository) {
-        this.checkRule(new UserEmailMustBeUnique(userRespository, anEmail));
+            AuthProvider aProvider) {
+        this.checkRule(DomainRegistry.userEmailMustBeUnique(anEmail));
         this.userId = anId;
         this.firstName = aFirstName;
         this.lastName = aLastName;

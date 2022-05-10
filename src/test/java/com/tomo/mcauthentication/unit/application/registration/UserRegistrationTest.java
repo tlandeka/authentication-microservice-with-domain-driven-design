@@ -29,10 +29,10 @@ public class UserRegistrationTest {
     DomainRegistry domainRegistry;
 
     @Mock
-    UserRegistrationRepository repository;
+    UserRegistrationRepository userRegistrationRepository;
 
     @Mock
-    UserRepository userRespository;
+    UserRepository userRepository;
 
     @Mock
     EncryptionService encryptionService;
@@ -48,25 +48,18 @@ public class UserRegistrationTest {
         when(encryptionService.encryptedValue(any())).thenReturn("randomString");
         when(applicationContext.getBean("passwordService")).thenReturn(new PasswordService());
         when(applicationContext.getBean("MD5EncryptionService")).thenReturn(encryptionService);
+        when(applicationContext.getBean("userRepository")).thenReturn(userRepository);
+        when(applicationContext.getBean("userRegistrationRepository")).thenReturn(userRegistrationRepository);
     }
 
     @Test
     public void testCreateUserRegister() {
-        when(repository.countByEmailAndStatus(any(), any())).thenReturn(Long.valueOf(0));
-        when(userRespository.findByEmail(any())).thenReturn(null);
-        UserRegistration ur = UserRegistration.registerNewUser("AA123bb##", "email", "firstName", "lastName", repository, userRespository);
+        when(userRegistrationRepository.countByEmailAndStatus(any(), any())).thenReturn(Long.valueOf(0));
+        when(userRepository.findByEmail(any())).thenReturn(null);
+        UserRegistration ur = UserRegistration.registerNewUser("AA123bb##", "email", "firstName", "lastName");
 
         assertEquals(ur.getEmail(), "email");
         assertEquals(ur.getStatus(), UserRegistrationStatus.WaitingForConfirmation);
         assertNotEquals(ur.getEmail(), "email1");
     }
-
-    @Test
-    public void testCreateUserRegisterBroken() {
-        when(repository.countByEmailAndStatus(any(), any())).thenReturn(1L);
-        assertThrows(RuntimeException.class, () -> {
-            UserRegistration ur = UserRegistration.registerNewUser("test", "email", "firstName", "lastName", repository, userRespository);
-        });
-    }
-
 }

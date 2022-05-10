@@ -40,8 +40,7 @@ public class OAuth2Service {
                 principal.getFirstName(),
                 principal.getLastName(),
                 principal.getEmail(),
-                User.AuthProvider.valueOf(principal.getProvider()),
-                userRespository);
+                User.AuthProvider.valueOf(principal.getProvider()));
 
        return userRespository.save(user);
     }

@@ -4,8 +4,10 @@ import com.tomo.mcauthentication.application.authentication.EmailLoginCommandHan
 import com.tomo.mcauthentication.application.authentication.FacebookLoginCommandHandler;
 import com.tomo.mcauthentication.application.authentication.GoogleLoginCommandHandler;
 import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
+import com.tomo.mcauthentication.application.recovery.SendPasswordRecoveryEmailCommandHandler;
 import com.tomo.mcauthentication.application.registration.ConfirmUserRegistrationCommandHandler;
 import com.tomo.mcauthentication.application.registration.RegisterNewUserCommandHandler;
+import com.tomo.mcauthentication.application.registration.SendRegistrationConfirmationEmailCommandHandler;
 import com.tomo.mcauthentication.application.registration.command.ConfirmUserRegistrationCommand;
 import com.tomo.mcauthentication.ddd.email.EmailSender;
 import com.tomo.mcauthentication.domain.oauth2.OAuth2Principal;
@@ -21,6 +23,7 @@ import com.tomo.mcauthentication.testdata.StaticFields;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -57,12 +60,20 @@ public abstract class AbstractApplicationServiceTest extends BaseIntegrationTest
     @Autowired
     protected UserRepository userRepository;
 
+    @SpyBean
+    protected SendRegistrationConfirmationEmailCommandHandler sendRegistrationConfirmationEmailCommandHandler;
+
+    @SpyBean
+    protected SendPasswordRecoveryEmailCommandHandler sendPasswordRecoveryEmailCommandHandler;
+
     @MockBean
     protected EmailSender emailMessageSender;
 
     protected User createFormUser() {
         confirmUserRegistrationCommandHandler.handle(
-                new ConfirmUserRegistrationCommand(createUserRegistration().getConfirmationCode()));
+                new ConfirmUserRegistrationCommand(
+                        createUserRegistration().getConfirmationCode()
+                ));
         return userRepository.findByEmail(StaticFields.USER_EMAIL);
     }
 
