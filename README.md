@@ -25,12 +25,17 @@ This is a list of the main goals of this repository:
 * Become a contributor
 
 ### 2. Domain
+#### 2.1. Business logic of the repository
 The main idea of this repository is to create small microservice for authentication that provides next functionalities:
 * Form Registration
 * Form Login, Google Login, Facebook Login
 * Password recovery
 * Email notifications
 * Session identification and authentication
+#### 2.2. How to run
+* Run database docker container first: `docker-compose up -d`
+* Run application locally with `local` profile
+* Plan is to dockerize the application in order to run it easy 
 
 ### 3. Desired TODO List to complete the application:
 * Clean the code from inconsistencies
