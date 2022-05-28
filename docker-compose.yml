@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+
+  mc-authentication-database:
+    image: postgres:12
+    restart: always
+    ports:
+      - 127.0.0.1:5432:5432
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    volumes:
+      - mc-authentication-database:/var/lib/postgresql
+      - ./1-init.sql:/docker-entrypoint-initdb.d/1-init.sql
+volumes:
+  mc-authentication-database:
