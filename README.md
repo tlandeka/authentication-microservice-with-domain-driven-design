@@ -36,6 +36,12 @@ The main idea of this repository is to create small microservice for authenticat
 * Run database docker container first: `docker-compose up -d`
 * Run application locally with `local` profile
 * Plan is to dockerize the application in order to run it easy 
+#### 2.3. How to run tests
+* Run database docker container first: `docker-compose up -d`. Plan is to add testdb for testing purposes.
+* Run Integration test separately
+* Run Unit test separately
+* Run Web-Layer (tests that are testing Spring Boot implementation and Rest Controller) tests separately
+
 
 ### 3. Desired TODO List to complete the application:
 * Clean the code from inconsistencies
