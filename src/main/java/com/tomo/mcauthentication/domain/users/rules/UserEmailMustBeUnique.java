@@ -1,6 +1,6 @@
 package com.tomo.mcauthentication.domain.users.rules;
 
-import com.tomo.mcauthentication.ddd.domain.BusinessRule;
+import com.tomo.ddd.domain.BusinessRule;
 import com.tomo.mcauthentication.domain.users.UserRepository;
 
 public class UserEmailMustBeUnique implements BusinessRule {

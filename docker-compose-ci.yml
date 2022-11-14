@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+
+  mc-authentication-db-test:
+    container_name: mc-authentication-db-test
+    image: postgres:12
+    restart: always
+    ports:
+      - 127.0.0.1:5432:5432
+    networks:
+      - mc-network-test
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    volumes:
+      - mc-authentication-db-test:/var/lib/postgresql
+      - ./1-init.sql:/docker-entrypoint-initdb.d/1-init.sql
+
+  mc-authentication-service-test:
+    container_name: mc-authentication-service-test
+    depends_on:
+      - mc-authentication-db-test
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: test
+    ports:
+      - 127.0.0.1:8080:8080
+    networks:
+      - mc-network-test
+
+volumes:
+  mc-authentication-db-test:
+
+networks:
+  mc-network-test:
+    driver: bridge

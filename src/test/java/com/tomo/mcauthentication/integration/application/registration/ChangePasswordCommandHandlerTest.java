@@ -1,14 +1,13 @@
 package com.tomo.mcauthentication.integration.application.registration;
 
+import com.tomo.ddd.domain.BusinessRuleValidationException;
 import com.tomo.mcauthentication.application.authentication.command.EmailLoginCommand;
 import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
 import com.tomo.mcauthentication.application.contracts.Voidy;
 import com.tomo.mcauthentication.application.registration.ChangePasswordCommandHandler;
 import com.tomo.mcauthentication.application.registration.command.ChangePasswordCommand;
-import com.tomo.mcauthentication.ddd.domain.BusinessRuleValidationException;
 import com.tomo.mcauthentication.integration.application.AbstractApplicationServiceTest;
 import com.tomo.mcauthentication.testdata.StaticFields;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

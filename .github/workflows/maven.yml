@@ -1,26 +1,25 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
-
-name: Java CI with Maven
-
+name: Run tests
 on:
-  push:
-    branches: [ main ]
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
-
+    env:
+      RAILS_ENV: test
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-        cache: maven
-    - name: Run the Maven verify phase
-      run: mvn --batch-mode --update-snapshots verify
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Start docker containers
+        run: |
+          docker-compose -f docker-compose-ci.yml up --build --detach
+          sleep 10  # wait for database to be ready          
+
+      - name: Run backend unit and integration tests
+        run: |
+          docker exec -it mc-authentication-service-test ./mvnw test -Punittest -Dspring.profiles.active=ci
+          docker exec -it mc-authentication-service-test ./mvnw test -Pintegrationtest -Dspring.profiles.active=ci

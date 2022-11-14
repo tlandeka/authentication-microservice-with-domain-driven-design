@@ -1,6 +1,6 @@
 package com.tomo.mcauthentication.domain.session;
 
-import com.tomo.mcauthentication.ddd.domain.AbstractId;
+import com.tomo.ddd.domain.AbstractId;
 
 import javax.persistence.Embeddable;
 import java.util.UUID;

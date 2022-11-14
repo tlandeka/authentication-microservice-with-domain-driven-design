@@ -1,0 +1,5 @@
+debug: true
+
+spring:
+  datasource:
+    url: jdbc:postgresql://mc-authentication-db-test:5432/mc_authentication

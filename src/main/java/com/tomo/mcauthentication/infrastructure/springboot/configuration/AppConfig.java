@@ -1,11 +1,11 @@
 package com.tomo.mcauthentication.infrastructure.springboot.configuration;
 
 import com.tomo.mcauthentication.application.contracts.McAuthenticationModule;
-import com.tomo.mcauthentication.ddd.email.EmailSender;
-import com.tomo.mcauthentication.ddd.event.EventStore;
-import com.tomo.mcauthentication.ddd.infrastructure.persistence.springdata.jpa.EventStoreJpaRepositoryAdapter;
-import com.tomo.mcauthentication.ddd.infrastructure.persistence.springdata.jpa.StoredEventJpaRepository;
-import com.tomo.mcauthentication.ddd.port.adapter.message.email.MailGunMessageSender;
+import com.tomo.ddd.email.EmailSender;
+import com.tomo.ddd.event.EventStore;
+import com.tomo.ddd.infrastructure.persistence.springdata.jpa.EventStoreJpaRepositoryAdapter;
+import com.tomo.ddd.infrastructure.persistence.springdata.jpa.StoredEventJpaRepository;
+import com.tomo.ddd.port.adapter.message.email.MailGunMessageSender;
 import com.tomo.mcauthentication.domain.oauth2.OAuth2Service;
 import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
 import com.tomo.mcauthentication.domain.users.UserRepository;
@@ -31,7 +31,10 @@ import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 
 @Configuration
-@EnableJpaRepositories
+@EnableJpaRepositories({
+        "com.tomo.ddd.infrastructure.persistence.springdata.jpa",
+        "com.tomo.mcauthentication.infrastructure.persistence"
+})
 public class AppConfig {
 
     @Autowired

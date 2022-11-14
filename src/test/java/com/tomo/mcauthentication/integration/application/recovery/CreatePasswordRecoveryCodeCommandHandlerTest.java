@@ -4,7 +4,6 @@ import com.tomo.mcauthentication.application.authentication.dto.RecoveryPassword
 import com.tomo.mcauthentication.application.recovery.CreatePasswordRecoveryCodeCommandHandler;
 import com.tomo.mcauthentication.integration.application.AbstractApplicationServiceTest;
 import com.tomo.mcauthentication.testdata.CommandObjectMother;
-
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;

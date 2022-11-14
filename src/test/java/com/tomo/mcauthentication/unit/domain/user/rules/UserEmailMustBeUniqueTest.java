@@ -4,7 +4,6 @@ import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserRepository;
 import com.tomo.mcauthentication.domain.users.rules.UserEmailMustBeUnique;
 import com.tomo.mcauthentication.unit.domain.AbstractUnitTest;
-
 import org.junit.Test;
 import org.mockito.Mockito;
 

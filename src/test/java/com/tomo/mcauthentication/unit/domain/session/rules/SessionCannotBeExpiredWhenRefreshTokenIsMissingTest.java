@@ -1,11 +1,8 @@
 package com.tomo.mcauthentication.unit.domain.session.rules;
 
-import com.tomo.mcauthentication.domain.registration.UserRegistration;
-import com.tomo.mcauthentication.domain.registration.rules.PasswordRecoveryCodeShouldNotExpired;
 import com.tomo.mcauthentication.domain.session.Session;
 import com.tomo.mcauthentication.domain.session.rule.SessionCannotBeExpiredWhenRefreshTokenIsMissing;
 import com.tomo.mcauthentication.unit.domain.AbstractUnitTest;
-
 import org.junit.Test;
 
 import java.time.LocalDateTime;

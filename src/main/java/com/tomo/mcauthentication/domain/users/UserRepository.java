@@ -1,6 +1,6 @@
 package com.tomo.mcauthentication.domain.users;
 
-import com.tomo.mcauthentication.ddd.domain.BaseRepository;
+import com.tomo.ddd.domain.BaseRepository;
 
 public interface UserRepository extends BaseRepository<User, UserId> {
     UserId nextIdentity();

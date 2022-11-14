@@ -1,6 +1,6 @@
 package com.tomo.mcauthentication.infrastructure.service;
 
-import com.tomo.mcauthentication.ddd.AssertionConcern;
+import com.tomo.ddd.AssertionConcern;
 import com.tomo.mcauthentication.domain.EncryptionService;
 
 import org.springframework.beans.factory.annotation.Qualifier;

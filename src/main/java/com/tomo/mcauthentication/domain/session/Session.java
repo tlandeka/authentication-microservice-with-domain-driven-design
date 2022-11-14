@@ -1,7 +1,7 @@
 package com.tomo.mcauthentication.domain.session;
 
-import com.tomo.mcauthentication.ddd.domain.DomainEventPublisher;
-import com.tomo.mcauthentication.ddd.domain.RootEntity;
+import com.tomo.ddd.domain.DomainEventPublisher;
+import com.tomo.ddd.domain.RootEntity;
 import com.tomo.mcauthentication.domain.DomainRegistry;
 import com.tomo.mcauthentication.domain.session.events.SessionCreated;
 import com.tomo.mcauthentication.domain.users.User;

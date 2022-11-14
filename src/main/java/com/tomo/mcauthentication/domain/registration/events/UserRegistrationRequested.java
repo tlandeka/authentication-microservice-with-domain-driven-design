@@ -1,6 +1,6 @@
 package com.tomo.mcauthentication.domain.registration.events;
 
-import com.tomo.mcauthentication.ddd.domain.BaseDomainEvent;
+import com.tomo.ddd.domain.BaseDomainEvent;
 import com.tomo.mcauthentication.domain.registration.UserRegistrationStatus;
 
 import java.time.LocalDateTime;

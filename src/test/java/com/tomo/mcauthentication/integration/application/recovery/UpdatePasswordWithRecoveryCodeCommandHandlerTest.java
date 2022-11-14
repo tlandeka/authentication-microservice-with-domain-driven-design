@@ -10,7 +10,6 @@ import com.tomo.mcauthentication.application.recovery.command.UpdatePasswordWith
 import com.tomo.mcauthentication.integration.application.AbstractApplicationServiceTest;
 import com.tomo.mcauthentication.testdata.CommandObjectMother;
 import com.tomo.mcauthentication.testdata.StaticFields;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

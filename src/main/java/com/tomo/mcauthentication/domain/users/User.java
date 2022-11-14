@@ -1,12 +1,11 @@
 package com.tomo.mcauthentication.domain.users;
 
-import com.tomo.mcauthentication.ddd.domain.ConcurrencySafeEntity;
-import com.tomo.mcauthentication.ddd.domain.DomainEvent;
-import com.tomo.mcauthentication.ddd.domain.DomainEventPublisher;
+import com.tomo.ddd.domain.ConcurrencySafeEntity;
+import com.tomo.ddd.domain.DomainEvent;
+import com.tomo.ddd.domain.DomainEventPublisher;
 import com.tomo.mcauthentication.domain.DomainRegistry;
 import com.tomo.mcauthentication.domain.users.events.UserCreated;
 import com.tomo.mcauthentication.domain.users.events.UserNameChanged;
-import com.tomo.mcauthentication.domain.users.rules.UserEmailMustBeUnique;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;

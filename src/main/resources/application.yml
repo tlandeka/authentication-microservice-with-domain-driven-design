@@ -1,0 +1,68 @@
+server:
+  port: 8080
+debug: true
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mc_authentication
+    username: mcuser
+    password: mcuser
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+
+  flyway:
+    enabled: true
+    baselineOnMigrate: true
+    schemas: public
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: your-client-id.apps.googleusercontent.com
+            clientSecret: your-client-secret
+            scope:
+              - email
+              - profile
+          facebook:
+            clientId: your-client-id
+            clientSecret: your-client-secret
+            scope:
+              - email
+              - public_profile
+        provider:
+          facebook:
+            authorizationUri: https://www.facebook.com/v3.0/dialog/oauth
+            tokenUri: https://graph.facebook.com/v3.0/oauth/access_token
+            userInfoUri: https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)
+app:
+  base-url: http://localhost:8080
+  auth:
+    tokenSecret: 04ca023b39512e46d0c2cf4b48d5aac61d34302994c87ed4eff225dcf3b0a218739f3897051a057f9b846a69ea2927a587044164b7bae5e1306219d50b588cb1
+    tokenExpirationMsec: 864000000
+    sessionAuthTokenName: "dei-www"
+  cors:
+    allowedOrigins: http://localhost:3000,http://localhost:8080
+
+  message:
+    email:
+      mailgun:
+        domains: "[your-sandbox].mailgun.org"
+        api-url: "https://api.mailgun.net/v3/"
+        api-key: "[mailgun-api-key]"
+        from:
+          name: "mc team"
+          email: "tomo.landeka02@gmail.com"
+  gui:
+    base-url: "localhost:3000"
+    recovery-route: "${app.gui.base-url}/reset-password/?recoveryCode="
+    confirmation-route: "${app.gui.base-url}/register/confirm/?confirmationCode="
