@@ -14,6 +14,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
+
       - name: Start docker containers
         run: |
           docker-compose -f docker-compose-ci.yml up --build --detach
@@ -22,5 +25,5 @@ jobs:
       - name: Run unit tests
         run: docker-compose -f docker-compose-ci.yml run mc-authentication-service-test ./mvnw test -Punittest -Dspring.profiles.active=ci
 
-      - name: Run backend integration tests
+      - name: Run integration tests
         run: docker-compose -f docker-compose-ci.yml run mc-authentication-service-test ./mvnw test -Pintegrationtest -Dspring.profiles.active=ci
