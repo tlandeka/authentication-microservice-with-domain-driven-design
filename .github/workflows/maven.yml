@@ -20,7 +20,7 @@ jobs:
           sleep 10  # wait for database to be ready          
 
       - name: Run backend unit tests
-        run: docker exec -it mc-authentication-service-test ./mvnw test -Punittest -Dspring.profiles.active=ci
+        run: docker-compose -f docker-compose-ci.yml run mc-authentication-service-test ./mvnw test -Punittest -Dspring.profiles.active=ci
 
       - name: Run backend integration tests
         run: docker exec -it mc-authentication-service-test ./mvnw test -Pintegrationtest -Dspring.profiles.active=ci
