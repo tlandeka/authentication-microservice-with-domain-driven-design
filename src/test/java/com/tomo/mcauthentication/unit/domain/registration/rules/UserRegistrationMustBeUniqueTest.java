@@ -3,14 +3,13 @@ package com.tomo.mcauthentication.unit.domain.registration.rules;
 import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
 import com.tomo.mcauthentication.domain.registration.rules.UserRegistrationMustBeUnique;
 import com.tomo.mcauthentication.unit.domain.AbstractUnitTest;
-
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 
 public class UserRegistrationMustBeUniqueTest extends AbstractUnitTest {
 

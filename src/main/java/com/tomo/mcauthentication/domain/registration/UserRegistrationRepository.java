@@ -1,6 +1,6 @@
 package com.tomo.mcauthentication.domain.registration;
 
-import com.tomo.mcauthentication.ddd.domain.BaseRepository;
+import com.tomo.ddd.domain.BaseRepository;
 import com.tomo.mcauthentication.domain.users.UserId;
 
 import java.util.List;

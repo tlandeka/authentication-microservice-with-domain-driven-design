@@ -1,6 +1,6 @@
 package com.tomo.mcauthentication.domain.registration;
 
-import com.tomo.mcauthentication.ddd.AssertionConcern;
+import com.tomo.ddd.AssertionConcern;
 
 import org.springframework.stereotype.Component;
 

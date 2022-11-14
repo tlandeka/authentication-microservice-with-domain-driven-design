@@ -1,6 +1,6 @@
 package com.tomo.mcauthentication.domain.oauth2;
 
-import com.tomo.mcauthentication.ddd.domain.BusinessRuleValidationException;
+import com.tomo.ddd.domain.BusinessRuleValidationException;
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserRepository;
 import com.tomo.mcauthentication.domain.users.rules.UserEmailMustBeUnique;

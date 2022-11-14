@@ -1,13 +1,8 @@
 package com.tomo.mcauthentication.domain.users.events;
 
-import com.tomo.mcauthentication.ddd.domain.BaseDomainEvent;
-import com.tomo.mcauthentication.domain.registration.UserRegistrationStatus;
+import com.tomo.ddd.domain.BaseDomainEvent;
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserId;
-
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import java.time.LocalDateTime;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

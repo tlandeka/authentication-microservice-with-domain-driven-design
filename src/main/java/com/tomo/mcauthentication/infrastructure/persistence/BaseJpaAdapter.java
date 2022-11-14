@@ -1,7 +1,7 @@
 package com.tomo.mcauthentication.infrastructure.persistence;
 
-import com.tomo.mcauthentication.ddd.domain.BaseRepository;
-import com.tomo.mcauthentication.ddd.infrastructure.persistence.springdata.jpa.McCrudRepository;
+import com.tomo.ddd.domain.BaseRepository;
+import com.tomo.ddd.infrastructure.persistence.springdata.jpa.McCrudRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +22,8 @@ public class BaseJpaAdapter<T, ID, E extends McCrudRepository> implements BaseRe
 
     @Override
     public T findById(ID id) {
-        return ((Optional<T>) jpaRepository.findById(id)).get();
+        Optional<T> entity = jpaRepository.findById(id);
+        return entity.isPresent() ? entity.get() : null;
     }
 
     @Override

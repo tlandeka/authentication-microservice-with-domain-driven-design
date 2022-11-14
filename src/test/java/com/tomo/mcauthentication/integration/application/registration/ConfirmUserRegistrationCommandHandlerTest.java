@@ -2,7 +2,6 @@ package com.tomo.mcauthentication.integration.application.registration;
 
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.integration.application.AbstractApplicationServiceTest;
-
 import org.junit.Test;
 
 import javax.transaction.Transactional;

@@ -2,8 +2,8 @@ package com.tomo.mcauthentication.application.recovery;
 
 import com.tomo.mcauthentication.application.contracts.McAuthenticationModule;
 import com.tomo.mcauthentication.application.recovery.command.SendPasswordRecoveryEmailCommand;
-import com.tomo.mcauthentication.ddd.domain.DomainEventPublisher;
-import com.tomo.mcauthentication.ddd.domain.DomainEventSubscriber;
+import com.tomo.ddd.domain.DomainEventPublisher;
+import com.tomo.ddd.domain.DomainEventSubscriber;
 import com.tomo.mcauthentication.domain.registration.events.PasswordRecoveryCodeCreated;
 
 import org.aspectj.lang.annotation.Aspect;

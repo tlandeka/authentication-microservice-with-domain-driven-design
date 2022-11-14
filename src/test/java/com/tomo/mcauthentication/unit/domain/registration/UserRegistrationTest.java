@@ -1,27 +1,18 @@
 package com.tomo.mcauthentication.unit.domain.registration;
 
-import com.tomo.mcauthentication.ddd.domain.DomainEventPublisher;
+import com.tomo.ddd.domain.DomainEventPublisher;
 import com.tomo.mcauthentication.domain.DomainRegistry;
 import com.tomo.mcauthentication.domain.EncryptionService;
 import com.tomo.mcauthentication.domain.registration.PasswordService;
 import com.tomo.mcauthentication.domain.registration.UserRegistration;
 import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
 import com.tomo.mcauthentication.domain.registration.UserRegistrationStatus;
-import com.tomo.mcauthentication.domain.registration.events.PasswordChanged;
-import com.tomo.mcauthentication.domain.registration.events.PasswordRecovered;
-import com.tomo.mcauthentication.domain.registration.events.PasswordRecoveryCodeCreated;
-import com.tomo.mcauthentication.domain.registration.events.UserRegistrationConfirmed;
-import com.tomo.mcauthentication.domain.registration.events.UserRegistrationRequested;
+import com.tomo.mcauthentication.domain.registration.events.*;
 import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserId;
 import com.tomo.mcauthentication.domain.users.UserRepository;
 import com.tomo.mcauthentication.testdata.StaticFields;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockedConstruction;
@@ -31,25 +22,19 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@ActiveProfiles(profiles = { "unit" })
 public class UserRegistrationTest {
 
     private static boolean setUpIsDone = false;

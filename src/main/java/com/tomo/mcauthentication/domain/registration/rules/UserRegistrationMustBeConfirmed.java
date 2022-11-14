@@ -1,7 +1,6 @@
 package com.tomo.mcauthentication.domain.registration.rules;
 
-import com.tomo.mcauthentication.ddd.domain.BusinessRule;
-import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
+import com.tomo.ddd.domain.BusinessRule;
 import com.tomo.mcauthentication.domain.registration.UserRegistrationStatus;
 
 public class UserRegistrationMustBeConfirmed implements BusinessRule {

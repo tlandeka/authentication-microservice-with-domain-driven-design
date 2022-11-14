@@ -1,8 +1,8 @@
 package com.tomo.mcauthentication.domain.registration;
 
-import com.tomo.mcauthentication.ddd.domain.ConcurrencySafeEntity;
-import com.tomo.mcauthentication.ddd.domain.DomainEvent;
-import com.tomo.mcauthentication.ddd.domain.DomainEventPublisher;
+import com.tomo.ddd.domain.ConcurrencySafeEntity;
+import com.tomo.ddd.domain.DomainEvent;
+import com.tomo.ddd.domain.DomainEventPublisher;
 import com.tomo.mcauthentication.domain.DomainRegistry;
 import com.tomo.mcauthentication.domain.registration.events.PasswordChanged;
 import com.tomo.mcauthentication.domain.registration.events.PasswordRecovered;

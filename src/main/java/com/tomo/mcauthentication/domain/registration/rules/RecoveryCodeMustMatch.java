@@ -1,6 +1,6 @@
 package com.tomo.mcauthentication.domain.registration.rules;
 
-import com.tomo.mcauthentication.ddd.domain.BusinessRule;
+import com.tomo.ddd.domain.BusinessRule;
 
 public class RecoveryCodeMustMatch implements BusinessRule {
 

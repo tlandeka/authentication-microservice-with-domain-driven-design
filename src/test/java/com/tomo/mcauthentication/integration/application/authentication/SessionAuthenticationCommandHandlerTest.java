@@ -5,7 +5,6 @@ import com.tomo.mcauthentication.application.authentication.command.SessionAuthe
 import com.tomo.mcauthentication.application.authentication.dto.SessionDto;
 import com.tomo.mcauthentication.domain.session.SessionAuthenticationService;
 import com.tomo.mcauthentication.integration.application.AbstractApplicationServiceTest;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

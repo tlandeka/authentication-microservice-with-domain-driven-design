@@ -1,8 +1,7 @@
 package com.tomo.mcauthentication.integration.application.authentication;
 
-import com.tomo.mcauthentication.ddd.domain.BusinessRuleValidationException;
+import com.tomo.ddd.domain.BusinessRuleValidationException;
 import com.tomo.mcauthentication.integration.application.AbstractApplicationServiceTest;
-
 import org.junit.Test;
 
 import javax.transaction.Transactional;

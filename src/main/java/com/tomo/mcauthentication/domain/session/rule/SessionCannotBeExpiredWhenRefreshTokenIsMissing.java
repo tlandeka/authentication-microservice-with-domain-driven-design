@@ -1,6 +1,6 @@
 package com.tomo.mcauthentication.domain.session.rule;
 
-import com.tomo.mcauthentication.ddd.domain.BusinessRule;
+import com.tomo.ddd.domain.BusinessRule;
 import com.tomo.mcauthentication.domain.session.Session;
 
 public class SessionCannotBeExpiredWhenRefreshTokenIsMissing implements BusinessRule {

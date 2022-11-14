@@ -2,8 +2,8 @@ package com.tomo.mcauthentication.application.registration;
 
 import com.tomo.mcauthentication.application.contracts.McAuthenticationModule;
 import com.tomo.mcauthentication.application.registration.command.SendRegistrationConfirmationEmailCommand;
-import com.tomo.mcauthentication.ddd.domain.DomainEventPublisher;
-import com.tomo.mcauthentication.ddd.domain.DomainEventSubscriber;
+import com.tomo.ddd.domain.DomainEventPublisher;
+import com.tomo.ddd.domain.DomainEventSubscriber;
 import com.tomo.mcauthentication.domain.registration.events.UserRegistrationRequested;
 
 import org.aspectj.lang.annotation.Aspect;

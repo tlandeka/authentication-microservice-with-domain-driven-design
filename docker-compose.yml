@@ -1,8 +1,9 @@
-version: '3'
+version: '3.7'
 
 services:
 
-  mc-authentication-database:
+  mc-authentication_db:
+    container_name: mc-authentication_db
     image: postgres:12
     restart: always
     ports:
@@ -11,7 +12,12 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
     volumes:
-      - mc-authentication-database:/var/lib/postgresql
+      - mc-authentication-db:/var/lib/postgresql
       - ./1-init.sql:/docker-entrypoint-initdb.d/1-init.sql
+
 volumes:
-  mc-authentication-database:
+  mc-authentication-db:
+
+networks:
+  mc-network:
+    driver: bridge

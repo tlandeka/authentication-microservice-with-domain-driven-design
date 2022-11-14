@@ -2,9 +2,8 @@ package com.tomo.mcauthentication.application.registration;
 
 import com.tomo.mcauthentication.application.configuration.AbstractVoidyCommandHandler;
 import com.tomo.mcauthentication.application.registration.command.SendRegistrationConfirmationEmailCommand;
-import com.tomo.mcauthentication.ddd.email.EmailSender;
-import com.tomo.mcauthentication.ddd.port.adapter.message.email.EmailMessage;
-import com.tomo.mcauthentication.infrastructure.springboot.configuration.AppProperties;
+import com.tomo.ddd.email.EmailSender;
+import com.tomo.ddd.port.adapter.message.email.EmailMessage;
 
 import org.springframework.stereotype.Component;
 

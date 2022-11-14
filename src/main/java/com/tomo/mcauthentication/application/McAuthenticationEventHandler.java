@@ -1,9 +1,9 @@
 package com.tomo.mcauthentication.application;
 
-import com.tomo.mcauthentication.ddd.domain.DomainEvent;
-import com.tomo.mcauthentication.ddd.domain.DomainEventPublisher;
-import com.tomo.mcauthentication.ddd.domain.DomainEventSubscriber;
-import com.tomo.mcauthentication.ddd.event.EventStore;
+import com.tomo.ddd.domain.DomainEvent;
+import com.tomo.ddd.domain.DomainEventPublisher;
+import com.tomo.ddd.domain.DomainEventSubscriber;
+import com.tomo.ddd.event.EventStore;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;

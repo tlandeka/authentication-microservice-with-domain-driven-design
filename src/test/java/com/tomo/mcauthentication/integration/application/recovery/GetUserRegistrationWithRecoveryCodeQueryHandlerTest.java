@@ -7,7 +7,6 @@ import com.tomo.mcauthentication.application.recovery.dto.GetUserRegistrationWit
 import com.tomo.mcauthentication.application.registration.dto.UserRegistrationDto;
 import com.tomo.mcauthentication.integration.application.AbstractApplicationServiceTest;
 import com.tomo.mcauthentication.testdata.CommandObjectMother;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -1,8 +1,7 @@
 package com.tomo.mcauthentication.domain.session.events;
 
-import com.tomo.mcauthentication.ddd.domain.BaseDomainEvent;
+import com.tomo.ddd.domain.BaseDomainEvent;
 import com.tomo.mcauthentication.domain.session.SessionId;
-import com.tomo.mcauthentication.domain.users.User;
 import com.tomo.mcauthentication.domain.users.UserId;
 
 import lombok.Getter;

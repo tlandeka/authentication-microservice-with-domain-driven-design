@@ -1,5 +1,6 @@
 package com.tomo.mcauthentication.integration.application;
 
+import com.tomo.ddd.email.EmailSender;
 import com.tomo.mcauthentication.application.authentication.EmailLoginCommandHandler;
 import com.tomo.mcauthentication.application.authentication.FacebookLoginCommandHandler;
 import com.tomo.mcauthentication.application.authentication.GoogleLoginCommandHandler;
@@ -9,7 +10,6 @@ import com.tomo.mcauthentication.application.registration.ConfirmUserRegistratio
 import com.tomo.mcauthentication.application.registration.RegisterNewUserCommandHandler;
 import com.tomo.mcauthentication.application.registration.SendRegistrationConfirmationEmailCommandHandler;
 import com.tomo.mcauthentication.application.registration.command.ConfirmUserRegistrationCommand;
-import com.tomo.mcauthentication.ddd.email.EmailSender;
 import com.tomo.mcauthentication.domain.oauth2.OAuth2Principal;
 import com.tomo.mcauthentication.domain.registration.UserRegistration;
 import com.tomo.mcauthentication.domain.registration.UserRegistrationRepository;
@@ -20,7 +20,6 @@ import com.tomo.mcauthentication.infrastructure.http.oauth2.GoogleOAuth2Authenti
 import com.tomo.mcauthentication.integration.BaseIntegrationTest;
 import com.tomo.mcauthentication.testdata.CommandObjectMother;
 import com.tomo.mcauthentication.testdata.StaticFields;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;

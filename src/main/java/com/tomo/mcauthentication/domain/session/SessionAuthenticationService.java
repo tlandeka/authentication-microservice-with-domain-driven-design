@@ -1,7 +1,6 @@
 package com.tomo.mcauthentication.domain.session;
 
-import com.tomo.mcauthentication.ddd.domain.BusinessRuleValidator;
-import com.tomo.mcauthentication.domain.EncryptionService;
+import com.tomo.ddd.domain.BusinessRuleValidator;
 import com.tomo.mcauthentication.domain.session.rule.SessionCannotBeExpiredWhenRefreshTokenIsMissing;
 import com.tomo.mcauthentication.domain.users.UserRepository;
 
